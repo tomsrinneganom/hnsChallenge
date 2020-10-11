@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/changa_bold</item>
+        <item>@font/changa_medium</item>
+        <item>@font/germania_one</item>
+        <item>@font/kanit</item>
+        <item>@font/kanit_bold</item>
+        <item>@font/kanit_medium</item>
+        <item>@font/kanit_thin</item>
+        <item>@font/roboto_thin</item>
+        <item>@font/rubik_medium</item>
+        <item>@font/russo_one</item>
+    </array>
+</resources>

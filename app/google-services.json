@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "194592409296",
+    "firebase_url": "https://hnschallenge-6c69d.firebaseio.com",
+    "project_id": "hnschallenge-6c69d",
+    "storage_bucket": "hnschallenge-6c69d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194592409296:android:444e690d604a06b25740d5",
+        "android_client_info": {
+          "package_name": "com.dedstudio.hnschallenge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194592409296-aptrlkca6211bvnjlov10qj4n21mjbia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3tZ4Y1BWsJgOp6e3MIROduOaadmOCpdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194592409296-aptrlkca6211bvnjlov10qj4n21mjbia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

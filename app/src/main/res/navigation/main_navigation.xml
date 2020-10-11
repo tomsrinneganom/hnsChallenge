@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/signInFragment">
+
+    <fragment
+        android:id="@+id/addingChallengeNavigationItem"
+        android:name="com.dedstudio.hnschallenge.AddingChallengeCameraFragment"
+        android:label="adding_challenge_fragment"
+        tools:layout="@layout/adding_challenge_fragment" >
+        <action
+            android:id="@+id/action_addingChallengeNavigationItem_to_displayImageFragment"
+            app:destination="@id/displayImageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainMapNavigationItem"
+        android:name="com.dedstudio.hnschallenge.MainMapFragment"
+        android:label="main_map_fragment"
+        tools:layout="@layout/main_map_fragment" >
+        <action
+            android:id="@+id/action_mainMapNavigationItem_to_selectedChallengeListFragment"
+            app:destination="@id/selectedChallengeListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/displayImageFragment"
+        android:name="com.dedstudio.hnschallenge.DisplayImageFragment"
+        android:label="display_image_fragment"
+        tools:layout="@layout/display_image_fragment" >
+        <argument
+            android:name="pathToImage"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/challengeListNavigationItem"
+        android:name="com.dedstudio.hnschallenge.ChallengeListFragment"
+        android:label="challenge_list_fragment"
+        tools:layout="@layout/challenge_list_fragment" >
+        <action
+            android:id="@+id/action_challengeLsitNavigationItem_to_mapChallengeExecutionFragment"
+            app:destination="@id/mapChallengeExecutionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.dedstudio.hnschallenge.SignInFragment"
+        android:label="sign_in_fragment"
+        tools:layout="@layout/sign_in_fragment" />
+    <fragment
+        android:id="@+id/selectedChallengeListFragment"
+        android:name="com.dedstudio.hnschallenge.SelectedChallengeListFragment"
+        android:label="selected_challenge_list_fragment"
+        tools:layout="@layout/selected_challenge_list_fragment" >
+        <argument
+            android:name="challenges"
+            app:argType="com.dedstudio.hnschallenge.Challenge[]" />
+        <action
+            android:id="@+id/action_selectedChallengeListFragment_to_mapChallengeExecutionFragment"
+            app:destination="@id/mapChallengeExecutionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainProfileNavigationItem"
+        android:name="com.dedstudio.hnschallenge.MainProfileFragment"
+        android:label="main_profile_fragment"
+        tools:layout="@layout/main_profile_fragment" />
+    <fragment
+        android:id="@+id/mapChallengeExecutionFragment"
+        android:name="com.dedstudio.hnschallenge.MapChallengeExecutionFragment"
+        android:label="map_challenge_execution_fragment"
+        tools:layout="@layout/map_challenge_execution_fragment" >
+        <argument
+            android:name="challenge"
+            app:argType="com.dedstudio.hnschallenge.Challenge" />
+        <action
+            android:id="@+id/action_mapChallengeExecutionFragment_to_cameraChallengeExecutionFragment"
+            app:destination="@id/cameraChallengeExecutionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraChallengeExecutionFragment"
+        android:name="com.dedstudio.hnschallenge.CameraChallengeExecutionFragment"
+        android:label="camera_challenge_execution_fragment"
+        tools:layout="@layout/camera_challenge_execution_fragment" >
+        <argument
+            android:name="challenge"
+            app:argType="com.dedstudio.hnschallenge.Challenge" />
+    </fragment>
+</navigation>
