@@ -66,6 +66,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage-ktx:19.2.0'
     implementation 'com.firebaseui:firebase-ui-storage:6.2.0'
     //Firebase Authentication
+    implementation platform('com.google.firebase:firebase-bom:25.12.0')
     implementation 'com.google.firebase:firebase-auth-ktx:19.3.2'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
 
@@ -77,6 +78,7 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-location:17.0.0'
 
+    implementation 'com.google.firebase:firebase-firestore:21.4.2'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

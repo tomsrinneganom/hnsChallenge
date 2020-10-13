@@ -3,6 +3,7 @@
   <component name="ProjectTreeColorHighlighter">
     <files>
       <node color="1" path="$PROJECT_DIR$/app/src/main/java/com/dedstudio/hnschallenge/MainActivity.kt" />
+      <node color="5" path="$PROJECT_DIR$/app/src/main/java/com/dedstudio/hnschallenge/MainProfileFragment.kt" />
       <node color="1" path="$PROJECT_DIR$/app/src/main/res/layout/camera_challenge_execution_fragment.xml" />
     </files>
     <colors>

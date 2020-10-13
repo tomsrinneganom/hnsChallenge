@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.mapbox.geojson.*
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.Style
@@ -28,6 +30,9 @@ open class MainMapFragment : MapFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        if(Firebase.auth.currentUser == null){
+            findNavController().navigate(R.id.signInFragment)
+        }
         val view = inflater.inflate(R.layout.main_map_fragment, container, false)
         mapView = view.findViewById(R.id.main_map_view)
         imageMoveToCurrentLocation = view.floatingActionButtonLocation
@@ -44,7 +49,7 @@ open class MainMapFragment : MapFragment() {
                 mapLocalization(style)
                 addHeatmap(style)
                 addShowingLocation(style)
-                this.mapboxMap.addOnMapClickListener (onMapClickListener)
+                this.mapboxMap.addOnMapClickListener(onMapClickListener)
             }
         }
 
@@ -55,9 +60,6 @@ open class MainMapFragment : MapFragment() {
         challenges.observeForever {
             addEarthquakeSource(style)
         }
-    }
-    protected fun getChallenges(){
-
     }
 
     private val onMapClickListener = MapboxMap.OnMapClickListener { point ->
@@ -86,7 +88,7 @@ open class MainMapFragment : MapFragment() {
         true
     }
 
-    fun addEarthquakeSource(style: Style) {
+    fun addEarthquakeSource(s: Style) {
         val coordinates = ArrayList<Point>()
         challenges.value?.forEach { challenge ->
             if (challenge.latitude != null && challenge.longitude != null) {
@@ -98,11 +100,13 @@ open class MainMapFragment : MapFragment() {
 
         val lineString = LineString.fromLngLats(coordinates)
         val featureCollection = FeatureCollection.fromFeature(Feature.fromGeometry(lineString))
-        if (style.getSource(sourceID) == null) {
-            val geoJsonSource = GeoJsonSource(sourceID, featureCollection)
-            style.addSource(geoJsonSource)
+        mapboxMap.getStyle { style ->
+            if (style.getSource(sourceID) == null) {
+                val geoJsonSource = GeoJsonSource(sourceID, featureCollection)
+                style.addSource(geoJsonSource)
+            }
+            addHeatmapLayer(style)
         }
-        addHeatmapLayer(style)
     }
 
     private fun addHeatmapLayer(style: Style) {
@@ -112,7 +116,7 @@ open class MainMapFragment : MapFragment() {
             heatmapColor(
                 interpolate(
                     linear(), heatmapDensity(),
-                    literal(0), rgba(179,35,255,0),
+                    literal(0), rgba(179, 35, 255, 0),
                     literal(0.2), rgba(179, 35, 255, 0.2),
                     literal(0.4), rgba(179, 35, 255, 0.3),
                     literal(0.6), rgba(179, 35, 255, 0.5),
@@ -128,7 +132,7 @@ open class MainMapFragment : MapFragment() {
                 )
             )
         )
-        if(style.getLayer(layerID) == null) {
+        if (style.getLayer(layerID) == null) {
             style.addLayer(layer)
         }
     }

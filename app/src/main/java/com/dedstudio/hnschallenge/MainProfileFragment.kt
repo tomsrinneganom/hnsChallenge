@@ -24,6 +24,7 @@ class MainProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.main_profile_fragment, container, false)
     }
 

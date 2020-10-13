@@ -47,6 +47,20 @@ class SignInFragment : Fragment() {
         signInButton.setOnClickListener {
             signIn()
         }
+        Log.i("Log_tag","ffffffffff")
+
+        auth.createUserWithEmailAndPassword("tomsrinneganom@gmail.com", "denis2").addOnCompleteListener {
+            if(it.isSuccessful){
+                Log.i("Log_tag","isSuccessful == true")
+                findNavController().navigate(R.id.mainMapNavigationItem)
+            }
+            else{
+                Log.i("Log_tag","isSuccessful == false")
+            }
+        }.addOnFailureListener {
+            Log.i("Log_tag","error ${it.message}")
+
+        }
         return view
     }
 
