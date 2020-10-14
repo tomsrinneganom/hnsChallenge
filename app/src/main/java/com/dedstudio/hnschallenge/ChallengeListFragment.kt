@@ -1,17 +1,13 @@
 package com.dedstudio.hnschallenge
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 open class ChallengeListFragment : Fragment() {
@@ -36,16 +32,15 @@ open class ChallengeListFragment : Fragment() {
         val challenges = viewModel.getChallenges()
         challenges.observe(viewLifecycleOwner) {
             initViewAdapter(it)
-            bindRecyclerView(it)
+            bindRecyclerView()
         }
     }
 
     protected open fun initViewAdapter(challenges: List<Challenge>) {
         viewAdapter = ChallengeListAdapter(challenges)
-
     }
 
-    protected fun bindRecyclerView(challenges: List<Challenge>) {
+    protected fun bindRecyclerView() {
 
         recyclerView.apply {
             setHasFixedSize(true)

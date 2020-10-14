@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
     private val MAP_NAVIGATION_NAME = "mainMap"
     private val ADDING_CHALLENGE_NAVIGATION_NAME = "addingChallenge"
     private val CHALLENGE_LIST_NAVIGATION_NAME = "challengeList"
+    private val USER_LIST_NAVIGATION_NAME = "userList"
+
     private lateinit var itemName: String
     private lateinit var navController: NavController
 
@@ -48,6 +50,8 @@ class MainActivity : AppCompatActivity() {
                 CHALLENGE_LIST_NAVIGATION_NAME -> {
                     navigate(R.id.challengeListNavigationItem)
                 }
+                USER_LIST_NAVIGATION_NAME ->
+                    navigate(R.id.userListNavigationItem)
             }
             true
         }

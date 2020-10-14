@@ -37,9 +37,11 @@ class MainProfileFragment : Fragment() {
             textViewProfileSubscriptions.text = it.subscription.size.toString()
             textViewProfileScore.text = it.score.toString()
             Log.i("Log_tag","update")
-            Glide.with(requireContext())
-                .load(it.profilePhotoReference)
-                .into(image_view_profile_photo)
+            if(it.profilePhotoReference != null) {
+                Glide.with(requireContext())
+                    .load(it.profilePhotoReference)
+                    .into(image_view_profile_photo)
+            }
         }
         cardViewSubscribe.apply {
             isClickable = true

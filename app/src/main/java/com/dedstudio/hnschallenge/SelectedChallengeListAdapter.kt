@@ -3,7 +3,7 @@ package com.dedstudio.hnschallenge
 import androidx.navigation.findNavController
 
 class SelectedChallengeListAdapter(challenges: List<Challenge>) : ChallengeListAdapter(challenges) {
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ChallengeListViewHolder, position: Int) {
         holder.bind(challenges[position])
         holder.item.apply {
             isClickable = true

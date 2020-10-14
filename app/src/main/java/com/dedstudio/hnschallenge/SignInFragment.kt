@@ -49,9 +49,12 @@ class SignInFragment : Fragment() {
         }
         Log.i("Log_tag","ffffffffff")
 
-        auth.createUserWithEmailAndPassword("tomsrinneganom@gmail.com", "denis2").addOnCompleteListener {
+        auth.createUserWithEmailAndPassword("hnsChallenge@gmail.com", "denis2").addOnCompleteListener {
             if(it.isSuccessful){
                 Log.i("Log_tag","isSuccessful == true")
+                if(auth.currentUser != null) {
+                    signUp(auth.currentUser!!)
+                }
                 findNavController().navigate(R.id.mainMapNavigationItem)
             }
             else{

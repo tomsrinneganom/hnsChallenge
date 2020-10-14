@@ -23,7 +23,7 @@ class MainProfileViewModel : ViewModel() {
                 if (it.data == null) {
                     Log.i("Log_tag", "get profile null")
                 }
-                getSubscribers()
+//                getSubscribers()
             }.addOnFailureListener {
                 Log.i("Log_tag", "get profile failure exception:${it}")
             }
@@ -47,18 +47,20 @@ class MainProfileViewModel : ViewModel() {
 
     fun getSubscribers() {
         Log.i("Log_tag", "getSubscribers")
-        firestore.collection("userList")
-            .whereArrayContainsAny("subscription", profile.value!!.subscription).get()
-            .addOnSuccessListener {
-                Log.i("Log_tag", "Success")
-                val profiles = it.toObjects<Profile>()
-                profiles.forEach {
-                    Log.i("Log_tag", "${it.id}")
+        if(profile.value?.subscription != null) {
+            firestore.collection("userList")
+                .whereIn("subscription", profile.value!!.subscription).get()
+                .addOnSuccessListener {
+                    Log.i("Log_tag", "Success")
+                    val profiles = it.toObjects<Profile>()
+                    profiles.forEach {
+                        Log.i("Log_tag", "${it.id}")
+                    }
                 }
-            }
-            .addOnFailureListener {
-                Log.i("Log_tag", "error ${it.message}")
+                .addOnFailureListener {
+                    Log.i("Log_tag", "error ${it.message}")
 
-            }
+                }
+        }
     }
 }
