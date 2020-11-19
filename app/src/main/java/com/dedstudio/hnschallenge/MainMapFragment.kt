@@ -31,8 +31,10 @@ open class MainMapFragment : MapFragment() {
         savedInstanceState: Bundle?
     ): View? {
         if(Firebase.auth.currentUser == null){
+            Log.i("Log_tag","null")
             findNavController().navigate(R.id.signInFragment)
         }
+        Log.i("Log_tag","!= null")
         val view = inflater.inflate(R.layout.main_map_fragment, container, false)
         mapView = view.findViewById(R.id.main_map_view)
         imageMoveToCurrentLocation = view.floatingActionButtonLocation

@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.map_challenge_execution_fragment.view.*
 class MapChallengeExecutionFragment : MapFragment() {
 
     private lateinit var challenge: Challenge
-    private lateinit var floatingActionButtonCamera: FloatingActionButton
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,10 +30,12 @@ class MapChallengeExecutionFragment : MapFragment() {
         val args: MapChallengeExecutionFragmentArgs by navArgs()
         challenge = args.challenge
         imageMoveToCurrentLocation = view.floatingActionButtonChallengeExecutionLocation
-        floatingActionButtonCamera = view.floatingActionButtonChallengeExecutionCamera
-        floatingActionButtonCamera.setOnClickListener {
+        view.floatingActionButtonChallengeExecutionCamera.setOnClickListener {
           val navDirections = MapChallengeExecutionFragmentDirections.actionMapChallengeExecutionFragmentToCameraChallengeExecutionFragment(challenge)
             findNavController().navigate(navDirections)
+        }
+        view.floatingActionButtonChallengeExecutionImage.setOnClickListener {
+
         }
         mapView = view.findViewById(R.id.mapViewChallengeExecution)
         mapView.onCreate(savedInstanceState)

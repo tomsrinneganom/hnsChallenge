@@ -83,7 +83,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/image_view_challenge_item_creator_photo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_view_challenge_item_creator_photo"
-            app:layout_constraintTop_toTopOf="@+id/image_view_challenge_item_creator_photo" />
+            app:layout_constraintTop_toBottomOf="@+id/image_view_challenge_item_image" />
 
         <TextView
             android:id="@+id/textView4"

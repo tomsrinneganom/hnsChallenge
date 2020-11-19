@@ -1,28 +1,17 @@
 package com.dedstudio.hnschallenge
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
-import android.util.Rational
-import android.util.Size
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.camera.core.*
-import androidx.camera.core.impl.PreviewConfig
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.BitmapCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.observe
 import com.google.common.util.concurrent.ListenableFuture
-import com.mapbox.mapboxsdk.utils.BitmapUtils
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.concurrent.Executors
 
@@ -32,13 +21,14 @@ abstract class Camera : Fragment() {
     protected lateinit var cameraPreviewView: PreviewView
     protected lateinit var buttonTakePhoto: ImageView
     private lateinit var imageCapture: ImageCapture
-    protected lateinit var pathToImage: String
-    protected val savedImage = MutableLiveData<Boolean>()
+    protected lateinit var pathToPhoto: String
+    private val savingImageLiveData = MutableLiveData<Boolean>()
+    protected lateinit var cameraProvider: ProcessCameraProvider
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        savedImage.observe(viewLifecycleOwner) {
-            saveImage()
+        savingImageLiveData.observe(viewLifecycleOwner) {
+            savingPhoto()
         }
         initCamera()
     }
@@ -49,14 +39,14 @@ abstract class Camera : Fragment() {
 
     private fun initProcessCameraProvider() {
         cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
-        cameraProviderFuture.addListener(Runnable {
-            val cameraProvider = cameraProviderFuture.get()
-            bindPreview(cameraProvider)
+        cameraProviderFuture.addListener({
+            cameraProvider = cameraProviderFuture.get()
+            bindPreview()
             bindTakePhoto()
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
-    private fun bindPreview(cameraProvider: ProcessCameraProvider) {
+    private fun bindPreview() {
         val preview = Preview.Builder()
             .setTargetAspectRatio(AspectRatio.RATIO_16_9)
             .build()
@@ -66,13 +56,13 @@ abstract class Camera : Fragment() {
             .build()
 
         imageCapture = ImageCapture.Builder()
-            .setTargetResolution(Size(400, 400))
+            .setTargetAspectRatio(AspectRatio.RATIO_16_9)
             .build()
 
         preview.setSurfaceProvider(cameraPreviewView.createSurfaceProvider())
 
         val camera = cameraProvider.bindToLifecycle(
-            viewLifecycleOwner,
+            this as LifecycleOwner,
             cameraSelector,
             preview,
             imageCapture
@@ -80,8 +70,8 @@ abstract class Camera : Fragment() {
     }
 
     private fun bindTakePhoto() {
-        pathToImage = requireContext().filesDir.path + "/img1.jpeg"
-        val imageFile = File(pathToImage)
+        pathToPhoto = requireContext().filesDir.path + "/img1.jpeg"
+        val imageFile = File(pathToPhoto)
         val outputFileOptions = ImageCapture.OutputFileOptions.Builder(imageFile).build()
         var f = false
         buttonTakePhoto.isClickable = true
@@ -91,7 +81,7 @@ abstract class Camera : Fragment() {
                 Executors.newSingleThreadExecutor(),
                 object : ImageCapture.OnImageSavedCallback {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                        savedImage.postValue(true)
+                        savingImageLiveData.postValue(true)
                     }
 
                     override fun onError(exception: ImageCaptureException) {
@@ -100,5 +90,13 @@ abstract class Camera : Fragment() {
                 })
         }
     }
-    abstract fun saveImage()
+
+
+    abstract fun savingPhoto()
+
+    override fun onStop() {
+        super.onStop()
+        cameraProvider.unbindAll()
+
+    }
 }

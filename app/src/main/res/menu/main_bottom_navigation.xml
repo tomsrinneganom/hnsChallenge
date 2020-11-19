@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/mainProfileNavigationItem"
+        android:id="@+id/ownProfileNavigationItem"
         android:icon="@drawable/ic_baseline_account_circle_24"
-        android:title="mainProfile" />
+        android:title="ownProfile" />
     <item
-        android:id="@+id/searchNavigationItem"
+        android:id="@+id/mainSearchNavigationItem"
         android:icon="@drawable/ic_baseline_search_24"
-        android:title="userList" />
+        android:title="mainSearch" />
     <item
         android:id="@+id/mainMapNavigationItem"
         android:icon="@drawable/ic_hns_logo"
         android:title="mainMap" />
     <item
-        android:id="@+id/addingChallengeNavigationItem"
+        android:id="@+id/createChallengeNavigationItem"
         android:icon="@drawable/ic_baseline_add_circle_outline_24"
-        android:title="addingChallenge" />
+        android:title="createChallenge" />
     <item
         android:id="@+id/challengeListNavigationItem"
         android:icon="@drawable/ic_baseline_format_list_bulleted_24"

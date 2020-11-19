@@ -46,8 +46,8 @@ class CameraChallengeExecutionFragment : Camera(),SeekBar.OnSeekBarChangeListene
         return view
     }
 
-    override fun saveImage() {
-        TODO("Not yet implemented")
+    override fun savingPhoto() {
+
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {

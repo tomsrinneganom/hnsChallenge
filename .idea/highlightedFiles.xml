@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectTreeColorHighlighter">
     <files>
-      <node color="1" path="$PROJECT_DIR$/app/src/main/java/com/dedstudio/hnschallenge/MainActivity.kt" />
-      <node color="5" path="$PROJECT_DIR$/app/src/main/java/com/dedstudio/hnschallenge/MainProfileFragment.kt" />
-      <node color="1" path="$PROJECT_DIR$/app/src/main/res/layout/camera_challenge_execution_fragment.xml" />
+      <node color="5" path="$PROJECT_DIR$/app/src/main/java/com/dedstudio/hnschallenge/UserListAdapter.kt" />
+      <node color="5" path="$PROJECT_DIR$/app/src/main/java/com/dedstudio/hnschallenge/UserListFragment.kt" />
+      <node color="5" path="$PROJECT_DIR$/app/src/main/java/com/dedstudio/hnschallenge/UserListViewModel.kt" />
     </files>
     <colors>
       <color name="Color 1" value="#4f060d" enabled="true" />

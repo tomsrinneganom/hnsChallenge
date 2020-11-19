@@ -15,8 +15,12 @@
       },
       "oauth_client": [
         {
-          "client_id": "194592409296-aptrlkca6211bvnjlov10qj4n21mjbia.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "194592409296-5fnq9sd39tn8vsqvnsa48g08clgmcgg7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dedstudio.hnschallenge",
+            "certificate_hash": "26178c3408e1f9bb4abf274beafa4147063d4e34"
+          }
         }
       ],
       "api_key": [
@@ -28,7 +32,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "194592409296-aptrlkca6211bvnjlov10qj4n21mjbia.apps.googleusercontent.com",
+              "client_id": "194592409296-jn8ufa6q9ik94jjitplq27djo3rip68f.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

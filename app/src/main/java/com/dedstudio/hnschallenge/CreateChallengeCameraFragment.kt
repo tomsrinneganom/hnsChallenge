@@ -1,24 +1,14 @@
 package com.dedstudio.hnschallenge
 
-import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.FirebaseApp
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.adding_challenge_fragment.view.*
-import kotlinx.coroutines.launch
 
-class AddingChallengeCameraFragment : Camera() {
-
-    private val viewModel: AddingChallengeViewModel by viewModels()
+class CreateChallengeCameraFragment : Camera() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,13 +21,12 @@ class AddingChallengeCameraFragment : Camera() {
     }
 
 
-    override fun saveImage() {
+    override fun savingPhoto() {
         val navDirections =
-            AddingChallengeCameraFragmentDirections.actionAddingChallengeNavigationItemToDisplayImageFragment(
-                pathToImage
+            CreateChallengeCameraFragmentDirections.actionCreateChallengeNavigationItemToCropChallengePhotoFragment(
+                pathToPhoto
             )
         findNavController().navigate(navDirections)
-        viewModel.addingChallenge(pathToImage)
-    }
 
+    }
 }

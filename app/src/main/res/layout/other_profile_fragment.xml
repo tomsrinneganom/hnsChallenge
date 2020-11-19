@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OtherProfileFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewOtherProfilePhoto"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        app:cardCornerRadius="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageViewOtherProfilePhoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:src="@tools:sample/avatars" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/textViewOtherProfileUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="tomsrinneganom"
+        android:textAlignment="textStart"
+        android:textAllCaps="false"
+        android:textColor="@color/colorDark"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/cardViewOtherProfilePhoto"
+        app:layout_constraintTop_toTopOf="@+id/cardViewOtherProfilePhoto" />
+
+    <ImageView
+        android:id="@+id/imageViewScore"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_baseline_stars_24"
+        app:layout_constraintStart_toStartOf="@+id/textViewOtherProfileUserName"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOtherProfileUserName"
+        app:tint="@color/colorDark" />
+
+    <TextView
+        android:id="@+id/textViewOtherProfileScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="2000"
+        android:textColor="@color/colorDark"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewScore"
+        app:layout_constraintStart_toEndOf="@+id/imageViewScore"
+        app:layout_constraintTop_toTopOf="@+id/imageViewScore" />
+
+    <TextView
+        android:id="@+id/textViewOtherProfileSubscribersTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/subscribers"
+        android:textAlignment="center"
+        android:textColor="@color/colorDark"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/imageViewScore"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewScore" />
+
+    <TextView
+        android:id="@+id/textViewOtherProfileSubscriptionsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/subscriptions"
+        android:textAlignment="center"
+        android:textColor="@color/colorDark"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewOtherProfileSubscribersTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewOtherProfileSubscribersTitle"
+        app:layout_constraintTop_toTopOf="@+id/textViewOtherProfileSubscribersTitle" />
+
+    <TextView
+        android:id="@+id/textViewOtherProfileSubscriptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="1200"
+        android:textColor="@color/colorDark"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewOtherProfileSubscriptionsTitle"
+        app:layout_constraintStart_toStartOf="@+id/textViewOtherProfileSubscriptionsTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOtherProfileSubscriptionsTitle" />
+
+    <TextView
+        android:id="@+id/textViewOtherProfileSubscribers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="1200"
+        android:textColor="@color/colorDark"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewOtherProfileSubscribersTitle"
+        app:layout_constraintStart_toStartOf="@+id/textViewOtherProfileSubscribersTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOtherProfileSubscribersTitle" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="5dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout3">
+
+        <fragment
+            android:id="@+id/mapFragmentOwnProfile"
+            android:name="com.dedstudio.hnschallenge.ProfileMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.cardview.widget.CardView>
+
+    <FrameLayout
+        android:id="@+id/frameLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewOtherProfileSubscriptionsTitle"
+        app:layout_constraintStart_toStartOf="@+id/textViewOtherProfileSubscribersTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOtherProfileSubscribers">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonViewOtherProfileSubscribe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/subscribe"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:cornerRadius="10dp"
+            app:strokeColor="@color/colorPrimary"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonViewOtherProfileUnsubscribe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:backgroundTint="#FFFFFF"
+            android:text="@string/unsubscribe"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:cornerRadius="10dp" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

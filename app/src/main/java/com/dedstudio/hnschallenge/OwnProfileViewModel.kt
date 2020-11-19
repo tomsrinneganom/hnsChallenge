@@ -11,22 +11,27 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 
-class MainProfileViewModel : ViewModel() {
+open class OwnProfileViewModel : ViewModel() {
     val firestore = Firebase.firestore
     private val profile = MutableLiveData<Profile>()
 
     fun getProfile(userId: String): LiveData<Profile> {
         if (profile.value == null) {
             firestore.collection("userList").document(userId).get().addOnSuccessListener {
-                profile.value = it.toObject<Profile>()
                 Log.i("Log_tag", "get profile success")
-                if (it.data == null) {
+                if (it.data != null) {
+                    profile.value = it.toObject<Profile>()
+                }
+                else{
                     Log.i("Log_tag", "get profile null")
                 }
 //                getSubscribers()
             }.addOnFailureListener {
                 Log.i("Log_tag", "get profile failure exception:${it}")
             }
+        }
+        else{
+            Log.i("Log_tag","profile != null")
         }
         return profile
     }

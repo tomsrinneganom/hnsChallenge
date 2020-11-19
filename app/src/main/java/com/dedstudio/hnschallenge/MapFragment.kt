@@ -91,6 +91,10 @@ open class MapFragment : Fragment() {
             )
         }
     }
+    //TODO() добавить инициализацию карты через метод, и в суперметод добавить вызов метода disableCompass()
+    protected fun disableCompass(){
+        mapboxMap.uiSettings.isCompassEnabled = false
+    }
 
     override fun onStart() {
         super.onStart()

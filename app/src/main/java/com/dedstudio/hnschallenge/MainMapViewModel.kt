@@ -22,7 +22,7 @@ class MainMapViewModel : ViewModel() {
                 Log.i("Log_tag", "get  challenges success")
                 val challengeList: List<Challenge> = it.toObjects()
                 challenges.value = challengeList
-            }.addOnFailureListener {1
+            }.addOnFailureListener {
                 Log.i("Log_tag", "get  challenges exception:${it.message}")
             }
         return challenges

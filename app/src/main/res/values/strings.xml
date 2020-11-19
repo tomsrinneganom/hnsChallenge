@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">hnsChallenge</string>
     <string name="mapbox_access_token">pk.eyJ1IjoiaG5zY2hhbGxlbmdlIiwiYSI6ImNrYzlibTN6dDFqbTIycnRpaWJwdG45ZDkifQ._V2JULP6FljjDCaQwfN67A</string>
-    <string name="firebase_web_client_id">194592409296-aptrlkca6211bvnjlov10qj4n21mjbia.apps.googleusercontent.com</string>
+    <string name="firebase_web_client_id">194592409296–5fnq9sd39tn8vsqvnsa48g08clgmcgg7.apps.googleusercontent.com</string>
+
+    <string name="subscribe">Subscribe</string>
+    <string name="unsubscribe">Unsubscribe</string>
+    <string name="subscribers">Subscribers</string>
+    <string name="subscriptions">Subscriptions</string>
 </resources>

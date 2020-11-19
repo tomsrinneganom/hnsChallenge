@@ -2,10 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainProfileFragment">
+    tools:context=".OwnProfileFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
@@ -13,21 +12,19 @@
         android:layout_height="120dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:rotation="23"
-        android:rotationY="50"
         app:cardCornerRadius="6dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/image_view_profile_photo"
+            android:id="@+id/imageViewOwnProfilePhoto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:src="@tools:sample/avatars" />
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textViewProfileUserName"
+        android:id="@+id/textViewOwnProfileUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -46,12 +43,12 @@
         android:layout_height="25dp"
         android:layout_marginTop="5dp"
         android:src="@drawable/ic_baseline_stars_24"
-        android:tint="@color/colorDark"
-        app:layout_constraintStart_toStartOf="@+id/textViewProfileUserName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProfileUserName" />
+        app:layout_constraintStart_toStartOf="@+id/textViewOwnProfileUserName"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOwnProfileUserName"
+        app:tint="@color/colorDark" />
 
     <TextView
-        android:id="@+id/textViewProfileScore"
+        android:id="@+id/textViewOwnProfileScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
@@ -64,12 +61,12 @@
         app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
     <TextView
-        android:id="@+id/textViewProfileSubscribersTitle"
+        android:id="@+id/textViewOwnProfileSubscribersTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/roboto_medium"
-        android:text="Подписчики"
+        android:text="@string/subscribers"
         android:textAlignment="center"
         android:textColor="@color/colorDark"
         android:textSize="16sp"
@@ -77,21 +74,21 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <TextView
-        android:id="@+id/textViewProfileSubscriptionsTitle"
+        android:id="@+id/textViewOwnProfileSubscriptionsTitle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:fontFamily="@font/roboto_medium"
-        android:text="Подписки"
+        android:text="@string/subscriptions"
         android:textAlignment="center"
         android:textColor="@color/colorDark"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewProfileSubscribersTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewOwnProfileSubscribersTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewProfileSubscribersTitle"
-        app:layout_constraintTop_toTopOf="@+id/textViewProfileSubscribersTitle" />
+        app:layout_constraintStart_toEndOf="@+id/textViewOwnProfileSubscribersTitle"
+        app:layout_constraintTop_toTopOf="@+id/textViewOwnProfileSubscribersTitle" />
 
     <TextView
-        android:id="@+id/textViewProfileSubscriptions"
+        android:id="@+id/textViewOwnProfileSubscriptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -99,12 +96,12 @@
         android:text="1200"
         android:textColor="@color/colorDark"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewProfileSubscriptionsTitle"
-        app:layout_constraintStart_toStartOf="@+id/textViewProfileSubscriptionsTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProfileSubscriptionsTitle" />
+        app:layout_constraintEnd_toEndOf="@+id/textViewOwnProfileSubscriptionsTitle"
+        app:layout_constraintStart_toStartOf="@+id/textViewOwnProfileSubscriptionsTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOwnProfileSubscriptionsTitle" />
 
     <TextView
-        android:id="@+id/textViewProfileSubscribers"
+        android:id="@+id/textViewOwnProfileSubscribers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -112,32 +109,9 @@
         android:text="1200"
         android:textColor="@color/colorDark"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewProfileSubscribersTitle"
-        app:layout_constraintStart_toStartOf="@+id/textViewProfileSubscribersTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProfileSubscribersTitle" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewSubscribe"
-        android:layout_width="130dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="7dp"
-        app:cardBackgroundColor="#FFB323FF"
-        app:cardCornerRadius="6dp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewProfileSubscriptionsTitle"
-        app:layout_constraintStart_toStartOf="@+id/textViewProfileSubscribersTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProfileSubscribers">
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/roboto_medium"
-            android:text="Подписаться"
-            android:textAlignment="center"
-            android:textColor="@color/colorLight"
-            android:textSize="18sp" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintEnd_toEndOf="@+id/textViewOwnProfileSubscribersTitle"
+        app:layout_constraintStart_toStartOf="@+id/textViewOwnProfileSubscribersTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOwnProfileSubscribersTitle" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
@@ -152,10 +126,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewSubscribe">
+        app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
         <fragment
-            android:id="@+id/fragment2"
+            android:id="@+id/mapFragmentOwnProfile"
             android:name="com.dedstudio.hnschallenge.ProfileMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

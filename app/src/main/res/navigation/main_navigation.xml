@@ -6,13 +6,13 @@
     app:startDestination="@id/mainMapNavigationItem">
 
     <fragment
-        android:id="@+id/addingChallengeNavigationItem"
-        android:name="com.dedstudio.hnschallenge.AddingChallengeCameraFragment"
-        android:label="addingChallenge"
+        android:id="@+id/createChallengeNavigationItem"
+        android:name="com.dedstudio.hnschallenge.CreateChallengeCameraFragment"
+        android:label="createChallenge"
         tools:layout="@layout/adding_challenge_fragment">
         <action
-            android:id="@+id/action_addingChallengeNavigationItem_to_displayImageFragment"
-            app:destination="@id/displayImageFragment" />
+            android:id="@+id/action_createChallengeNavigationItem_to_cropChallengePhotoFragment"
+            app:destination="@id/cropChallengePhotoFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainMapNavigationItem"
@@ -25,11 +25,11 @@
     </fragment>
     <fragment
         android:id="@+id/displayImageFragment"
-        android:name="com.dedstudio.hnschallenge.DisplayImageFragment"
+        android:name="com.dedstudio.hnschallenge.DisplayPhotoFragment"
         android:label="displayImage"
         tools:layout="@layout/display_image_fragment">
         <argument
-            android:name="pathToImage"
+            android:name="pathToPhoto"
             app:argType="string" />
     </fragment>
     <fragment
@@ -45,7 +45,11 @@
         android:id="@+id/signInFragment"
         android:name="com.dedstudio.hnschallenge.SignInFragment"
         android:label="signIn"
-        tools:layout="@layout/sign_in_fragment" />
+        tools:layout="@layout/sign_in_fragment" >
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
     <fragment
         android:id="@+id/selectedChallengeListFragment"
         android:name="com.dedstudio.hnschallenge.SelectedChallengeListFragment"
@@ -59,10 +63,14 @@
             app:destination="@id/mapChallengeExecutionFragment" />
     </fragment>
     <fragment
-        android:id="@+id/mainProfileNavigationItem"
-        android:name="com.dedstudio.hnschallenge.MainProfileFragment"
-        android:label="mainProfile"
-        tools:layout="@layout/main_profile_fragment" />
+        android:id="@+id/ownProfileNavigationItem"
+        android:name="com.dedstudio.hnschallenge.OwnProfileFragment"
+        android:label="ownProfile"
+        tools:layout="@layout/own_profile_fragment" >
+        <action
+            android:id="@+id/action_ownProfileNavigationItem_to_subscriptionsListFragment"
+            app:destination="@id/subscriptionsListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mapChallengeExecutionFragment"
         android:name="com.dedstudio.hnschallenge.MapChallengeExecutionFragment"
@@ -85,8 +93,62 @@
             app:argType="com.dedstudio.hnschallenge.Challenge" />
     </fragment>
     <fragment
-        android:id="@+id/userListNavigationItem"
-        android:name="com.dedstudio.hnschallenge.UserListFragment"
-        android:label="userList"
-        tools:layout="@layout/user_list_fragment" />
+        android:id="@+id/mainSearchNavigationItem"
+        android:name="com.dedstudio.hnschallenge.MainSearchFragment"
+        android:label="mainSearch"
+        tools:layout="@layout/main_search_fragment" >
+        <action
+            android:id="@+id/action_mainSearchNavigationItem_to_otherProfileFragment"
+            app:destination="@id/otherProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/otherProfileFragment"
+        android:name="com.dedstudio.hnschallenge.OtherProfileFragment"
+        android:label="other_profile_fragment"
+        tools:layout="@layout/other_profile_fragment" >
+        <argument android:name="profile"
+            app:argType="com.dedstudio.hnschallenge.Profile" />
+        <action
+            android:id="@+id/action_otherProfileFragment_to_subscriptionsListFragment"
+            app:destination="@id/subscriptionsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/subscriptionsListFragment"
+        android:name="com.dedstudio.hnschallenge.SubscriptionsListFragment"
+        android:label="SubscriptionsListFragment" >
+        <argument
+            android:name="idList"
+            app:argType="string[]" />
+        <action
+            android:id="@+id/action_subscriptionsListFragment_to_otherProfileFragment"
+            app:destination="@id/otherProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.dedstudio.hnschallenge.SignUpFragment"
+        android:label="sign_up_fragment"
+        tools:layout="@layout/sign_up_fragment" >
+        <action
+            android:id="@+id/action_signUpFragment_to_cropProfilePhotoFragment"
+            app:destination="@id/cropProfilePhotoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cropProfilePhotoFragment"
+        android:name="com.dedstudio.hnschallenge.CropProfilePhotoFragment"
+        android:label="CropProfilePhotoFragment" >
+        <argument
+            android:name="profilePhotoUri"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/cropChallengePhotoFragment"
+        android:name="com.dedstudio.hnschallenge.CropChallengePhotoFragment"
+        android:label="CropChallengePhotoFragment" >
+        <action
+            android:id="@+id/action_cropChallengePhotoFragment_to_displayImageFragment"
+            app:destination="@id/displayImageFragment" />
+        <argument
+            android:name="pathToPhoto"
+            app:argType="string" />
+    </fragment>
 </navigation>

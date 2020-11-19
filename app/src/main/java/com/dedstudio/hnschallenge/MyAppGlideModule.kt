@@ -12,7 +12,7 @@ import java.io.InputStream
 
 
 @GlideModule
-class MyAppGlideModule:AppGlideModule(){
+class MyAppGlideModule : AppGlideModule() {
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         super.registerComponents(context, glide, registry)

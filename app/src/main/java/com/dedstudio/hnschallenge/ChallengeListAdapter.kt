@@ -17,6 +17,7 @@ import java.io.File
 
 open class ChallengeListAdapter(protected val challenges: List<Challenge>) :
     RecyclerView.Adapter<ChallengeListAdapter.ChallengeListViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChallengeListViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.challenge_list_item, parent, false)
@@ -46,29 +47,21 @@ open class ChallengeListAdapter(protected val challenges: List<Challenge>) :
             itemView.findViewById(R.id.text_view_challenge_item_creator_name)
         private val creatorPhoto: ImageView =
             itemView.findViewById(R.id.image_view_challenge_item_creator_photo)
-        public val item: CardView = itemView.findViewById(R.id.card_view_challenge_item)
+        val item: CardView = itemView.findViewById(R.id.card_view_challenge_item)
 
         fun bind(challenge: Challenge) {
-//            creatorNameTextView.text = challenge.creatorName
-            creatorNameTextView.text = "Denissssssss chechel"
+            creatorNameTextView.text = challenge.creatorName
+            Log.i("Log_tag", "creatorName: ${challenge.creatorName}")
             val reference =
                 Firebase.storage.reference.child("${challenge.creatorId}/${challenge.id}.jpg")
-
-            val file = File.createTempFile("images", "jpg")
-
-            reference.getFile(file).addOnSuccessListener {
-                Log.i("Log_tag", "SUCCESSS get challenge image1")
-                val bitmap = BitmapFactory.decodeFile(file.path)
-                Log.i("Log_tag", "SUCCESSS get challenge image1 file path ${file.path}")
-
-                imageView.setImageBitmap(bitmap)
-            }.addOnFailureListener { exception ->
-                Log.i("Log_tag", "exception get image${exception.message}")
-            }
+            val profilePhotoReference =
+                ProfileUtils().getProfilePhotoReference(challenge.creatorId!!)
 
             Glide.with(itemView)
-                .load(challenge.creatorPhoto)
+                .load(profilePhotoReference)
                 .into(creatorPhoto)
+
+            Glide.with(itemView).load(reference).into(imageView)
 
         }
     }
