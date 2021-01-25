@@ -13,9 +13,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.sign_up_fragment.view.*
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
 
     private val viewModel: SignUpViewModel by activityViewModels()
@@ -56,8 +60,8 @@ class SignUpFragment : Fragment() {
         val username = usernameEditText.text.toString()
         val password = passwordEditText.text.toString()
         if (email.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty()) {
-            viewModel.signUp(email, username, password).observe(viewLifecycleOwner) {
-                if (it) {
+            viewLifecycleOwner.lifecycle.coroutineScope.launch {
+                if (viewModel.signUp(email, username, password)){
                     findNavController().navigate(R.id.mainMapNavigationItem)
                 }
             }

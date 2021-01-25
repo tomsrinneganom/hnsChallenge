@@ -10,10 +10,14 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.observe
+import androidx.lifecycle.lifecycleScope
 import com.google.common.util.concurrent.ListenableFuture
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.launch
 import java.io.File
+import java.util.concurrent.Executor
 import java.util.concurrent.Executors
+import kotlin.concurrent.thread
 
 abstract class Camera : Fragment() {
 
@@ -42,7 +46,9 @@ abstract class Camera : Fragment() {
         cameraProviderFuture.addListener({
             cameraProvider = cameraProviderFuture.get()
             bindPreview()
-            bindTakePhoto()
+            viewLifecycleOwner.lifecycleScope.launch {
+                bindTakePhoto()
+            }
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
@@ -67,10 +73,12 @@ abstract class Camera : Fragment() {
             preview,
             imageCapture
         )
+
     }
 
-    private fun bindTakePhoto() {
+    private suspend fun bindTakePhoto(): Boolean {
         pathToPhoto = requireContext().filesDir.path + "/img1.jpeg"
+        val executor = Executors.newSingleThreadExecutor()
         val imageFile = File(pathToPhoto)
         val outputFileOptions = ImageCapture.OutputFileOptions.Builder(imageFile).build()
         var f = false
@@ -78,10 +86,10 @@ abstract class Camera : Fragment() {
         buttonTakePhoto.setOnClickListener {
             imageCapture.takePicture(
                 outputFileOptions,
-                Executors.newSingleThreadExecutor(),
+                executor,
                 object : ImageCapture.OnImageSavedCallback {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                        savingImageLiveData.postValue(true)
+                        f = true
                     }
 
                     override fun onError(exception: ImageCaptureException) {
@@ -89,6 +97,7 @@ abstract class Camera : Fragment() {
                     }
                 })
         }
+        return f
     }
 
 

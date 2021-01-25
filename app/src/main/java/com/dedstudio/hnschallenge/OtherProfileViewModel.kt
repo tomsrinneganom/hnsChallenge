@@ -1,38 +1,61 @@
 package com.dedstudio.hnschallenge
 
-import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.dedstudio.hnschallenge.repository.ProfileRepository
+import com.dedstudio.hnschallenge.repository.room.RoomDatabase
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class OtherProfileViewModel : ViewModel() {
-    private val firestore = Firebase.firestore
+class OtherProfileViewModel @ViewModelInject constructor(
+    private val roomDatabase: RoomDatabase,
+) : ViewModel() {
+    private var subscribe: Boolean = false
 
-    fun subscribeToUser(profile: Profile) {
-        val mId = Firebase.auth.uid
-        if (mId != null && profile.id != null && !(profile.subscription.contains(mId))) {
-            profile.subscription.add(mId)
-            val updatedData = profile.subscription
-            firestore.collection("userList").document(profile.id!!)
-                .update(mapOf("subscription" to updatedData)).addOnSuccessListener {
-                    Log.i("Log_tag", "success subscribe to user")
-                }.addOnFailureListener {
-                    Log.i("Log_tag", "failure subscribe to user exception:${it.message}")
-                }
+    private fun updateOwnProfile(profileId: String) {
+        val profileRepository = ProfileRepository()
+        viewModelScope.launch(Dispatchers.IO) {
+            val profile = profileRepository.getOwnProfile(roomDatabase)
+            if (checkSubscriptions(profile.subscription, profileId)) {
+                profileRepository.updateOwnProfile(roomDatabase, profile)
+            }
         }
     }
-    fun unsubscribeToUser(profile: Profile) {
+
+    private fun updateProfile(profile: Profile) {
         val mId = Firebase.auth.uid
-        if (mId != null && profile.id != null && profile.subscription.contains(mId)) {
-            profile.subscription.remove(mId)
-            val updatedData = profile.subscription
-            firestore.collection("userList").document(profile.id!!)
-                .update(mapOf("subscription" to updatedData)).addOnSuccessListener {
-                    Log.i("Log_tag", "success unsubscribe to user")
-                }.addOnFailureListener {
-                    Log.i("Log_tag", "failure subscribe to user exception:${it.message}")
-                }
+        if (!(mId.isNullOrEmpty()) && profile.id.isNotEmpty()) {
+            if (checkSubscriptions(profile.subscribers, mId)) {
+                ProfileRepository().updateProfile(profile)
+                updateOwnProfile(profile.id)
+            }
         }
     }
+
+    private fun checkSubscriptions(
+        subscription: MutableList<String>,
+        verificationId: String
+    ): Boolean {
+        return if (subscribe && !subscription.contains(verificationId)) {
+            subscription.add(verificationId)
+            true
+        } else if (!subscribe && subscription.contains(verificationId)) {
+            subscription.remove(verificationId)
+            true
+        } else {
+            false
+        }
+    }
+
+    fun subscribe(profile: Profile, subscribe: Boolean) {
+        this.subscribe = subscribe
+        updateProfile(profile)
+    }
+
 }

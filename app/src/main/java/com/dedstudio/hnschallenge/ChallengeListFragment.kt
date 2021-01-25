@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
 import timber.log.Timber.tag
 
 open class ChallengeListFragment : Fragment() {
@@ -34,9 +36,9 @@ open class ChallengeListFragment : Fragment() {
     }
 
     protected open fun getChallenges() {
-        val challenges = viewModel.getChallenges()
-        challenges.observe(viewLifecycleOwner) {
-            initViewAdapter(it)
+        viewLifecycleOwner.lifecycle.coroutineScope.launch {
+            val challengeList  = viewModel.getChallenges()
+            initViewAdapter(challengeList)
             bindRecyclerView()
         }
     }

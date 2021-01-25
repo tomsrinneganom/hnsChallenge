@@ -11,10 +11,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.mapbox.mapboxsdk.Mapbox
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val PROFILE_NAVIGATION_NAME = "ownProfile"
     private val MAP_NAVIGATION_NAME = "mainMap"
@@ -41,8 +44,19 @@ class MainActivity : AppCompatActivity() {
 
         imageView8.setOnClickListener {
             Firebase.auth.signOut()
-            navController.navigate(R.id.signUpFragment)
+            navController.navigate(R.id.signInFragment)
         }
+    }
+
+    //TODO() test
+    override fun onResume() {
+        super.onResume()
+//        Firebase.auth.addAuthStateListener {
+//            if (it.uid.isNullOrEmpty()) {
+//                Firebase.auth.signOut()
+//                navController.navigate(R.id.signInFragment)
+//            }
+//        }
     }
 
     private fun setUpBottomNavigation() {
@@ -71,15 +85,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigate(rId: Int) {
-        Log.i("Log_tag",
-            "currentDestination: ${navController.currentDestination?.id} itemName: $itemName")
+        Log.i(
+            "Log_tag",
+            "currentDestination: ${navController.currentDestination?.id} itemName: $itemName"
+        )
         if (navController.currentDestination?.label != itemName) {
-            Log.i("Log_tag",
-                "currentDestination: ${navController.currentDestination?.label} != itemName: $itemName")
+            Log.i(
+                "Log_tag",
+                "currentDestination: ${navController.currentDestination?.label} != itemName: $itemName"
+            )
             navController.navigate(rId)
         } else {
-            Log.i("Log_tag",
-                "currentDestination: ${navController.currentDestination?.label} == itemName: $itemName")
+            Log.i(
+                "Log_tag",
+                "currentDestination: ${navController.currentDestination?.label} == itemName: $itemName"
+            )
 
         }
     }

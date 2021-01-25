@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.GridLayoutManager
+import kotlinx.coroutines.launch
 
 class MainSearchFragment : AbstractProfileListFragment() {
 
@@ -29,10 +31,10 @@ class MainSearchFragment : AbstractProfileListFragment() {
     }
 
     override fun getProfileList() {
-        viewModel.getProfileList().observe(viewLifecycleOwner) {
-            profileList = it
+        viewLifecycleOwner.lifecycle.coroutineScope.launch {
+            profileList = viewModel.getRecommendedListOfProfiles()
             setUpRecycler()
+
         }
     }
-
 }

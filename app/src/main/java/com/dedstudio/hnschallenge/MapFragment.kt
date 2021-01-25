@@ -1,26 +1,15 @@
 package com.dedstudio.hnschallenge
 
 import android.Manifest
-import android.app.Notification
-import android.app.PendingIntent
-import android.app.Service
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
 import android.content.pm.PackageManager
-import android.content.res.Configuration
-import android.location.Location
 import android.os.Bundle
-import android.os.IBinder
-import android.service.autofill.CharSequenceTransformation
 import android.util.Log
 import android.widget.ImageView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.observe
+import androidx.lifecycle.lifecycleScope
+import com.dedstudio.hnschallenge.utils.LocationUtils
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions
@@ -28,15 +17,20 @@ import com.mapbox.mapboxsdk.location.modes.CameraMode
 import com.mapbox.mapboxsdk.location.modes.RenderMode
 import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
+import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
+import com.mapbox.mapboxsdk.maps.Style.MAPBOX_STREETS
 import com.mapbox.mapboxsdk.plugins.localization.LocalizationPlugin
-import java.sql.Connection
+import kotlinx.coroutines.GlobalScope.coroutineContext
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlin.coroutines.coroutineContext
 
 
-open class MapFragment : Fragment() {
+open class MapFragment : Fragment(), OnMapReadyCallback {
     protected lateinit var mapView: MapView
     protected lateinit var mapboxMap: MapboxMap
-    protected lateinit var challenges: LiveData<List<Challenge>>
+    protected lateinit var challenges: List<Challenge>
     protected lateinit var imageMoveToCurrentLocation: ImageView
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -47,10 +41,23 @@ open class MapFragment : Fragment() {
                 moveToCurrentLocation()
             }
         }
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync(this)
     }
 
-    protected fun mapLocalization(style:Style){
-        val localizationPlugin = LocalizationPlugin(mapView,mapboxMap,style)
+
+    override fun onMapReady(mapboxMap: MapboxMap) {
+        this.mapboxMap = mapboxMap
+        mapboxMap.setStyle(MAPBOX_STREETS) {
+            mapLocalization(it)
+            addShowingLocation(it)
+            disableCompass()
+            it.transition
+        }
+    }
+
+    protected fun mapLocalization(style: Style) {
+        val localizationPlugin = LocalizationPlugin(mapView, mapboxMap, style)
         localizationPlugin.matchMapLanguageWithDeviceDefault()
     }
 
@@ -77,23 +84,29 @@ open class MapFragment : Fragment() {
         locationComponent.cameraMode = CameraMode.TRACKING
         locationComponent.renderMode = RenderMode.COMPASS
 
+
         moveToCurrentLocation()
     }
 
     protected fun moveToCurrentLocation() {
-        LocationUtils().getLastKnowLocation(requireContext()).observeForever {
-            mapboxMap.animateCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    LatLng(
-                        it
-                    ), 14.0
-                ),1500
-            )
+        Log.i("Log_tag", "moveToCurrentLocation()")
+        viewLifecycleOwner.lifecycleScope.launch {
+            val location = LocationUtils().getLastKnowLocation(requireContext())
+            if (location != null)
+                mapboxMap.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(location), 14.0
+                    ), 1500
+                )
         }
+
     }
-    //TODO() добавить инициализацию карты через метод, и в суперметод добавить вызов метода disableCompass()
-    protected fun disableCompass(){
-        mapboxMap.uiSettings.isCompassEnabled = false
+
+    protected fun disableCompass() {
+        mapboxMap.uiSettings.apply {
+            isCompassEnabled = false
+            isRotateGesturesEnabled = false
+        }
     }
 
     override fun onStart() {
@@ -130,4 +143,5 @@ open class MapFragment : Fragment() {
         super.onDestroyView()
         mapView.onDestroy()
     }
+
 }

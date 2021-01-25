@@ -11,6 +11,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -20,8 +22,11 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.sign_in_fragment.view.*
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SignInFragment : Fragment() {
 
     private val viewModel: SignInViewModel by viewModels()
@@ -42,8 +47,6 @@ class SignInFragment : Fragment() {
             findNavController().navigate(R.id.mainMapNavigationItem)
         }
 
-        initGoogleClient()
-
         val googleSignInButton: SignInButton = view.sign_in_button_google
         googleSignInButton.setOnClickListener {
             startGoogleSignInIntent()
@@ -56,6 +59,7 @@ class SignInFragment : Fragment() {
                 signInWithEmail()
             }
         }
+
         view.buttonSignInSignUp.setOnClickListener {
             findNavController().navigate(R.id.signUpFragment)
         }
@@ -73,7 +77,6 @@ class SignInFragment : Fragment() {
         val lastSignedInAccount = GoogleSignIn.getLastSignedInAccount(requireContext())
         if (lastSignedInAccount != null) {
             signInWithGoogleAccount(lastSignedInAccount.idToken!!)
-            findNavController().navigate(R.id.mainMapNavigationItem)
         }
     }
 
@@ -81,18 +84,21 @@ class SignInFragment : Fragment() {
         val email = emailEditText.text.toString()
         val password = passwordEditText.text.toString()
         if (email.isNotEmpty() && password.isNotEmpty()) {
-            viewModel.signInWithEmail(email, password).observe(viewLifecycleOwner) {
-                if (it) {
+            viewLifecycleOwner.lifecycle.coroutineScope.launch {
+                val signIn = viewModel.signInWithEmail(email, password)
+                if (signIn) {
+                    findNavController().navigate(R.id.mainMapNavigationItem)
+                } else {
                     Toast.makeText(requireContext(), "Failed sign in", Toast.LENGTH_LONG)
                         .show()
-                } else {
-                    findNavController().navigate(R.id.mainMapNavigationItem)
                 }
             }
         }
     }
 
     private fun startGoogleSignInIntent() {
+        initGoogleClient()
+
         val intent: Intent = googleSignInClient.signInIntent
         startActivityForResult(intent, 12)
     }
@@ -116,6 +122,10 @@ class SignInFragment : Fragment() {
     }
 
     private fun signInWithGoogleAccount(idToken: String) {
-        viewModel.signInWithGoogle(idToken)
+        viewLifecycleOwner.lifecycle.coroutineScope.launch {
+            if (viewModel.signInWithGoogle(idToken)) {
+                findNavController().navigate(R.id.mainMapNavigationItem)
+            }
+        }
     }
 }

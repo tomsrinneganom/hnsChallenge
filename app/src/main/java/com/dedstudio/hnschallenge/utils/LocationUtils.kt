@@ -1,4 +1,4 @@
-package com.dedstudio.hnschallenge
+package com.dedstudio.hnschallenge.utils
 
 import android.Manifest
 import android.app.Activity
@@ -18,10 +18,20 @@ import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.coroutineScope
 import android.location.LocationManager
 import androidx.core.location.LocationManagerCompat
+import com.google.android.gms.dynamic.DeferredLifecycleHelper
+import com.google.android.gms.tasks.Tasks
+import com.google.android.gms.tasks.Tasks.*
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.tasks.asDeferred
+import kotlinx.coroutines.tasks.await
 
 class LocationUtils {
-    fun getLastKnowLocation(context: Context): LiveData<Location> {
-        val location = MutableLiveData<Location>()
+    //TODO()
+    suspend fun getLastKnowLocation(context: Context): Location? {
+        Log.i("Log_tag", "getLastKnowLocation()")
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         if (ActivityCompat.checkSelfPermission(
                 context,
@@ -31,15 +41,16 @@ class LocationUtils {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
+            Log.i("Log_tag", "error premission")
         }
-            fusedLocationClient.lastLocation.addOnCompleteListener {
-                val i = Log.i("Log_tag", "complete: ${it.result?.latitude} ")
-                 location.value = it.result
-            }.addOnFailureListener {
-                Log.i("Log_tag", "exception: ${it.message}")
-            }.addOnSuccessListener {
-                Log.i("Log_tag", "success")
-            }
-        return location
+        Log.i("Log_tag", "start")
+        val lastLocation = fusedLocationClient.lastLocation.await()
+        if (lastLocation.latitude != null) {
+            Log.i("Log_tag", "${lastLocation.latitude} ${lastLocation.longitude}")
+        } else {
+            Log.i("Log_tag", "error")
+        }
+        Log.i("Log_tag", "end")
+        return lastLocation
     }
 }

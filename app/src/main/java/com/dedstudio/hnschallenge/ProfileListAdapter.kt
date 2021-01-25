@@ -3,10 +3,9 @@ package com.dedstudio.hnschallenge
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.dedstudio.hnschallenge.utils.ImageUtils
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.profile_list_item.view.*
@@ -51,9 +50,10 @@ open class ProfileListAdapter(private val profileList: ArrayList<Profile>) :
         fun bind(profile: Profile) {
             userNameTextView.text = profile.userName
             userScoreTextView.text = profile.score.toString()
-            val photoReference = ProfileUtils().getProfilePhotoReference(profile.id!!)
-            Glide.with(itemView.context).load(photoReference)
-                .into(profilePhotoImageView)
+            ImageUtils().uploadImageIntoImageView(
+                profile.id,
+                profile.photoReference,
+                profilePhotoImageView)
         }
     }
 }

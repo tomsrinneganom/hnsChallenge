@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import kotlinx.coroutines.launch
 
 class SubscriptionsListFragment : AbstractProfileListFragment() {
     private val viewModel: SubscriptionsListViewModel by viewModels()
@@ -31,8 +33,8 @@ class SubscriptionsListFragment : AbstractProfileListFragment() {
     override fun getProfileList() {
         val args: SubscriptionsListFragmentArgs by navArgs()
         val idList = args.idList.toList()
-        viewModel.getProfileList(idList).observe(viewLifecycleOwner){
-            profileList = it
+        viewLifecycleOwner.lifecycle.coroutineScope.launch {
+            profileList = viewModel.getProfileList(idList)
             setUpRecycler()
         }
     }

@@ -11,8 +11,10 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.other_profile_fragment.view.*
 
+@AndroidEntryPoint
 class OtherProfileFragment : AbstractProfileFragment() {
 
     private val viewModel: OtherProfileViewModel by viewModels()
@@ -34,12 +36,12 @@ class OtherProfileFragment : AbstractProfileFragment() {
         gettingProfile()
         checkSubscribe()
         buttonViewUnsubscribe.setOnClickListener {
-            viewModel.unsubscribeToUser(profile)
+            viewModel.subscribe(profile, false)
             updateSubscribeButton(false)
             updateUI()
         }
         buttonViewSubscribe.setOnClickListener {
-            viewModel.subscribeToUser(profile)
+            viewModel.subscribe(profile, true)
             updateSubscribeButton(true)
             updateUI()
         }
@@ -75,18 +77,18 @@ class OtherProfileFragment : AbstractProfileFragment() {
 
     override fun navigateToSubscribersList() {
         val subscribersIdList = profile.subscribers
-        if(subscribersIdList.isNotEmpty()) {
+        if (subscribersIdList.isNotEmpty()) {
             val navDirections =
                 OtherProfileFragmentDirections.actionOtherProfileFragmentToSubscriptionsListFragment(
                     subscribersIdList.toTypedArray()
                 )
             findNavController().navigate(navDirections)
         }
-        }
+    }
 
     override fun navigateToSubscriptionList() {
         val subscriptionsIdList = profile.subscription
-        if(subscriptionsIdList.isNotEmpty()) {
+        if (subscriptionsIdList.isNotEmpty()) {
             val navDirections =
                 OtherProfileFragmentDirections.actionOtherProfileFragmentToSubscriptionsListFragment(
                     subscriptionsIdList.toTypedArray()
@@ -97,27 +99,24 @@ class OtherProfileFragment : AbstractProfileFragment() {
 
     private fun checkSubscribe() {
         val ownId = Firebase.auth.uid
-        if (profile.subscription.contains(ownId)) {
+        if (profile.subscribers.contains(ownId)) {
             updateSubscribeButton(true)
-        }
-        else{
+        } else {
             updateSubscribeButton(false)
         }
     }
 
 
     private fun updateSubscribeButton(subscribe: Boolean) {
-        Log.i("Log_tag","$subscribe")
-        if(subscribe){
+        Log.i("Log_tag", "$subscribe")
+        if (subscribe) {
             buttonViewSubscribe.visibility = View.GONE
             buttonViewUnsubscribe.visibility = View.VISIBLE
-        }
-        else{
+        } else {
             buttonViewSubscribe.visibility = View.VISIBLE
             buttonViewUnsubscribe.visibility = View.GONE
         }
-}
-
+    }
 
 
 }

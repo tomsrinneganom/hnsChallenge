@@ -7,19 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.mapbox.geojson.*
 import com.mapbox.mapboxsdk.maps.MapboxMap
+import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.style.expressions.Expression.*
 import com.mapbox.mapboxsdk.style.layers.HeatmapLayer
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory.heatmapColor
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory.heatmapWeight
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.main_map_fragment.view.*
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 open class MainMapFragment : MapFragment() {
 
     private val viewModel: MainMapViewModel by viewModels()
@@ -28,13 +33,16 @@ open class MainMapFragment : MapFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
-        if(Firebase.auth.currentUser == null){
-            Log.i("Log_tag","null")
+        if (Firebase.auth.currentUser == null) {
+            Log.i("Log_tag", "null")
             findNavController().navigate(R.id.signInFragment)
         }
-        Log.i("Log_tag","!= null")
+        Log.i("Log_tag", "${Firebase.auth.uid}")
+
+
+        Log.i("Log_tag", "!= null")
         val view = inflater.inflate(R.layout.main_map_fragment, container, false)
         mapView = view.findViewById(R.id.main_map_view)
         imageMoveToCurrentLocation = view.floatingActionButtonLocation
@@ -42,25 +50,16 @@ open class MainMapFragment : MapFragment() {
         return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync { mapboxMap ->
-            mapboxMap.setStyle(Style.MAPBOX_STREETS) { style ->
-                this.mapboxMap = mapboxMap
-                mapLocalization(style)
-                addHeatmap(style)
-                addShowingLocation(style)
-                this.mapboxMap.addOnMapClickListener(onMapClickListener)
-            }
-        }
-
+    override fun onMapReady(mapboxMap: MapboxMap) {
+        super.onMapReady(mapboxMap)
+        addHeatmap()
+        mapboxMap.addOnMapClickListener(onMapClickListener)
     }
 
-    protected fun addHeatmap(style: Style) {
-        challenges = viewModel.getChallenges()
-        challenges.observeForever {
-            addEarthquakeSource(style)
+    protected fun addHeatmap() {
+        viewLifecycleOwner.lifecycle.coroutineScope.launch {
+            challenges = viewModel.getChallenges()
+            addEarthquakeSource()
         }
     }
 
@@ -68,7 +67,7 @@ open class MainMapFragment : MapFragment() {
         val selectedChallenges = mutableListOf<Challenge>()
         //TODO() Добавить проверки на null
         //если пусто выдавать  сообщение что челлендж был удалён
-        challenges.value?.forEach { challenge ->
+        challenges.forEach { challenge ->
             val differenceLatitude = point.latitude - challenge.latitude!!
             Log.i("Log_tag", "$differenceLatitude")
             if (differenceLatitude < 0.001 && differenceLatitude > -0.001) {
@@ -90,9 +89,9 @@ open class MainMapFragment : MapFragment() {
         true
     }
 
-    fun addEarthquakeSource(s: Style) {
+    fun addEarthquakeSource() {
         val coordinates = ArrayList<Point>()
-        challenges.value?.forEach { challenge ->
+        challenges.forEach { challenge ->
             if (challenge.latitude != null && challenge.longitude != null) {
                 coordinates.add(Point.fromLngLat(challenge.longitude!!, challenge.latitude!!))
             }
@@ -138,5 +137,6 @@ open class MainMapFragment : MapFragment() {
             style.addLayer(layer)
         }
     }
+
 
 }

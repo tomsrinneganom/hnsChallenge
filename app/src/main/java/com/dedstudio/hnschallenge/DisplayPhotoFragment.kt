@@ -37,7 +37,7 @@ class DisplayPhotoFragment : Fragment() {
         val bitmap = BitmapFactory.decodeFile(pathToImage)
         val imageView: ImageView = view.findViewById(R.id.imageView2)
         imageView.setImageBitmap(bitmap)
-//        viewModel.addingChallenge(pathToPhoto)
+//        viewModel.createChallenge(pathToPhoto)
         return view
     }
 

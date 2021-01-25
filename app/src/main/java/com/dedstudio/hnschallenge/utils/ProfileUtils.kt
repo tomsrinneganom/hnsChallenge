@@ -1,4 +1,4 @@
-package com.dedstudio.hnschallenge
+package com.dedstudio.hnschallenge.utils
 
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference

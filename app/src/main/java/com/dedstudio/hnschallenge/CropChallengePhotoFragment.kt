@@ -1,13 +1,15 @@
 package com.dedstudio.hnschallenge
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import java.io.ByteArrayOutputStream
-import java.io.File
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class CropChallengePhotoFragment : AbstractCropPhotoFragment() {
     private val viewModel: CreateChallengeViewModel by viewModels()
     private lateinit var pathToPhoto: String
@@ -23,10 +25,11 @@ class CropChallengePhotoFragment : AbstractCropPhotoFragment() {
     }
 
     override fun savingPhoto() {
-        viewModel.addingChallenge(cropImageView.croppedImage)
-        findNavController().apply {
-            popBackStack()
-            navigateUp()
+        viewLifecycleOwner.lifecycleScope.launch {
+            val result = viewModel.createChallenge(cropImageView.croppedImage)
+            Toast.makeText(requireContext(), "$result", Toast.LENGTH_LONG).show()
+            findNavController().navigate(R.id.mainMapNavigationItem)
         }
+        Toast.makeText(requireContext(), "result", Toast.LENGTH_LONG).show()
     }
 }

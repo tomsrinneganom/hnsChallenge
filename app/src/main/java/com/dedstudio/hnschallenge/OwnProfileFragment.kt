@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.firebase.FirebaseError
@@ -15,12 +16,14 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.other_profile_fragment.view.*
 import kotlinx.android.synthetic.main.own_profile_fragment.*
 import kotlinx.android.synthetic.main.own_profile_fragment.view.*
+import kotlinx.coroutines.launch
 
-open class
-OwnProfileFragment : AbstractProfileFragment() {
+@AndroidEntryPoint
+open class OwnProfileFragment : AbstractProfileFragment() {
 
     private val viewModel: OwnProfileViewModel by viewModels()
 
@@ -28,14 +31,12 @@ OwnProfileFragment : AbstractProfileFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view =inflater.inflate(R.layout.own_profile_fragment, container, false)
-        profileId = Firebase.auth.uid!!
+        val view = inflater.inflate(R.layout.own_profile_fragment, container, false)
         usernameTextView = view.textViewOwnProfileUserName
         subscribersTextView = view.textViewOwnProfileSubscribers
         subscriptionTextView = view.textViewOwnProfileSubscriptions
         scoreTextView = view.textViewOwnProfileScore
         photoProfileImageView = view.imageViewOwnProfilePhoto
-        Log.i("Log_tag", "profileid: $profileId")
 
         gettingProfile()
 
@@ -63,15 +64,15 @@ OwnProfileFragment : AbstractProfileFragment() {
     }
 
     override fun gettingProfile() {
-        viewModel.getProfile(profileId).observe(viewLifecycleOwner){
-            profile = it
+        viewLifecycleOwner.lifecycle.coroutineScope.launch {
+            profile = viewModel.getProfile()
             updateUI()
         }
     }
 
     override fun navigateToSubscribersList() {
         val subscribersIdList = profile.subscribers
-        if(subscribersIdList.isNotEmpty()) {
+        if (subscribersIdList.isNotEmpty()) {
             val navDirections =
                 OwnProfileFragmentDirections.actionOwnProfileNavigationItemToSubscriptionsListFragment(
                     subscribersIdList.toTypedArray()

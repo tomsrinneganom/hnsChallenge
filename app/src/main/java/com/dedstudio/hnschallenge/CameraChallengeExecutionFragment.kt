@@ -2,18 +2,18 @@ package com.dedstudio.hnschallenge
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.SeekBar
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.camera_challenge_execution_fragment.view.*
+import kotlinx.coroutines.launch
 
-class CameraChallengeExecutionFragment : Camera(),SeekBar.OnSeekBarChangeListener {
+class CameraChallengeExecutionFragment : Camera(), SeekBar.OnSeekBarChangeListener {
 
     private val viewModel: CameraChallengeExecutionViewModel by viewModels()
     private lateinit var challengeImageView: ImageView
@@ -32,11 +32,11 @@ class CameraChallengeExecutionFragment : Camera(),SeekBar.OnSeekBarChangeListene
         verticalSeekBar.setOnSeekBarChangeListener(this)
         verticalSeekBar.progress = 50
 
-        if (challenge.id != null && challenge.creatorId != null) {
+        if (!challenge.id.isNullOrEmpty() && !challenge.creatorId.isNullOrEmpty()) {
             Log.i("Log_tag", "challenge.id != null && challenge.creatorId != null")
-
-            viewModel.loadImage(challenge.creatorId!!, challenge.id!!).observeForever {
-                challengeImageView.setImageBitmap(it)
+            viewLifecycleOwner.lifecycle.coroutineScope.launch {
+                val photo = viewModel.uploadChallengePhoto(challenge.creatorId!!, challenge.id!!)
+                challengeImageView.setImageBitmap(photo)
             }
         } else {
             Log.i("Log_tag", "challenge.id == null && challenge.creatorId == null")
@@ -54,12 +54,12 @@ class CameraChallengeExecutionFragment : Camera(),SeekBar.OnSeekBarChangeListene
         challengeImageView.alpha = progress.toFloat() / 100
     }
 
-    override fun onStartTrackingTouch(seekBar: SeekBar?){
-        Log.i("Log_tag","onStartTrackingTouch()")
+    override fun onStartTrackingTouch(seekBar: SeekBar?) {
+        Log.i("Log_tag", "onStartTrackingTouch()")
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar?) {
-        Log.i("Log_tag","onStopTrackingTouch()")
+        Log.i("Log_tag", "onStopTrackingTouch()")
 
     }
 

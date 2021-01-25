@@ -23,7 +23,7 @@ class CreateChallengeCameraFragment : Camera() {
 
     override fun savingPhoto() {
         val navDirections =
-            CreateChallengeCameraFragmentDirections.actionCreateChallengeNavigationItemToCropChallengePhotoFragment(
+            CreateChallengeCameraFragmentDirections.actionCreateChallengeNavigationItemToCropChallengePhotoFragment2(
                 pathToPhoto
             )
         findNavController().navigate(navDirections)

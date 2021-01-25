@@ -7,9 +7,9 @@ data class Challenge(
     var id:String? = null,
     var latitude:Double? = null,
     var longitude:Double? = null,
-    var imageReference:String? = null,
+    var photoReference:String? = null,
     var creatorName:String? = null,
-    var creatorPhoto:String? = null,
+    var creatorProfilePhotoReference:String? = null,
     var creatorId:String? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -27,9 +27,9 @@ data class Challenge(
         parcel.writeString(id)
         parcel.writeValue(latitude)
         parcel.writeValue(longitude)
-        parcel.writeString(imageReference)
+        parcel.writeString(photoReference)
         parcel.writeString(creatorName)
-        parcel.writeString(creatorPhoto)
+        parcel.writeString(creatorProfilePhotoReference)
         parcel.writeString(creatorId)
     }
 

@@ -11,8 +11,9 @@
         android:label="createChallenge"
         tools:layout="@layout/adding_challenge_fragment">
         <action
-            android:id="@+id/action_createChallengeNavigationItem_to_cropChallengePhotoFragment"
-            app:destination="@id/cropChallengePhotoFragment" />
+            android:id="@+id/action_createChallengeNavigationItem_to_cropChallengePhotoFragment2"
+            app:destination="@id/cropChallengePhotoFragment"
+            app:popUpTo="@id/createChallengeNavigationItem" />
     </fragment>
     <fragment
         android:id="@+id/mainMapNavigationItem"
@@ -144,11 +145,11 @@
         android:id="@+id/cropChallengePhotoFragment"
         android:name="com.dedstudio.hnschallenge.CropChallengePhotoFragment"
         android:label="CropChallengePhotoFragment" >
-        <action
-            android:id="@+id/action_cropChallengePhotoFragment_to_displayImageFragment"
-            app:destination="@id/displayImageFragment" />
         <argument
             android:name="pathToPhoto"
             app:argType="string" />
+        <action
+            android:id="@+id/action_cropChallengePhotoFragment_to_createChallengeNavigationItem2"
+            app:destination="@id/createChallengeNavigationItem" />
     </fragment>
 </navigation>

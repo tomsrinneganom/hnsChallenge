@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "194592409296-5fnq9sd39tn8vsqvnsa48g08clgmcgg7.apps.googleusercontent.com",
+          "client_id": "194592409296-5thrdi1j4r2t0akrjoo40nolnns0adaa.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.dedstudio.hnschallenge",
-            "certificate_hash": "26178c3408e1f9bb4abf274beafa4147063d4e34"
+            "certificate_hash": "6ea1bc6dca4dcfb3d263c71b2e30ce52b0557fc9"
           }
         }
       ],

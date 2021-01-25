@@ -2,19 +2,25 @@ package com.dedstudio.hnschallenge
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 
-data class  Profile(
-    var userName:String? = null,
-    var email:String? = null,
-    var id:String? = null,
-    var photoReference:String? = null,
-    var score:Int = 0,
-    var rank:Int = 0,
-    var subscribers:MutableList<String> = mutableListOf(),
-    var subscription:MutableList<String> = mutableListOf()
-):Parcelable {
+@Entity
+@TypeConverters(ProfileConverter::class)
+data class Profile(
+    @PrimaryKey var id: String = "",
+    var userName: String? = null,
+    var email: String? = null,
+    var photoReference: String? = null,
+    var score: Int = 0,
+    var rank: Int = 0,
+    var subscribers: MutableList<String> = mutableListOf(),
+    var subscription: MutableList<String> = mutableListOf(),
+) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
+        parcel.readString().toString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -30,9 +36,9 @@ data class  Profile(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
         parcel.writeString(userName)
         parcel.writeString(email)
-        parcel.writeString(id)
         parcel.writeString(photoReference)
         parcel.writeInt(score)
         parcel.writeInt(rank)
