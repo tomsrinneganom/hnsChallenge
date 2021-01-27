@@ -129,7 +129,7 @@
 
         <fragment
             android:id="@+id/mapFragmentOwnProfile"
-            android:name="com.dedstudio.hnschallenge.ProfileMapFragment"
+            android:name="com.rinnestudio.hnschallenge.ProfileMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </androidx.cardview.widget.CardView>

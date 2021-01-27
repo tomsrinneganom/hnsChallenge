@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:194592409296:android:444e690d604a06b25740d5",
+        "mobilesdk_app_id": "1:194592409296:android:fe94e076e109442b5740d5",
         "android_client_info": {
-          "package_name": "com.dedstudio.hnschallenge"
+          "package_name": "com.rinnestudio.hnschallenge"
         }
       },
       "oauth_client": [
         {
-          "client_id": "194592409296-5thrdi1j4r2t0akrjoo40nolnns0adaa.apps.googleusercontent.com",
+          "client_id": "194592409296-5g4okndhlpc54m4e6scgmnnmjn0a8u7g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.dedstudio.hnschallenge",
-            "certificate_hash": "6ea1bc6dca4dcfb3d263c71b2e30ce52b0557fc9"
+            "package_name": "com.rinnestudio.hnschallenge",
+            "certificate_hash": "030dcb7dc9ec3c21cd672ed6ee4425e702a534eb"
           }
         }
       ],
