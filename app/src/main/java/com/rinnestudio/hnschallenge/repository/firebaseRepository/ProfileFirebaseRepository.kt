@@ -2,7 +2,7 @@ package com.rinnestudio.hnschallenge.repository.firebaseRepository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.rinnestudio.hnschallenge.Profile
+import com.rinnestudio.hnschallenge.profile.Profile
 import com.rinnestudio.hnschallenge.utils.ProfileUtils
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth

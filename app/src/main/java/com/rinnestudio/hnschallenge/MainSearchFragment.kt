@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.rinnestudio.hnschallenge.profile.AbstractProfileListFragment
+import com.rinnestudio.hnschallenge.profile.Profile
+import com.rinnestudio.hnschallenge.profile.ProfileListAdapter
 import kotlinx.coroutines.launch
 
 class MainSearchFragment : AbstractProfileListFragment() {

@@ -1,4 +1,4 @@
-package com.rinnestudio.hnschallenge
+package com.rinnestudio.hnschallenge.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import com.rinnestudio.hnschallenge.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -18,7 +19,7 @@ open class OwnProfileFragment : AbstractProfileFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.own_profile_fragment, container, false)
         usernameTextView = view.findViewById(R.id.textViewOwnProfileUserName)
@@ -58,6 +59,7 @@ open class OwnProfileFragment : AbstractProfileFragment() {
             updateUI()
         }
     }
+
 
     override fun navigateToSubscribersList() {
         val subscribersIdList = profile.subscribers

@@ -1,9 +1,10 @@
-package com.rinnestudio.hnschallenge
+package com.rinnestudio.hnschallenge.profile
 
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.rinnestudio.hnschallenge.profile.Profile
 import com.rinnestudio.hnschallenge.utils.ImageUtils
 
 abstract class AbstractProfileFragment : Fragment() {
@@ -23,7 +24,7 @@ abstract class AbstractProfileFragment : Fragment() {
         subscribersTextView.text = profile.subscribers.size.toString()
         subscriptionTextView.text = profile.subscription.size.toString()
         Log.i("Log_tag", "${profile.photoReference}")
-        ImageUtils().uploadImageIntoImageView(profile.id,
+        ImageUtils().uploadProfilePhotoIntoImageView(profile.id,
             profile.photoReference,
             photoProfileImageView)
     }

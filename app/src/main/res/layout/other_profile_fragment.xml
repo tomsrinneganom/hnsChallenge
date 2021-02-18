@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OtherProfileFragment">
+    android:background="@color/backgroundLightColor"
+    tools:context=".profile.OtherProfileFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewOtherProfilePhoto"
@@ -12,6 +13,7 @@
         android:layout_height="120dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
+        app:cardBackgroundColor="@color/backgroundLightColor"
         app:cardCornerRadius="6dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -28,8 +30,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="tomsrinneganom"
+        android:fontFamily="@font/rubik_medium"
+        android:text=" "
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@color/colorDark"
@@ -52,8 +54,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="2000"
+        android:fontFamily="@font/rubik_medium"
+        android:text=" "
         android:textColor="@color/colorDark"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewScore"
@@ -65,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/roboto_medium"
+        android:fontFamily="@font/rubik_medium"
         android:text="@string/subscribers"
         android:textAlignment="center"
         android:textColor="@color/colorDark"
@@ -77,7 +79,7 @@
         android:id="@+id/textViewOtherProfileSubscriptionsTitle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:fontFamily="@font/roboto_medium"
+        android:fontFamily="@font/rubik_medium"
         android:text="@string/subscriptions"
         android:textAlignment="center"
         android:textColor="@color/colorDark"
@@ -92,8 +94,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="1200"
+        android:fontFamily="@font/rubik_medium"
+        android:text=" "
         android:textColor="@color/colorDark"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/textViewOtherProfileSubscriptionsTitle"
@@ -105,8 +107,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="1200"
+        android:fontFamily="@font/rubik_medium"
+        android:text=" "
         android:textColor="@color/colorDark"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/textViewOtherProfileSubscribersTitle"
@@ -125,49 +127,45 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/buttonViewOtherProfileSubscribe">
 
         <fragment
-            android:id="@+id/mapFragmentOwnProfile"
-            android:name="com.rinnestudio.hnschallenge.ProfileMapFragment"
+            android:id="@+id/mapFragmentOtherProfile"
+            android:name="com.rinnestudio.hnschallenge.profile.OtherProfileMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </androidx.cardview.widget.CardView>
 
-    <FrameLayout
-        android:id="@+id/frameLayout3"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonViewOtherProfileSubscribe"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginTop="4dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/rubik_medium"
+        android:text="@string/subscribe"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="@+id/textViewOtherProfileSubscriptionsTitle"
         app:layout_constraintStart_toStartOf="@+id/textViewOtherProfileSubscribersTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOtherProfileSubscribers">
+        app:layout_constraintTop_toBottomOf="@+id/textViewOtherProfileSubscribers"
+        app:strokeColor="@color/colorPrimary"
+        app:strokeWidth="1dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonViewOtherProfileSubscribe"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="2dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="@string/subscribe"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            app:cornerRadius="10dp"
-            app:strokeColor="@color/colorPrimary"
-            app:strokeWidth="1dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonViewOtherProfileUnsubscribe"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="2dp"
-            android:backgroundTint="#FFFFFF"
-            android:text="@string/unsubscribe"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
-            android:visibility="gone"
-            app:cornerRadius="10dp" />
-
-    </FrameLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonViewOtherProfileUnsubscribe"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:backgroundTint="@color/backgroundLightColor"
+        android:fontFamily="@font/rubik_medium"
+        android:text="@string/unsubscribe"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewOtherProfileSubscriptionsTitle"
+        app:layout_constraintStart_toStartOf="@+id/textViewOtherProfileSubscribersTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOtherProfileSubscribers" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundLightColor"
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/settingsImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
@@ -15,12 +16,13 @@
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_login_24" />
+        app:srcCompat="@drawable/ic_baseline_settings_24" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/mainBottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:background="@color/backgroundLightColor"
         app:elevation="0dp"
         app:itemIconSize="25dp"
         app:itemIconTint="@color/colorDark"
@@ -38,6 +40,7 @@
         android:layout_marginTop="2dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="2dp"
+        android:background="@color/backgroundLightColor"
         app:cardCornerRadius="15dp"
         app:layout_constraintBottom_toTopOf="@+id/mainBottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:fontFamily="@font/rubik_medium"
+        android:fontFamily="@font/montserrat_bold"
         android:text="@string/app_name"
         android:textAllCaps="false"
         android:textColor="@color/colorDark"

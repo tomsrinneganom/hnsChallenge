@@ -9,25 +9,31 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.rinnestudio.hnschallenge.utils.ChallengeUtils
 import kotlinx.coroutines.tasks.await
 import java.io.File
 
 class ChallengeFirebaseRepository {
     private val firestore = Firebase.firestore.collection("challenges").document("users")
 
-    fun getChallengeById() {
-
-    }
-
-    fun getChallengesByProfileId() {
-
+    suspend fun getChallengesByCreatorId(creatorId: String): List<Challenge> {
+        return firestore.collection(creatorId).get().continueWith {
+            if (it.isComplete && it.isSuccessful) {
+                it.result.toObjects<Challenge>()
+            } else {
+                listOf()
+            }
+        }.await()
     }
 
     suspend fun addChallengeToDatabase(challenge: Challenge, challengePhoto: ByteArray): Boolean {
+        if (challenge.creatorId == null || challenge.id == null) {
+            return false
+        }
         val reference =
-            Firebase.storage.reference.child("${challenge.creatorId}/${challenge.id}.jpg")
+            ChallengeUtils().generateChallengePhotoReference(challenge.creatorId!!, challenge.id!!)
         val task = reference.putBytes(challengePhoto)
-
+        //TODO() create new fun for upload challenge photo
         val uploadChallengeImage = task.addOnSuccessListener {
             Log.i("Log_tag", "SUCCESSS add challengePhoto challenge")
 
@@ -53,30 +59,31 @@ class ChallengeFirebaseRepository {
     }
 
     suspend fun getOwnChallengeList(): List<Challenge> {
-        val firestore = Firebase.firestore
-       return firestore.collection("challenges").document("users").collection(Firebase.auth.currentUser!!.uid).get().continueWith {
-            if(it.isComplete && it.isSuccessful) {
-                it.result.toObjects<Challenge>()
-            }else{
-                listOf()
-            }
-        }.await()
+        return firestore
+            .collection(Firebase.auth.currentUser!!.uid).get().continueWith {
+                if (it.isComplete && it.isSuccessful) {
+                    it.result.toObjects<Challenge>()
+                } else {
+                    listOf()
+                }
+            }.await()
 
     }
 
     suspend fun uploadChallengePhoto(creatorId: String, challengeId: String, file: File): Bitmap =
-        getReferenceToChallengePhoto(creatorId, challengeId).getFile(file)
+        ChallengeUtils().generateChallengePhotoReference(creatorId, challengeId).getFile(file)
             .continueWith {
                 BitmapFactory.decodeFile(file.path)
             }.await()
 
-    private fun getReferenceToChallengePhoto(
-        creatorId: String,
-        challengeId: String
-    ) = Firebase.storage.reference.child("${creatorId}/${challengeId}.jpg")
 
-
-    fun deleteChallengeById() {
-
+    suspend fun deleteChallengeById(challengeId: String, creatorId: String): Boolean {
+        return firestore.collection(creatorId).document(challengeId).delete().continueWith {
+            it.isSuccessful && it.isComplete
+        }.await() && ChallengeUtils().generateChallengePhotoReference(creatorId, challengeId)
+            .delete()
+            .continueWith {
+                it.isSuccessful && it.isComplete
+            }.await()
     }
 }

@@ -7,6 +7,7 @@ data class Challenge(
     var id:String? = null,
     var latitude:Double? = null,
     var longitude:Double? = null,
+    var accuracy: Float? = null,
     var photoReference:String? = null,
     var creatorName:String? = null,
     var creatorProfilePhotoReference:String? = null,
@@ -16,17 +17,18 @@ data class Challenge(
         parcel.readString(),
         parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readValue(Double::class.java.classLoader) as? Double,
+        parcel.readValue(Double::class.java.classLoader) as? Float,
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
         parcel.writeValue(latitude)
         parcel.writeValue(longitude)
+        parcel.writeValue(accuracy)
         parcel.writeString(photoReference)
         parcel.writeString(creatorName)
         parcel.writeString(creatorProfilePhotoReference)

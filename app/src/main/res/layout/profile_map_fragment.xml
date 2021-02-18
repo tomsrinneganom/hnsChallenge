@@ -1,19 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileMapFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/profileMapFabChallengeList"
+        style="@style/FloatingButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:src="@drawable/ic_baseline_format_list_bulleted_24"
+        app:backgroundTint="@color/backgroundLightColor"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toEndOf="@+id/profileMapFabLocation"
+        app:layout_constraintTop_toBottomOf="@+id/profileMapFabLocation" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/profileMapFabLocation"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:foregroundGravity="center"
+        android:src="@drawable/ic_baseline_gps_fixed_24"
+        android:tint="@color/colorDark"
+        app:backgroundTint="@color/colorLight"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:maxImageSize="20dp"
+        app:useCompatPadding="false" />
 
     <com.mapbox.mapboxsdk.maps.MapView
-        android:id="@+id/mapViewProfile"
+        android:id="@+id/profileMapMapView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:backgroundTint="@color/backgroundLightColor"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
+    </com.mapbox.mapboxsdk.maps.MapView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,11 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundLightColor"
-    tools:context=".MainSearchFragment">
+    tools:context=".settings.SettingsFragment">
 
-    <include
-        layout="@layout/profile_list_fragment"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/settingsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -32,13 +32,13 @@ class CameraChallengeExecutionFragment : Camera(), SeekBar.OnSeekBarChangeListen
         verticalSeekBar.progress = 50
 
         if (!challenge.id.isNullOrEmpty() && !challenge.creatorId.isNullOrEmpty()) {
-            Log.i("Log_tag", "challenge.id != null && challenge.creatorId != null")
+            Log.i("Log_tag", "challenge.id != null && challenge.profileId != null")
             viewLifecycleOwner.lifecycle.coroutineScope.launch {
                 val photo = viewModel.uploadChallengePhoto(challenge.creatorId!!, challenge.id!!)
                 challengeImageView.setImageBitmap(photo)
             }
         } else {
-            Log.i("Log_tag", "challenge.id == null && challenge.creatorId == null")
+            Log.i("Log_tag", "challenge.id == null && challenge.profileId == null")
 
         }
         cameraPreviewView = view.findViewById(R.id.cameraViewChallengeExecution)

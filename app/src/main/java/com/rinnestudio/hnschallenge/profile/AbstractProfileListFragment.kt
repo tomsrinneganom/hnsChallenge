@@ -1,9 +1,10 @@
-package com.rinnestudio.hnschallenge
+package com.rinnestudio.hnschallenge.profile
 
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.rinnestudio.hnschallenge.R
 
 abstract class AbstractProfileListFragment : Fragment() {
 

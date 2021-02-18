@@ -5,7 +5,8 @@
     android:id="@+id/frameLayout9"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpFragment" >
+    android:background="@color/backgroundLightColor"
+    tools:context=".SignUpFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView6"
@@ -21,7 +22,9 @@
             android:id="@+id/imageView10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_baseline_add_circle_outline_24" />
+            android:background="@color/backgroundLightColor"
+            android:src="@drawable/ic_baseline_add_circle_outline_24"
+            app:tint="@color/colorDark" />
     </androidx.cardview.widget.CardView>
 
     <EditText
@@ -30,13 +33,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:ems="10"
+        android:fontFamily="@font/rubik_medium"
         android:hint="Username"
         android:inputType="textPersonName"
         android:textColor="@color/colorDark"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSignUpEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextSignUpEmail"/>
 
     <EditText
         android:id="@+id/editTextSignUpPassword"
@@ -44,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:ems="10"
+        android:fontFamily="@font/rubik_medium"
         android:hint="Password"
         android:inputType="textPassword"
         android:textColor="@color/colorDark"
@@ -58,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/colorPrimary"
-        android:fontFamily="@font/roboto_medium"
+        android:fontFamily="@font/rubik_medium"
         android:text="Sign up"
         android:textColor="@color/colorLight"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,6 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:ems="10"
+        android:fontFamily="@font/rubik_medium"
         android:hint="Email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"

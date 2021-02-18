@@ -8,6 +8,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import com.rinnestudio.hnschallenge.profile.AbstractProfileListFragment
+import com.rinnestudio.hnschallenge.profile.Profile
 import kotlinx.coroutines.launch
 
 class SubscriptionsListFragment : AbstractProfileListFragment() {

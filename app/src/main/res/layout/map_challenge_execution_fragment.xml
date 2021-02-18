@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundLightColor"
     tools:context=".MapChallengeExecutionFragment">
 
     <com.mapbox.mapboxsdk.maps.MapView
@@ -39,11 +40,27 @@
         app:useCompatPadding="false" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonDeleteChallenge"
+        style="@style/FloatingButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/backgroundLightColor"
+        android:clickable="true"
+        android:foregroundGravity="center"
+        android:src="@drawable/ic_baseline_delete_24"
+        android:visibility="gone"
+        app:backgroundTint="@color/backgroundLightColor"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonChallengeExecutionCamera"
+        app:layout_constraintTop_toBottomOf="@+id/floatingActionButtonChallengeExecutionCamera" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButtonChallengeExecutionCamera"
         style="@style/FloatingButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:focusable="true"
         android:foregroundGravity="center"
@@ -61,7 +78,7 @@
         style="@style/FloatingButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:src="@drawable/ic_baseline_image_24"
         app:backgroundTint="@color/colorLight"

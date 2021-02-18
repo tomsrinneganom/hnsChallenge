@@ -23,14 +23,10 @@ abstract class Camera : Fragment() {
     protected lateinit var buttonTakePhoto: ImageView
     private lateinit var imageCapture: ImageCapture
     protected lateinit var pathToPhoto: String
-    private val savingImageLiveData = MutableLiveData<Boolean>()
     protected lateinit var cameraProvider: ProcessCameraProvider
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        savingImageLiveData.observe(viewLifecycleOwner) {
-            savingPhoto()
-        }
         initCamera()
     }
 
@@ -43,9 +39,8 @@ abstract class Camera : Fragment() {
         cameraProviderFuture.addListener({
             cameraProvider = cameraProviderFuture.get()
             bindPreview()
-            viewLifecycleOwner.lifecycleScope.launch {
-                bindTakePhoto()
-            }
+            bindTakePhoto()
+
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
@@ -73,12 +68,12 @@ abstract class Camera : Fragment() {
 
     }
 
-    private suspend fun bindTakePhoto(): Boolean {
+    private fun bindTakePhoto() {
         pathToPhoto = requireContext().filesDir.path + "/img1.jpeg"
+        val result = MutableLiveData(false)
         val executor = Executors.newSingleThreadExecutor()
         val imageFile = File(pathToPhoto)
         val outputFileOptions = ImageCapture.OutputFileOptions.Builder(imageFile).build()
-        var f = false
         buttonTakePhoto.isClickable = true
         buttonTakePhoto.setOnClickListener {
             imageCapture.takePicture(
@@ -86,7 +81,7 @@ abstract class Camera : Fragment() {
                 executor,
                 object : ImageCapture.OnImageSavedCallback {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                        f = true
+                        result.postValue(true)
                     }
 
                     override fun onError(exception: ImageCaptureException) {
@@ -94,7 +89,11 @@ abstract class Camera : Fragment() {
                     }
                 })
         }
-        return f
+        result.observe(viewLifecycleOwner){
+            if (it){
+                savingPhoto()
+            }
+        }
     }
 
 

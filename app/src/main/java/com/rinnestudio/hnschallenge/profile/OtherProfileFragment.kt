@@ -1,4 +1,4 @@
-package com.rinnestudio.hnschallenge
+package com.rinnestudio.hnschallenge.profile
 
 import android.os.Bundle
 import android.util.Log
@@ -12,12 +12,15 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.rinnestudio.hnschallenge.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OtherProfileFragment : AbstractProfileFragment() {
 
     private val viewModel: OtherProfileViewModel by viewModels()
+    private val mapViewModel: OtherProfileMapViewModel by viewModels()
+
     private lateinit var buttonViewSubscribe: MaterialButton
     private lateinit var buttonViewUnsubscribe: MaterialButton
 
@@ -43,6 +46,7 @@ class OtherProfileFragment : AbstractProfileFragment() {
         buttonViewSubscribe.setOnClickListener {
             viewModel.subscribe(profile, true)
             updateSubscribeButton(true)
+            //TODO()
             updateUI()
         }
 
@@ -68,11 +72,15 @@ class OtherProfileFragment : AbstractProfileFragment() {
 
         return view
     }
-
+    //TODO()
     override fun gettingProfile() {
         val args: OtherProfileFragmentArgs by navArgs()
         profile = args.profile
+        initMap()
         updateUI()
+    }
+    private fun initMap(){
+        mapViewModel.profileId.value = profile.id
     }
 
     override fun navigateToSubscribersList() {
@@ -110,11 +118,11 @@ class OtherProfileFragment : AbstractProfileFragment() {
     private fun updateSubscribeButton(subscribe: Boolean) {
         Log.i("Log_tag", "$subscribe")
         if (subscribe) {
-            buttonViewSubscribe.visibility = View.GONE
+            buttonViewSubscribe.visibility = View.INVISIBLE
             buttonViewUnsubscribe.visibility = View.VISIBLE
         } else {
             buttonViewSubscribe.visibility = View.VISIBLE
-            buttonViewUnsubscribe.visibility = View.GONE
+            buttonViewUnsubscribe.visibility = View.INVISIBLE
         }
     }
 

@@ -1,4 +1,4 @@
-package com.rinnestudio.hnschallenge
+package com.rinnestudio.hnschallenge.profile
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rinnestudio.hnschallenge.utils.ImageUtils
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.rinnestudio.hnschallenge.MainSearchFragmentDirections
+import com.rinnestudio.hnschallenge.R
 
 open class ProfileListAdapter(private val profileList: ArrayList<Profile>) :
     RecyclerView.Adapter<ProfileListAdapter.UserListViewHolder>() {
@@ -51,7 +53,7 @@ open class ProfileListAdapter(private val profileList: ArrayList<Profile>) :
         fun bind(profile: Profile) {
             userNameTextView.text = profile.userName
             userScoreTextView.text = profile.score.toString()
-            ImageUtils().uploadImageIntoImageView(
+            ImageUtils().uploadProfilePhotoIntoImageView(
                 profile.id,
                 profile.photoReference,
                 profilePhotoImageView)

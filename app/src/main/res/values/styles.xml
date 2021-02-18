@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">#757373</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionMenuTextColor">#000000</item>
+        <item name="backgroundColor">@color/backgroundLightColor</item>
     </style>
     <style name="Button" parent="Widget.MaterialComponents.Button">
         <item name="cornerRadius">10dp</item>

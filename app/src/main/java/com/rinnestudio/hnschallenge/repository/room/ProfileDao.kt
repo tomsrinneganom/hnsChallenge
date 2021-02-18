@@ -1,16 +1,16 @@
 package com.rinnestudio.hnschallenge.repository.room
 
 import androidx.room.*
-import com.rinnestudio.hnschallenge.Profile
+import com.rinnestudio.hnschallenge.profile.Profile
 
 @Dao
 interface ProfileDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addProfile(vararg profiles:Profile)
+    fun addProfile(vararg profiles: Profile)
 
     @Query("SELECT * FROM Profile WHERE id = :id")
-    fun getProfile(id:String):Profile
+    fun getProfile(id:String): Profile
 
     @Update
-    fun update(vararg profile:Profile)
+    fun update(vararg profile: Profile)
 }

@@ -1,7 +1,7 @@
 package com.rinnestudio.hnschallenge.repository
 
 import androidx.lifecycle.MutableLiveData
-import com.rinnestudio.hnschallenge.Profile
+import com.rinnestudio.hnschallenge.profile.Profile
 import com.rinnestudio.hnschallenge.repository.firebaseRepository.ProfileFirebaseRepository
 import com.rinnestudio.hnschallenge.repository.room.RoomDatabase
 import com.google.firebase.auth.ktx.auth

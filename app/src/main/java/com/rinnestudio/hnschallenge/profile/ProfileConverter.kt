@@ -1,4 +1,4 @@
-package com.rinnestudio.hnschallenge
+package com.rinnestudio.hnschallenge.profile
 
 import androidx.room.TypeConverter
 import java.util.stream.Collectors

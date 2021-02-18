@@ -10,7 +10,7 @@ class CreateChallengeCameraFragment : Camera() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.adding_challenge_fragment, container, false)
         cameraPreviewView = view.findViewById(R.id.camera_preview_view)
@@ -21,9 +21,8 @@ class CreateChallengeCameraFragment : Camera() {
 
     override fun savingPhoto() {
         val navDirections =
-            CreateChallengeCameraFragmentDirections.actionCreateChallengeNavigationItemToCropChallengePhotoFragment2(
-                pathToPhoto
-            )
+            CreateChallengeCameraFragmentDirections.actionCreateChallengeNavigationItemToCropChallengePhotoFragment(
+                pathToPhoto)
         findNavController().navigate(navDirections)
 
     }
