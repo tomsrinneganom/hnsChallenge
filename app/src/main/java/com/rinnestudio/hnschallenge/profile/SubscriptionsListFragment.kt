@@ -1,4 +1,4 @@
-package com.rinnestudio.hnschallenge
+package com.rinnestudio.hnschallenge.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.rinnestudio.hnschallenge.profile.AbstractProfileListFragment
-import com.rinnestudio.hnschallenge.profile.Profile
+import com.rinnestudio.hnschallenge.R
 import kotlinx.coroutines.launch
 
 class SubscriptionsListFragment : AbstractProfileListFragment() {
@@ -17,10 +16,14 @@ class SubscriptionsListFragment : AbstractProfileListFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.profile_list_fragment, container, false)
+
         recyclerView = view.findViewById(R.id.recyclerViewUserList)
+       searchInputLayout = view.findViewById(R.id.profileListSearchInputLayout)
+        searchEditText = view.findViewById(R.id.profileListSearchEditText)
+
         getProfileList()
 
         return view
@@ -40,4 +43,5 @@ class SubscriptionsListFragment : AbstractProfileListFragment() {
             setUpRecycler()
         }
     }
+
 }

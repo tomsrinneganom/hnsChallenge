@@ -55,4 +55,7 @@ class OtherProfileViewModel @ViewModelInject constructor(
         updateProfile(profile)
     }
 
+    suspend fun getProfileById(profileId: String) =
+        ProfileRepository().getProfile(profileId)
+
 }

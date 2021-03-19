@@ -12,6 +12,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.mapbox.mapboxsdk.Mapbox
 import dagger.hilt.android.AndroidEntryPoint
+import org.opencv.android.OpenCVLoader
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -24,20 +25,22 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-       Mapbox.getInstance(applicationContext, getString(R.string.mapbox_access_token))
+        Mapbox.getInstance(applicationContext, getString(R.string.mapbox_access_token))
 
         supportFragmentManager.findFragmentById(R.id.main_nav_host) as NavHostFragment
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.mainBottomNavigationView)
         navController = findNavController(R.id.main_nav_host)
-        bottomNavigationView.setupWithNavController(navController)
-
-        if (Firebase.auth.uid.isNullOrEmpty()){
+        OpenCVLoader.initDebug()
+        if (Firebase.auth.uid.isNullOrEmpty()) {
             Firebase.auth.signOut()
             navController.navigate(R.id.signInFragment)
         }
+        bottomNavigationView.setupWithNavController(navController)
+
         findViewById<ImageView>(R.id.settingsImageView).setOnClickListener {
             Firebase.auth.signOut()
             navController.navigate(R.id.settingsFragment)
         }
     }
+
 }

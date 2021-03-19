@@ -70,7 +70,7 @@ class SignUpFragment : Fragment() {
     private fun initChoosePhoto() {
         dialog =
             AlertDialog.Builder(requireActivity()).setTitle("Select Profile Photo").setItems(
-                arrayOf("Gallery", "Camera")
+                arrayOf("Gallery", "AbstractCameraFragment")
             ) { _, which ->
                 if (which == 0) {
                     val intent = Intent(Intent.ACTION_GET_CONTENT).apply {

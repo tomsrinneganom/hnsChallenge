@@ -11,7 +11,8 @@ data class Challenge(
     var photoReference:String? = null,
     var creatorName:String? = null,
     var creatorProfilePhotoReference:String? = null,
-    var creatorId:String? = null
+    var creatorId:String? = null,
+    var distanceToCurrentLocation:Float? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -21,7 +22,8 @@ data class Challenge(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString()
+        parcel.readString(),
+        parcel.readValue(Double::class.java.classLoader) as? Float
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -33,6 +35,7 @@ data class Challenge(
         parcel.writeString(creatorName)
         parcel.writeString(creatorProfilePhotoReference)
         parcel.writeString(creatorId)
+        parcel.writeValue(distanceToCurrentLocation)
     }
 
     override fun describeContents(): Int {

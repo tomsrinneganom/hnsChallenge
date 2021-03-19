@@ -21,7 +21,7 @@ class CreateChallengeViewModel @ViewModelInject constructor(
         val challengePhoto = ImageUtils().convertBitmapToByteArray(photo)
         val repository = ChallengeRepository()
         var result = false
-        val location = LocationUtils().getLastKnowLocation(getApplication())
+        val location = LocationUtils().getUserLocation(getApplication())
         withContext(Dispatchers.IO) {
             val profile = ProfileRepository().getOwnProfile(roomDatabase)
             if (location != null && profile.id.isNotEmpty()) {

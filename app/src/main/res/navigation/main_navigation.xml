@@ -40,6 +40,12 @@
         <action
             android:id="@+id/action_challengeListNavigationItem_to_mapChallengeExecutionFragment"
             app:destination="@id/mapChallengeExecutionFragment" />
+        <action
+            android:id="@+id/action_challengeListNavigationItem_to_otherProfileFragment"
+            app:destination="@id/otherProfileFragment" />
+        <action
+            android:id="@+id/action_challengeListNavigationItem_to_ownProfileNavigationItem"
+            app:destination="@id/ownProfileNavigationItem" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -61,6 +67,12 @@
         <action
             android:id="@+id/action_selectedChallengeListFragment_to_mapChallengeExecutionFragment"
             app:destination="@id/mapChallengeExecutionFragment" />
+        <action
+            android:id="@+id/action_selectedChallengeListFragment_to_otherProfileFragment"
+            app:destination="@id/otherProfileFragment" />
+        <action
+            android:id="@+id/action_selectedChallengeListFragment_to_ownProfileNavigationItem"
+            app:destination="@id/ownProfileNavigationItem" />
     </fragment>
     <fragment
         android:id="@+id/ownProfileNavigationItem"
@@ -113,17 +125,22 @@
         android:label="other_profile_fragment"
         tools:layout="@layout/other_profile_fragment" >
         <argument android:name="profile"
-            app:argType="com.rinnestudio.hnschallenge.profile.Profile" />
+            app:argType="com.rinnestudio.hnschallenge.profile.Profile"
+            app:nullable="true" />
         <action
             android:id="@+id/action_otherProfileFragment_to_selectedChallengeListFragment"
             app:destination="@id/selectedChallengeListFragment" />
         <action
             android:id="@+id/action_otherProfileFragment_to_subscriptionsListFragment"
             app:destination="@id/subscriptionsListFragment" />
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/subscriptionsListFragment"
-        android:name="com.rinnestudio.hnschallenge.SubscriptionsListFragment"
+        android:name="com.rinnestudio.hnschallenge.profile.SubscriptionsListFragment"
         android:label="SubscriptionsListFragment" >
         <argument
             android:name="idList"

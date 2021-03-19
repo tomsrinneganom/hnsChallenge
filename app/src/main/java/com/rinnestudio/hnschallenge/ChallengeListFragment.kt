@@ -42,16 +42,14 @@ open class ChallengeListFragment : Fragment() {
     }
 
     protected open fun initViewAdapter(challenges: List<Challenge>) {
-        viewAdapter = ChallengeListAdapter(challenges)
+        viewAdapter = ChallengeListAdapter(challenges,requireContext())
     }
 
     protected fun bindRecyclerView() {
-
         recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
         }
-
     }
 }

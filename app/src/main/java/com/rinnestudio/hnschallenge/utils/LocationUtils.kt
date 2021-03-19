@@ -1,37 +1,65 @@
 package com.rinnestudio.hnschallenge.utils
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
-import kotlinx.coroutines.tasks.await
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
-class LocationUtils {
-    //TODO()
-    suspend fun getLastKnowLocation(context: Context): Location? {
-        Log.i("Log_tag", "getLastKnowLocation()")
-        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-        if (ActivityCompat.checkSelfPermission(
+class LocationUtils() {
+
+    suspend fun getUserLocation(context: Context): Location? {
+        if (ActivityCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
         ) {
-            Log.i("Log_tag", "error premission")
-        }
-        Log.i("Log_tag", "start")
-        val lastLocation = fusedLocationClient.lastLocation.await()
-        if (lastLocation.latitude != null) {
-            Log.i("Log_tag", "${lastLocation.latitude} ${lastLocation.longitude}")
+            return null
         } else {
-            Log.i("Log_tag", "error")
+            val fusedLocationProviderClient: FusedLocationProviderClient =
+                LocationServices.getFusedLocationProviderClient(context)
+            val lastKnowLocation = getLastKnowLocation(fusedLocationProviderClient)
+            if (lastKnowLocation == null) {
+                return requestLocationUpdate(fusedLocationProviderClient)
+            }
+            else{
+               return lastKnowLocation
+            }
         }
-        Log.i("Log_tag", "end")
-        return lastLocation
     }
+
+    @SuppressLint("MissingPermission")
+    private suspend fun getLastKnowLocation(locationProviderClient: FusedLocationProviderClient): Location? =
+        suspendCoroutine {
+            locationProviderClient.lastLocation.addOnCompleteListener { location ->
+                it.resume(location.result)
+            }.addOnFailureListener { exception ->
+                Log.i("Log_tag", "getLastKnowLocation() Exception: ${exception.message}")
+                it.resume(null)
+            }
+        }
+
+    @SuppressLint("MissingPermission")
+    private suspend fun requestLocationUpdate(locationProviderClient: FusedLocationProviderClient): Location? =
+        suspendCoroutine {
+            val locationCallback = object : LocationCallback() {
+                override fun onLocationResult(location: LocationResult) {
+                    super.onLocationResult(location)
+                    it.resume(location.lastLocation)
+                }
+            }
+
+            locationProviderClient.requestLocationUpdates(LocationRequest(),
+                locationCallback,
+                Looper.getMainLooper()).addOnFailureListener { exception->
+                Log.i("Log_tag", "requestLocationUpdate() Exception: ${exception.message}")
+                it.resume(null)
+            }
+        }
 }

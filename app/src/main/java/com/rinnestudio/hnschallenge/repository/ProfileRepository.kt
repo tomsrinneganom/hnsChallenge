@@ -15,7 +15,8 @@ class ProfileRepository {
     val profile = MutableLiveData<Profile>()
     private val firebaseRepository = ProfileFirebaseRepository()
 
-    private suspend fun getProfile(profileId: String) = firebaseRepository.getProfile(profileId)
+    suspend fun getProfile(profileId: String) = firebaseRepository.getProfile(profileId)
+
     //TODO()
     suspend fun getOwnProfile(roomDatabase: RoomDatabase): Profile {
         val id = Firebase.auth.uid!!
@@ -48,7 +49,7 @@ class ProfileRepository {
     //TODO()
     suspend fun signInWithGoogleAccount(
         idToken: String,
-        roomDatabase: RoomDatabase
+        roomDatabase: RoomDatabase,
     ): Boolean {
         val profile = firebaseRepository.signInWithGoogleAccount(idToken)
         return if (profile.id.isNotEmpty()) {
@@ -95,7 +96,16 @@ class ProfileRepository {
     suspend fun getRecommendedListOfProfiles() =
         ProfileFirebaseRepository().getRecommendedListOfProfiles()
 
-    suspend fun getListOfProfilesById(idList:List<String>) = ProfileFirebaseRepository().getListOfProfilesById(idList)
+    suspend fun getListOfProfilesById(idList: List<String>) =
+        ProfileFirebaseRepository().getListOfProfilesById(idList)
+
+    suspend fun getSubscribersList(): MutableList<String>? {
+        val id = Firebase.auth.uid
+        if (id != null) {
+            return getProfile(id).subscription
+        }
+        return null
+    }
 
     fun deleteProfile() {
 

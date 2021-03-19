@@ -4,13 +4,23 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundLightColor"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/profileMapFabChallengeList"
         style="@style/FloatingButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
-        android:clickable="true"
         android:src="@drawable/ic_baseline_format_list_bulleted_24"
         app:backgroundTint="@color/backgroundLightColor"
         app:fabSize="mini"
@@ -23,7 +33,6 @@
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:clickable="true"
         android:foregroundGravity="center"
         android:src="@drawable/ic_baseline_gps_fixed_24"
         android:tint="@color/colorDark"
@@ -38,8 +47,9 @@
         android:id="@+id/profileMapMapView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/colorPrimary"
         android:backgroundTint="@color/backgroundLightColor"
-        android:visibility="visible"
+        android:elevation="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

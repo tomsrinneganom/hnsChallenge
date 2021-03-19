@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
@@ -27,7 +29,8 @@ open class OwnProfileFragment : AbstractProfileFragment() {
         subscriptionTextView = view.findViewById(R.id.textViewOwnProfileSubscriptions)
         scoreTextView = view.findViewById(R.id.textViewOwnProfileScore)
         photoProfileImageView = view.findViewById(R.id.imageViewOwnProfilePhoto)
-
+        mapFragment = view.findViewById(R.id.OwnProfileMapFragment)
+        mapFragment.visibility = View.VISIBLE
         gettingProfile()
 
         view.findViewById<TextView>(R.id.textViewOwnProfileSubscriptionsTitle).apply {
@@ -68,6 +71,7 @@ open class OwnProfileFragment : AbstractProfileFragment() {
                 OwnProfileFragmentDirections.actionOwnProfileNavigationItemToSubscriptionsListFragment(
                     subscribersIdList.toTypedArray()
                 )
+            hideMapFragment()
             findNavController().navigate(navDirections)
         }
     }
@@ -79,6 +83,7 @@ open class OwnProfileFragment : AbstractProfileFragment() {
                 OwnProfileFragmentDirections.actionOwnProfileNavigationItemToSubscriptionsListFragment(
                     subscriptionsIdList.toTypedArray()
                 )
+            hideMapFragment()
             findNavController().navigate(navDirections)
         }
     }

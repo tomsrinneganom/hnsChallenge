@@ -1,21 +1,25 @@
 package com.rinnestudio.hnschallenge
 
-import android.util.Log
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.navArgs
+import com.rinnestudio.hnschallenge.utils.ChallengeUtils
+import kotlinx.coroutines.launch
 
 class SelectedChallengeListFragment : ChallengeListFragment() {
 
     override fun getChallenges() {
         val args: SelectedChallengeListFragmentArgs by navArgs()
         val challenges = args.challenges
-        Log.i("Log_tag", challenges.size.toString())
-        val challengeList = challenges.toList()
-        initViewAdapter(challengeList)
-        bindRecyclerView()
+        var challengeList = challenges.toList()
+        viewLifecycleOwner.lifecycle.coroutineScope.launch {
+           challengeList = ChallengeUtils().sortChallengesByDistance(challengeList, requireContext())
+            initViewAdapter(challengeList)
+            bindRecyclerView()
+        }
     }
 
     override fun initViewAdapter(challenges: List<Challenge>) {
-        viewAdapter = SelectedChallengeListAdapter(challenges)
+        viewAdapter = SelectedChallengeListAdapter(challenges,requireContext())
     }
 
 }

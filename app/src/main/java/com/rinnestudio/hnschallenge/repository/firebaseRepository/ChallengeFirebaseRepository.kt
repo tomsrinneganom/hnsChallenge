@@ -58,17 +58,20 @@ class ChallengeFirebaseRepository {
         return uploadChallengeInfo && uploadChallengeImage
     }
 
-    suspend fun getOwnChallengeList(): List<Challenge> {
-        return firestore
-            .collection(Firebase.auth.currentUser!!.uid).get().continueWith {
-                if (it.isComplete && it.isSuccessful) {
-                    it.result.toObjects<Challenge>()
-                } else {
-                    listOf()
-                }
-            }.await()
-
-    }
+    //    suspend fun getOwnChallengeList(): List<Challenge> {
+//        return firestore
+//            .collection(Firebase.auth.currentUser!!.uid).get().continueWith {
+//                if (it.isComplete && it.isSuccessful) {
+//                    it.result.toObjects<Challenge>()
+//                } else {
+//                    listOf()
+//                }
+//            }.await()
+//
+//    }
+//    suspend fun getOwnChallengeList(subscriptionList: MutableList<String>): List<Challenge> {
+//
+//    }
 
     suspend fun uploadChallengePhoto(creatorId: String, challengeId: String, file: File): Bitmap =
         ChallengeUtils().generateChallengePhotoReference(creatorId, challengeId).getFile(file)

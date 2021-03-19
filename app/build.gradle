@@ -8,7 +8,7 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 30
-    buildToolsVersion '30.0.3'
+    buildToolsVersion '30.0.0'
 
     defaultConfig {
         applicationId "com.rinnestudio.hnschallenge"
@@ -39,7 +39,8 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    def camerax_version = "1.0.0-beta06"
+    implementation project(path: ':opencv')
+    def camerax_version = "1.0.0-rc03"
     def room_version = '2.2.6'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.4.30'
@@ -50,7 +51,7 @@ dependencies {
    implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
     // CameraX core library using the camera2 implementation
     // The following line is optional, as the core library is included indirectly by camera-camera2
     implementation "androidx.camera:camera-core:${camerax_version}"
@@ -58,9 +59,9 @@ dependencies {
     // If you want to additionally use the CameraX Lifecycle library
     implementation "androidx.camera:camera-lifecycle:${camerax_version}"
     // If you want to additionally use the CameraX View class
-    implementation "androidx.camera:camera-view:1.0.0-alpha13"
+    implementation 'androidx.camera:camera-view:1.0.0-alpha22'
     // If you want to additionally use the CameraX Extensions library
-    implementation "androidx.camera:camera-extensions:1.0.0-alpha13"
+    implementation 'androidx.camera:camera-extensions:1.0.0-alpha22'
 
     //Mapbox
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.1'
@@ -90,7 +91,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-rc01'
 
     //Location service
-    implementation 'com.google.android.gms:play-services-location:17.1.0'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 
     //Image-Cropper
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'

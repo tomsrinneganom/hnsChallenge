@@ -3,22 +3,17 @@
 
     <item
         android:id="@+id/ownProfileNavigationItem"
-        android:icon="@drawable/ic_baseline_account_circle_24"
-        android:title="ownProfile" />
+        android:icon="@drawable/ic_baseline_account_circle_24" />
     <item
         android:id="@+id/mainSearchNavigationItem"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:title="mainSearch" />
+        android:icon="@drawable/ic_baseline_search_24" />
     <item
         android:id="@+id/mainMapNavigationItem"
-        android:icon="@drawable/ic_hns_logo"
-        android:title="mainMap" />
+        android:icon="@drawable/ic_hns_logo" />
     <item
         android:id="@+id/createChallengeNavigationItem"
-        android:icon="@drawable/ic_baseline_add_circle_outline_24"
-        android:title="createChallenge" />
+        android:icon="@drawable/ic_baseline_add_circle_outline_24" />
     <item
         android:id="@+id/challengeListNavigationItem"
-        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
-        android:title="challengeList" />
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24" />
 </menu>

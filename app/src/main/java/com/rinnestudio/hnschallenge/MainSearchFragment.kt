@@ -9,7 +9,6 @@ import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.rinnestudio.hnschallenge.profile.AbstractProfileListFragment
 import com.rinnestudio.hnschallenge.profile.Profile
-import com.rinnestudio.hnschallenge.profile.ProfileListAdapter
 import kotlinx.coroutines.launch
 
 class MainSearchFragment : AbstractProfileListFragment() {
@@ -20,16 +19,20 @@ class MainSearchFragment : AbstractProfileListFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        //TODO() edit layout to main_search_fragment
         val view = inflater.inflate(R.layout.profile_list_fragment, container, false)
+
         recyclerView = view.findViewById(R.id.recyclerViewUserList)
+
+        searchInputLayout = view.findViewById(R.id.profileListSearchInputLayout)
+        searchEditText = view.findViewById(R.id.profileListSearchEditText)
+
         getProfileList()
         return view
     }
 
     override fun setUpRecycler() {
         recyclerLayoutManager = GridLayoutManager(requireContext(), 2)
-        recyclerAdapter = ProfileListAdapter(profileList as ArrayList<Profile>)
+        recyclerAdapter = MainSearchAdapter(profileList as ArrayList<Profile>)
         bindRecycler(requireView())
     }
 
@@ -37,7 +40,8 @@ class MainSearchFragment : AbstractProfileListFragment() {
         viewLifecycleOwner.lifecycle.coroutineScope.launch {
             profileList = viewModel.getRecommendedListOfProfiles()
             setUpRecycler()
-
         }
     }
+
+
 }

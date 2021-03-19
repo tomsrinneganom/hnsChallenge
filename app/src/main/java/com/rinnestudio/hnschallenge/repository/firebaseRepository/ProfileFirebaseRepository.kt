@@ -2,6 +2,7 @@ package com.rinnestudio.hnschallenge.repository.firebaseRepository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
 import com.rinnestudio.hnschallenge.profile.Profile
 import com.rinnestudio.hnschallenge.utils.ProfileUtils
 import com.google.firebase.auth.GoogleAuthProvider
@@ -14,9 +15,10 @@ import kotlinx.coroutines.tasks.await
 import timber.log.Timber
 
 class ProfileFirebaseRepository {
+    private val profilesCollection = Firebase.firestore.collection("userList")
 
     suspend fun getProfile(profileId: String): Profile {
-        return Firebase.firestore.collection("userList").document(profileId).get()
+        return profilesCollection.document(profileId).get()
             .addOnFailureListener {
                 Log.i("Log_tag", "get profile failure exception:${it}")
             }.continueWith {
@@ -47,7 +49,6 @@ class ProfileFirebaseRepository {
     suspend fun signInWithGoogleAccount(idToken: String): Profile {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         val auth = Firebase.auth
-        val result = MutableLiveData<Profile>()
 
         val signIn = auth.signInWithCredential(credential).continueWith {
             it.isSuccessful && it.isComplete
@@ -113,7 +114,7 @@ class ProfileFirebaseRepository {
         image: ByteArray,
     ): Boolean {
         uploadProfilePhoto(profile.id, image)
-        return Firebase.firestore.collection("userList").document(profile.id).set(profile)
+        return profilesCollection.document(profile.id).set(profile)
             .continueWith {
                 it.isSuccessful
             }.await()
@@ -135,7 +136,7 @@ class ProfileFirebaseRepository {
     }
 
     fun updateProfile(profile: Profile) {
-        Firebase.firestore.collection("userList").document(profile.id).set(profile)
+        profilesCollection.document(profile.id).set(profile)
             .addOnSuccessListener {
                 Timber.tag("Log_tag").i("updateProfile() success")
             }.addOnFailureListener {
@@ -144,7 +145,7 @@ class ProfileFirebaseRepository {
     }
 
     suspend fun getRecommendedListOfProfiles(): List<Profile> =
-        Firebase.firestore.collection("userList")
+        profilesCollection
             .get()
             .continueWith {
                 if (it.isSuccessful && it.isComplete) {
@@ -154,16 +155,16 @@ class ProfileFirebaseRepository {
             }.await()
 
     suspend fun getListOfProfilesById(idList: List<String>): List<Profile> =
-        Firebase.firestore.collection("userList")
+        profilesCollection
             .whereIn("id", idList)
             .get()
             .continueWith {
-            if (it.isComplete && it.isSuccessful) {
-                it.result.toObjects<Profile>()
-            } else {
-                listOf()
-            }
-        }.await()
+                if (it.isComplete && it.isSuccessful) {
+                    it.result.toObjects<Profile>()
+                } else {
+                    listOf()
+                }
+            }.await()
 
     fun deleteProfile() {
 

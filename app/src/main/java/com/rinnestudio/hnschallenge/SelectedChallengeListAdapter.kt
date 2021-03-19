@@ -1,19 +1,25 @@
 package com.rinnestudio.hnschallenge
 
+import android.content.Context
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
-class SelectedChallengeListAdapter(challenges: List<Challenge>) : ChallengeListAdapter(challenges) {
-    override fun onBindViewHolder(holder: ChallengeListViewHolder, position: Int) {
-        holder.bind(challenges[position])
-        holder.item.apply {
-            isClickable = true
-            setOnClickListener {
-                val navDirections =
-                    SelectedChallengeListFragmentDirections.actionSelectedChallengeListFragmentToMapChallengeExecutionFragment(
-                        challenges[position]
-                    )
-                it.findNavController().navigate(navDirections)
-            }
+class SelectedChallengeListAdapter(challenges: List<Challenge>,context: Context) : ChallengeListAdapter(challenges,context) {
+
+    override fun createNavDirectionsToProfile(creatorId: String): NavDirections {
+        return if (creatorId == Firebase.auth.uid) {
+            SelectedChallengeListFragmentDirections.actionSelectedChallengeListFragmentToOwnProfileNavigationItem()
+        } else {
+            SelectedChallengeListFragmentDirections.actionSelectedChallengeListFragmentToOtherProfileFragment(
+                null, creatorId)
         }
+    }
+
+    override fun createNavDirecetionsToChallenge(challenge: Challenge): NavDirections {
+        return SelectedChallengeListFragmentDirections.actionSelectedChallengeListFragmentToMapChallengeExecutionFragment(
+            challenge
+        )
     }
 }

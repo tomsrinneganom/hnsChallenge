@@ -19,8 +19,12 @@ abstract class AbstractProfileMapFragment : AbstractHeatmapMapFragment() {
         mapView = view.findViewById(R.id.profileMapMapView)
         fabLocation = view.findViewById(R.id.profileMapFabLocation)
         fabChallengeList = view.findViewById(R.id.profileMapFabChallengeList)
+        testView = view.findViewById(R.id.view3)
         fabChallengeList.setOnClickListener { openChallengeList() }
         return view
     }
     abstract fun openChallengeList()
+    protected fun hideMapView(){
+        mapView.visibility = View.INVISIBLE
+    }
 }

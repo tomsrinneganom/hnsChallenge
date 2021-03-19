@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.button.MaterialButton
@@ -14,6 +15,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.rinnestudio.hnschallenge.R
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OtherProfileFragment : AbstractProfileFragment() {
@@ -26,7 +29,7 @@ class OtherProfileFragment : AbstractProfileFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.other_profile_fragment, container, false)
         usernameTextView = view.findViewById(R.id.textViewOtherProfileUserName)
@@ -37,7 +40,6 @@ class OtherProfileFragment : AbstractProfileFragment() {
         buttonViewUnsubscribe = view.findViewById(R.id.buttonViewOtherProfileUnsubscribe)
         buttonViewSubscribe = view.findViewById(R.id.buttonViewOtherProfileSubscribe)
         gettingProfile()
-        checkSubscribe()
         buttonViewUnsubscribe.setOnClickListener {
             viewModel.subscribe(profile, false)
             updateSubscribeButton(false)
@@ -72,14 +74,29 @@ class OtherProfileFragment : AbstractProfileFragment() {
 
         return view
     }
+
     //TODO()
     override fun gettingProfile() {
         val args: OtherProfileFragmentArgs by navArgs()
-        profile = args.profile
-        initMap()
-        updateUI()
+        viewLifecycleOwner.lifecycle.coroutineScope.launch {
+            when {
+                args.profile != null -> {
+                    profile = args.profile!!
+                }
+                args.id != null -> {
+                    profile = viewModel.getProfileById(args.id!!)
+                }
+                else -> {
+                    findNavController().navigateUp()
+                }
+            }
+            initMap()
+            updateUI()
+            checkSubscribe()
+        }
     }
-    private fun initMap(){
+
+    private fun initMap() {
         mapViewModel.profileId.value = profile.id
     }
 
@@ -90,6 +107,7 @@ class OtherProfileFragment : AbstractProfileFragment() {
                 OtherProfileFragmentDirections.actionOtherProfileFragmentToSubscriptionsListFragment(
                     subscribersIdList.toTypedArray()
                 )
+            hideMapFragment()
             findNavController().navigate(navDirections)
         }
     }
@@ -101,6 +119,7 @@ class OtherProfileFragment : AbstractProfileFragment() {
                 OtherProfileFragmentDirections.actionOtherProfileFragmentToSubscriptionsListFragment(
                     subscriptionsIdList.toTypedArray()
                 )
+            hideMapFragment()
             findNavController().navigate(navDirections)
         }
     }

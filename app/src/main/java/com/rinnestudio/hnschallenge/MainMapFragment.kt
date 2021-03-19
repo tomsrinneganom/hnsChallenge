@@ -25,6 +25,7 @@ open class MainMapFragment : AbstractHeatmapMapFragment() {
         val view = inflater.inflate(R.layout.main_map_fragment, container, false)
         mapView = view.findViewById(R.id.mainMapMapView)
         fabLocation = view.findViewById(R.id.mainMapFabLocation)
+        testView = view.findViewById(R.id.view2)
         return view
     }
 

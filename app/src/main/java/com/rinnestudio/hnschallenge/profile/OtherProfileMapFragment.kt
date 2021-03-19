@@ -17,14 +17,15 @@ class OtherProfileMapFragment: AbstractProfileMapFragment() {
         val navDirections =
             OtherProfileFragmentDirections.actionOtherProfileFragmentToSelectedChallengeListFragment(
                 selectedChallenges)
+        hideMapView()
         findNavController().navigate(navDirections)
-
     }
     override fun openChallengeList(){
         val navDirections =
             OtherProfileFragmentDirections.actionOtherProfileFragmentToSelectedChallengeListFragment(
                 challenges.toTypedArray()
             )
+        hideMapView()
         findNavController().navigate(navDirections)
     }
 

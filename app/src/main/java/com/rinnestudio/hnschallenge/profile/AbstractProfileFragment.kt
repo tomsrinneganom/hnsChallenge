@@ -1,9 +1,11 @@
 package com.rinnestudio.hnschallenge.profile
 
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import com.rinnestudio.hnschallenge.profile.Profile
 import com.rinnestudio.hnschallenge.utils.ImageUtils
 
@@ -15,7 +17,7 @@ abstract class AbstractProfileFragment : Fragment() {
     protected lateinit var subscriptionTextView: TextView
     protected lateinit var subscribersTextView: TextView
     protected lateinit var photoProfileImageView: ImageView
-
+    protected lateinit var mapFragment: FragmentContainerView
     protected abstract fun gettingProfile()
 
     protected fun updateUI() {
@@ -29,7 +31,12 @@ abstract class AbstractProfileFragment : Fragment() {
             photoProfileImageView)
     }
 
+
     protected abstract fun navigateToSubscribersList()
     protected abstract fun navigateToSubscriptionList()
+
+    protected fun hideMapFragment() {
+        mapFragment.visibility = View.INVISIBLE
+    }
 
 }
