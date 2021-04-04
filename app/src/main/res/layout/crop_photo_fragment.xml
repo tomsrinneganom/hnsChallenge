@@ -5,18 +5,15 @@
     android:id="@+id/frameLayout10"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundLightColor"
     tools:context=".AbstractCropPhotoFragment">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/cropPhotoFloatingButtonSavePhoto"
-        style="@style/FloatingButton"
+    <Button
+        android:id="@+id/savePhotoButton"
+        style="@style/Widget.App.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:clickable="true"
-        android:src="@drawable/ic_baseline_done_24"
-        app:backgroundTint="@color/backgroundLightColor"
+        android:layout_marginBottom="8dp"
+        android:text="@string/create"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -1,30 +1,53 @@
 package com.rinnestudio.hnschallenge.settings
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.coroutineScope
+import androidx.navigation.findNavController
+import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.rinnestudio.hnschallenge.R
+import com.rinnestudio.hnschallenge.SettingsManager
+import kotlinx.coroutines.launch
 
 class SettingsFragment : Fragment() {
     private lateinit var viewModel: SettingsViewModel
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var editProfileTv: TextView
+    private lateinit var logOutTv: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.settings_fragment, container, false)
-        recyclerView = view.findViewById(R.id.settingsRecyclerView)
-        val viewManager = LinearLayoutManager(context)
-        recyclerView.apply {
-            setHasFixedSize(true)
-            layoutManager = viewManager
-            adapter = SettingsAdapter()
+        editProfileTv = view.findViewById(R.id.editProfileTextView)
+        logOutTv = view.findViewById(R.id.logOutTextView)
+        logOutTv.apply {
+            isClickable = true
+            setOnClickListener {
+                Firebase.auth.signOut()
+                findNavController().navigate(R.id.signInFragment)
+            }
+        }
+
+        val settingsManager = SettingsManager()
+        view.findViewById<SwitchMaterial>(R.id.nightThemeSwitchView).apply {
+            isChecked = settingsManager.getCurrentAppTheme(requireContext())
+            setOnClickListener {
+                viewLifecycleOwner.lifecycle.coroutineScope.launch {
+                    if (isChecked) {
+                        settingsManager.setDarkTheme(requireContext())
+                    } else {
+                        settingsManager.setLightTheme(requireContext())
+                    }
+                }
+            }
         }
 
         return view

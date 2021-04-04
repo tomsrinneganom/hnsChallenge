@@ -1,13 +1,14 @@
 package com.rinnestudio.hnschallenge.profile
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.rinnestudio.hnschallenge.utils.ImageUtils
 import com.rinnestudio.hnschallenge.R
+import com.rinnestudio.hnschallenge.utils.ImageUtils
 
 abstract class AbstractProfileListAdapter(profileList: ArrayList<Profile>) :
     RecyclerView.Adapter<AbstractProfileListAdapter.UserListViewHolder>() {
@@ -24,6 +25,7 @@ abstract class AbstractProfileListAdapter(profileList: ArrayList<Profile>) :
     }
 
     override fun onBindViewHolder(holder: UserListViewHolder, position: Int) {
+        Log.i("Log_tag", "position: $position")
         holder.bind(data[position])
         holder.itemView.setOnClickListener {
             navigateToProfile(data[position], it)

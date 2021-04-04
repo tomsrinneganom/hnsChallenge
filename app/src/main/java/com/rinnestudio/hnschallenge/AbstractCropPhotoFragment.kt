@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.theartofdev.edmodo.cropper.CropImageView
 
 abstract class AbstractCropPhotoFragment : Fragment() {
 
     protected lateinit var cropImageView: CropImageView
-    protected lateinit var savePhotoFloatingActionButton: FloatingActionButton
+    protected lateinit var savePhotoButton: Button
 
 
     override fun onCreateView(
@@ -21,7 +21,7 @@ abstract class AbstractCropPhotoFragment : Fragment() {
         val view = inflater.inflate(R.layout.crop_photo_fragment, container, false)
         cropImageView = view.findViewById(R.id.cropImageView)
         setUpCropView()
-        savePhotoFloatingActionButton = view.findViewById<FloatingActionButton>(R.id.cropPhotoFloatingButtonSavePhoto).apply {
+        savePhotoButton = view.findViewById<Button>(R.id.savePhotoButton).apply {
             setOnClickListener {
                 savingPhoto()
             }

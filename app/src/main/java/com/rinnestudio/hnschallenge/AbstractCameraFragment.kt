@@ -1,11 +1,11 @@
 package com.rinnestudio.hnschallenge
 
+import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
@@ -22,7 +22,6 @@ abstract class AbstractCameraFragment : Fragment() {
     private lateinit var imageCapture: ImageCapture
     protected lateinit var pathToPhoto: String
     private lateinit var cameraProvider: ProcessCameraProvider
-    protected lateinit var layout: ConstraintLayout
 
     override fun onStart() {
         super.onStart()
@@ -31,6 +30,12 @@ abstract class AbstractCameraFragment : Fragment() {
 
     private fun initCamera() {
         initProcessCameraProvider()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        cameraPreviewView = requireView().findViewById(R.id.cameraPreviewView)
+        buttonTakePhoto = requireView().findViewById(R.id.takePhotoImageView)
     }
 
     private fun initProcessCameraProvider() {

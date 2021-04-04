@@ -26,11 +26,11 @@ import com.rinnestudio.hnschallenge.utils.ImageUtils
 import kotlin.random.Random
 
 open class ChallengeListAdapter(
-    protected val challenges: List<Challenge>,
+    protected var challenges: MutableList<Challenge>,
     protected val context: Context,
 ) :
     RecyclerView.Adapter<ChallengeListAdapter.ChallengeListViewHolder>() {
-
+    
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChallengeListViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.challenge_list_item, parent, false)
@@ -38,6 +38,7 @@ open class ChallengeListAdapter(
     }
 
     override fun onBindViewHolder(holder: ChallengeListViewHolder, position: Int) {
+        Log.i("Log_tag", "position: $position")
         holder.bind(challenges[position], context)
         holder.challengePhoto.apply {
             setOnClickListener {

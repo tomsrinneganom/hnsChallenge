@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.navArgs
@@ -29,11 +28,8 @@ class CameraChallengeExecutionFragment : AbstractCameraFragment(), SeekBar.OnSee
         savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.camera_challenge_execution_fragment, container, false)
-        layout = view as ConstraintLayout
-
         val args: CameraChallengeExecutionFragmentArgs by navArgs()
         challenge = args.challenge
-        buttonTakePhoto = view.findViewById(R.id.imageViewCameraChallengeExecutionTakePhoto)
         challengeImageView = view.findViewById(R.id.imageViewCameraChallengeExecution)
         verticalSeekBar = view.findViewById(R.id.verticalSeekBar)
         verticalSeekBar.setOnSeekBarChangeListener(this)
@@ -50,7 +46,6 @@ class CameraChallengeExecutionFragment : AbstractCameraFragment(), SeekBar.OnSee
             Log.i("Log_tag", "challenge.id == null && challenge.profileId == null")
 
         }
-        cameraPreviewView = view.findViewById(R.id.cameraViewChallengeExecution)
         return view
     }
 

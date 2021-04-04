@@ -1,6 +1,7 @@
 package com.rinnestudio.hnschallenge
 
 import android.graphics.Color.parseColor
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,15 +14,22 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.mapbox.geojson.*
+import com.mapbox.geojson.Feature
+import com.mapbox.geojson.LineString
+import com.mapbox.geojson.Point
+import com.mapbox.geojson.Polygon
+import com.mapbox.mapboxsdk.annotations.MarkerOptions
+import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.maps.MapboxMap
-import com.mapbox.mapboxsdk.style.expressions.Expression.*
-import com.mapbox.mapboxsdk.style.layers.CircleLayer
-import com.mapbox.mapboxsdk.style.layers.PropertyFactory.circleColor
-import com.mapbox.mapboxsdk.style.layers.PropertyFactory.circleRadius
+import com.mapbox.mapboxsdk.style.layers.FillLayer
+import com.mapbox.mapboxsdk.style.layers.PropertyFactory.*
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
+import com.mapbox.turf.TurfConstants
+import com.mapbox.turf.TurfMeta
+import com.mapbox.turf.TurfTransformation
 import com.rinnestudio.hnschallenge.utils.ChallengeUtils
 import kotlinx.coroutines.launch
+
 
 class MapChallengeExecutionFragment : AbstractMapFragment() {
 
@@ -36,18 +44,14 @@ class MapChallengeExecutionFragment : AbstractMapFragment() {
         val args: MapChallengeExecutionFragmentArgs by navArgs()
         challenge = args.challenge
 
-        fabLocation =
-            view.findViewById(R.id.floatingActionButtonChallengeExecutionLocation)
-        mapView = view.findViewById(R.id.mapViewChallengeExecution)
-
-        view.findViewById<FloatingActionButton>(R.id.floatingActionButtonChallengeExecutionCamera)
+        view.findViewById<FloatingActionButton>(R.id.openCameraFab)
             .setOnClickListener {
                 val navDirections =
                     MapChallengeExecutionFragmentDirections.actionMapChallengeExecutionFragmentToCameraChallengeExecutionFragment(
                         challenge)
                 findNavController().navigate(navDirections)
             }
-        view.findViewById<FloatingActionButton>(R.id.floatingActionButtonChallengeExecutionImage)
+        view.findViewById<FloatingActionButton>(R.id.openChallengePhotoFab)
             .setOnClickListener {
                 val navDirections =
                     MapChallengeExecutionFragmentDirections.actionMapChallengeExecutionFragmentToDisplayImageFragment(
@@ -57,7 +61,7 @@ class MapChallengeExecutionFragment : AbstractMapFragment() {
             }
         if (Firebase.auth.currentUser != null && challenge.creatorId == Firebase.auth.currentUser!!.uid) {
             Log.i("Log_tag", "true")
-            view.findViewById<FloatingActionButton>(R.id.floatingActionButtonDeleteChallenge)
+            view.findViewById<FloatingActionButton>(R.id.deleteChallengeFab)
                 .apply {
                     visibility = View.VISIBLE
                     setOnClickListener { deleteChallenge() }
@@ -82,21 +86,47 @@ class MapChallengeExecutionFragment : AbstractMapFragment() {
     }
 
     private fun addCircleLayer() {
-        mapboxMap.getStyle { style ->
+        mapboxMap.getStyle {
+            val centerCircle = generateCeneterPointOfCircle()
+            val f = TurfTransformation.circle(Point.fromLngLat(centerCircle.longitude!!,
+                centerCircle.latitude!!), 200.0, 360, TurfConstants.UNIT_METERS);
             val feature =
-                Feature.fromGeometry(Point.fromLngLat(challenge.longitude!!, challenge.latitude!!))
-            style.addSource(GeoJsonSource("circle-source", feature))
-            val layer = CircleLayer("circle-layer", "circle-source").withProperties(
-                circleRadius(
-                    interpolate(
-                        linear(), zoom(),
-                        stop(2, 5f),
-                        stop(3, 20f)
-                    )
-                ),
-                circleColor(parseColor("#B323FF"))
-            );
-            style.addLayer(layer)
+                Feature.fromGeometry(Point.fromLngLat(centerCircle.longitude!!,
+                    centerCircle.latitude!!))
+            val source = GeoJsonSource("circle-source", feature)
+            source.setGeoJson(Polygon.fromOuterInner(LineString.fromLngLats(TurfMeta.coordAll(f,
+                false))))
+            it.addSource(source)
+            val polygonFillLayer = FillLayer("layer-id", "circle-source")
+                .withProperties(fillColor(parseColor("#b134eb")), fillOpacity(0.5f))
+            it.addLayer(polygonFillLayer)
+            Log.i("Log_tag", "challenge: ${challenge.latitude!!} ${challenge.longitude!!}")
+            Log.i("Log_tag", "centerCircle: ${centerCircle.latitude!!} ${centerCircle.longitude!!}")
+            mapboxMap.addMarker(MarkerOptions().setPosition(LatLng(challenge.latitude!!,
+                challenge.longitude!!)))
+            mapboxMap.addMarker(MarkerOptions().setPosition(LatLng(centerCircle.latitude!!,
+                centerCircle.longitude!!)))
+
         }
+    }
+
+    private fun generateCeneterPointOfCircle(): LatLng {
+        val earth = 6371000.0
+        val x = (-100..100).random()
+        val y = (-100..100).random()
+        val lat: Double = challenge.latitude!! + (x / earth) * (180 / Math.PI)
+        val lng: Double =
+            challenge.longitude!! + (y / earth) * (180 / Math.PI) / kotlin.math.cos(challenge.latitude!! * Math.PI / 180)
+        val l1 = Location("test1").apply {
+            latitude = lat
+            longitude = lng
+        }
+        val l2 = Location("test2").apply {
+            latitude = challenge.latitude!!
+            longitude = challenge.longitude!!
+        }
+        Log.i("Log_tag", "distance: ${l1.distanceTo(l2)}")
+
+        return LatLng(lat, lng)
     }
 }

@@ -1,11 +1,11 @@
 package com.rinnestudio.hnschallenge.repository
 
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.rinnestudio.hnschallenge.profile.Profile
 import com.rinnestudio.hnschallenge.repository.firebaseRepository.ProfileFirebaseRepository
 import com.rinnestudio.hnschallenge.repository.room.RoomDatabase
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -99,7 +99,7 @@ class ProfileRepository {
     suspend fun getListOfProfilesById(idList: List<String>) =
         ProfileFirebaseRepository().getListOfProfilesById(idList)
 
-    suspend fun getSubscribersList(): MutableList<String>? {
+    suspend fun getSubscriptionList(): MutableList<String>? {
         val id = Firebase.auth.uid
         if (id != null) {
             return getProfile(id).subscription

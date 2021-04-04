@@ -1,11 +1,11 @@
 package com.rinnestudio.hnschallenge
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.rinnestudio.hnschallenge.repository.ProfileRepository
 import com.rinnestudio.hnschallenge.repository.room.RoomDatabase
+import javax.inject.Inject
 
-class SignInViewModel @ViewModelInject constructor(private val roomDatabase: RoomDatabase) :
+class SignInViewModel @Inject constructor(private val roomDatabase: RoomDatabase) :
     ViewModel() {
 
     suspend fun signInWithEmail(email: String, password: String): Boolean {

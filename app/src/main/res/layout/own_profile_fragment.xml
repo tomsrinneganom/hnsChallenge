@@ -4,136 +4,124 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundLightColor"
+    android:background="@color/backgroundColor"
     tools:context=".profile.OwnProfileFragment">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
+        android:id="@+id/cardViewProfilePhoto"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        app:cardBackgroundColor="@color/backgroundLightColor"
+        app:cardBackgroundColor="@color/backgroundColor"
         app:cardCornerRadius="6dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageViewOwnProfilePhoto"
+            android:id="@+id/profilePhotoImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:src="@tools:sample/avatars" />
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textViewOwnProfileUserName"
+        android:id="@+id/profileUserNameTextView"
+        style="@style/Widget.App.TextView.MediumText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:fontFamily="@font/rubik_medium"
         android:text=" "
         android:textAlignment="textStart"
-        android:textAllCaps="false"
-        android:textColor="@color/colorDark"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/cardView2"
-        app:layout_constraintTop_toTopOf="@+id/cardView2" />
+        app:layout_constraintStart_toEndOf="@+id/cardViewProfilePhoto"
+        app:layout_constraintTop_toTopOf="@+id/cardViewProfilePhoto" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/scoreIconImageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="5dp"
         android:src="@drawable/ic_baseline_stars_24"
-        app:layout_constraintStart_toStartOf="@+id/textViewOwnProfileUserName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOwnProfileUserName"
-        app:tint="@color/colorDark" />
+        app:layout_constraintStart_toStartOf="@+id/profileUserNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/profileUserNameTextView"
+        app:tint="@color/iconColor" />
 
     <TextView
-        android:id="@+id/textViewOwnProfileScore"
+        android:id="@+id/profileScoreTextView"
+        style="@style/Widget.App.TextView.MediumText"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
-        android:fontFamily="@font/rubik_medium"
         android:text=" "
-        android:textColor="@color/colorDark"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        app:layout_constraintBottom_toBottomOf="@+id/scoreIconImageView"
+        app:layout_constraintStart_toEndOf="@+id/scoreIconImageView"
+        app:layout_constraintTop_toTopOf="@+id/scoreIconImageView" />
 
     <TextView
-        android:id="@+id/textViewOwnProfileSubscribersTitle"
+        android:id="@+id/profileSubscribersTitleTextView"
+        style="@style/Widget.App.TextView.MediumText"
         android:layout_width="wrap_content"
         android:layout_height="22dp"
         android:layout_marginTop="4dp"
         android:elevation="10dp"
-        android:fontFamily="@font/rubik_medium"
         android:text="@string/subscribers"
         android:textAlignment="center"
-        android:textColor="@color/colorDark"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintStart_toStartOf="@+id/scoreIconImageView"
+        app:layout_constraintTop_toBottomOf="@+id/scoreIconImageView" />
 
     <TextView
-        android:id="@+id/textViewOwnProfileSubscriptionsTitle"
+        android:id="@+id/profileSubscriptionsTitleTextView"
+        style="@style/Widget.App.TextView.MediumText"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:fontFamily="@font/rubik_medium"
         android:text="@string/subscriptions"
         android:textAlignment="center"
-        android:textColor="@color/colorDark"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewOwnProfileSubscribersTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/profileSubscribersTitleTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewOwnProfileSubscribersTitle"
-        app:layout_constraintTop_toTopOf="@+id/textViewOwnProfileSubscribersTitle" />
+        app:layout_constraintStart_toEndOf="@+id/profileSubscribersTitleTextView"
+        app:layout_constraintTop_toTopOf="@+id/profileSubscribersTitleTextView" />
 
     <TextView
-        android:id="@+id/textViewOwnProfileSubscriptions"
+        android:id="@+id/profileSubscriptionsTextView"
+        style="@style/Widget.App.TextView.MediumText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/rubik_medium"
         android:text=" "
-        android:textColor="@color/colorDark"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewOwnProfileSubscriptionsTitle"
-        app:layout_constraintStart_toStartOf="@+id/textViewOwnProfileSubscriptionsTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOwnProfileSubscriptionsTitle" />
+        app:layout_constraintEnd_toEndOf="@+id/profileSubscriptionsTitleTextView"
+        app:layout_constraintStart_toStartOf="@+id/profileSubscriptionsTitleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/profileSubscriptionsTitleTextView" />
 
     <TextView
-        android:id="@+id/textViewOwnProfileSubscribers"
+        android:id="@+id/profileSubscribersTextView"
+        style="@style/Widget.App.TextView.MediumText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:elevation="10dp"
-        android:fontFamily="@font/rubik_medium"
         android:text=" "
-        android:textColor="@color/colorDark"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewOwnProfileSubscribersTitle"
-        app:layout_constraintStart_toStartOf="@+id/textViewOwnProfileSubscribersTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOwnProfileSubscribersTitle" />
+        app:layout_constraintEnd_toEndOf="@+id/profileSubscribersTitleTextView"
+        app:layout_constraintStart_toStartOf="@+id/profileSubscribersTitleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/profileSubscribersTitleTextView" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
+        style="@style/Widget.App.CardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOwnProfileSubscribers">
+        app:layout_constraintTop_toBottomOf="@+id/profileSubscribersTextView">
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/OwnProfileMapFragment"
+            android:id="@+id/profileMapFragment"
             android:name="com.rinnestudio.hnschallenge.profile.OwnProfileMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

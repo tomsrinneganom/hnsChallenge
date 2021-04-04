@@ -4,5 +4,8 @@
     <color name="colorDark">#1E1E1E</color>
     <color name="colorLight">#FFFFFF</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="backgroundLightColor">#FFFFFF</color>
+    <color name="backgroundColor">#FFFFFF</color>
+    <color name="textColor">#1E1E1E</color>
+    <color name="iconColor">#1E1E1E</color>
+    <color name="backgroundColorCard">#FFFFFF</color>
 </resources>

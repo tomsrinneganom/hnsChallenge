@@ -16,10 +16,6 @@
         android:roundIcon="@mipmap/ic_hns_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service
-            android:name=".LocationService"
-            android:enabled="true"
-            android:exported="true"></service>
 
         <activity android:name=".MainActivity">
             <intent-filter>

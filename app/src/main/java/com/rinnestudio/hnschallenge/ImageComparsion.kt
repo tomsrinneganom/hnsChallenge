@@ -3,7 +3,6 @@ package com.rinnestudio.hnschallenge
 import android.graphics.Bitmap
 import org.opencv.android.OpenCVLoader
 import org.opencv.android.Utils
-import org.opencv.core.DMatch
 import org.opencv.core.Mat
 import org.opencv.core.MatOfDMatch
 import org.opencv.core.MatOfKeyPoint
@@ -11,7 +10,6 @@ import org.opencv.features2d.DescriptorMatcher
 import org.opencv.features2d.FlannBasedMatcher
 import org.opencv.features2d.SIFT
 import org.opencv.imgproc.Imgproc
-import java.util.*
 
 class ImageComparsion {
     fun compare(bitmapObject: Bitmap, bitmapScene: Bitmap): String {

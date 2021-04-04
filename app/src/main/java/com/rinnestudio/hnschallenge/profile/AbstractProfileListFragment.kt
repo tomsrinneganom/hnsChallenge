@@ -35,6 +35,9 @@ abstract class AbstractProfileListFragment : Fragment() {
             setHasFixedSize(true)
             adapter = recyclerAdapter
         }
+
+        recyclerView
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

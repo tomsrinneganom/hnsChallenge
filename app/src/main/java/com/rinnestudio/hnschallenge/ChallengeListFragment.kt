@@ -2,10 +2,10 @@ package com.rinnestudio.hnschallenge
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -42,7 +42,7 @@ open class ChallengeListFragment : Fragment() {
     }
 
     protected open fun initViewAdapter(challenges: List<Challenge>) {
-        viewAdapter = ChallengeListAdapter(challenges,requireContext())
+        viewAdapter = ChallengeListAdapter(challenges.toMutableList(),requireContext())
     }
 
     protected fun bindRecyclerView() {

@@ -22,7 +22,17 @@ class ChallengeRepository {
     private suspend fun addChallengeToDatabase(challenge: Challenge, challengePhoto: ByteArray) =
         firebaseRepository.addChallengeToDatabase(challenge, challengePhoto)
 
-    suspend fun getOwnChallengeList() = ChallengeFirebaseRepository().getOwnChallengeList()
+    suspend fun getSubscriptionsChallengeList(): List<Challenge> {
+        val subscription = ProfileRepository().getSubscriptionList()
+        if (!subscription.isNullOrEmpty()) {
+            val challenges = ChallengeFirebaseRepository().getSubscriptionsChallengeList(subscription)
+            return if(challenges.isNullOrEmpty())
+                emptyList()
+            else
+                challenges
+        }
+        return listOf()
+    }
 
     suspend fun uploadChallengePhoto(creatorId: String, challengeId: String): Bitmap {
         val file = File.createTempFile("images", "jpg")
@@ -51,7 +61,7 @@ class ChallengeRepository {
     suspend fun deleteChallenge(
         challengeId: String,
         creatorId: String = Firebase.auth.currentUser!!.uid,
-    ) =  firebaseRepository.deleteChallengeById(challengeId, creatorId)
+    ) = firebaseRepository.deleteChallengeById(challengeId, creatorId)
 
     private fun getChallengeId(location: Location) =
         "${location.longitude + location.latitude}${Calendar.getInstance().time}"

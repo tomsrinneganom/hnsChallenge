@@ -8,9 +8,9 @@ import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.Style
-import com.mapbox.mapboxsdk.style.expressions.Expression
+import com.mapbox.mapboxsdk.style.expressions.Expression.*
 import com.mapbox.mapboxsdk.style.layers.HeatmapLayer
-import com.mapbox.mapboxsdk.style.layers.PropertyFactory
+import com.mapbox.mapboxsdk.style.layers.PropertyFactory.*
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import kotlinx.coroutines.launch
 
@@ -80,22 +80,34 @@ abstract class AbstractHeatmapMapFragment : AbstractMapFragment() {
         val layer = HeatmapLayer(layerID, sourceID)
         layer.sourceLayer = sourceID
         layer.setProperties(
-            PropertyFactory.heatmapColor(
-                Expression.interpolate(
-                    Expression.linear(), Expression.heatmapDensity(),
-                    Expression.literal(0), Expression.rgba(179, 35, 255, 0),
-                    Expression.literal(0.2), Expression.rgba(179, 35, 255, 0.2),
-                    Expression.literal(0.4), Expression.rgba(179, 35, 255, 0.3),
-                    Expression.literal(0.6), Expression.rgba(179, 35, 255, 0.5),
-                    Expression.literal(0.8), Expression.rgba(179, 35, 255, 0.6),
-                    Expression.literal(1), Expression.rgba(179, 35, 255, 1)
+            heatmapColor(
+                interpolate(
+                    linear(), heatmapDensity(),
+                    literal(0), rgba(179, 35, 255, 0),
+                    literal(0.2), rgba(179, 35, 255, 0.4),
+                    literal(0.4), rgba(179, 35, 255, 0.5),
+                    literal(0.6), rgba(179, 35, 255, 0.6),
+                    literal(0.8), rgba(179, 35, 255, 0.7),
+                    literal(1), rgba(179, 35, 255, 0.7)
                 )
             ),
-            PropertyFactory.heatmapWeight(
-                Expression.interpolate(
-                    Expression.linear(), Expression.get("mag"),
-                    Expression.stop(0, 0),
-                    Expression.stop(6, 1)
+            heatmapIntensity(interpolate(
+                linear(), zoom(),
+                literal(0), literal(0),
+                literal(22), literal(1)
+            )),
+            heatmapRadius(interpolate(
+                linear(), zoom(),
+                literal(0), literal(10),
+                literal(7), literal(50),
+                literal(13), literal(70),
+                literal(22), literal(500)
+            )),
+            heatmapWeight(
+                interpolate(
+                    linear(), get("mag"),
+                    stop(0, 0.5),
+                    stop(20, 0.7)
                 )
             )
         )

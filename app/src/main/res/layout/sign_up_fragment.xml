@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout9"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundLightColor"
+    android:background="@color/backgroundColor"
     tools:context=".SignUpFragment">
 
     <androidx.cardview.widget.CardView
@@ -22,9 +22,9 @@
             android:id="@+id/imageView10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/backgroundLightColor"
+            android:background="@color/backgroundColor"
             android:src="@drawable/ic_baseline_add_circle_outline_24"
-            app:tint="@color/colorDark" />
+            app:tint="@color/iconColor" />
     </androidx.cardview.widget.CardView>
 
     <EditText
@@ -59,13 +59,11 @@
 
     <Button
         android:id="@+id/buttonSignUp"
+        style="@style/Widget.App.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:fontFamily="@font/rubik_medium"
         android:text="Sign up"
-        android:textColor="@color/colorLight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextSignUpPassword" />

@@ -1,15 +1,15 @@
 package com.rinnestudio.hnschallenge
 
 import android.graphics.Bitmap
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rinnestudio.hnschallenge.repository.ProfileRepository
 import com.rinnestudio.hnschallenge.repository.room.RoomDatabase
 import com.rinnestudio.hnschallenge.utils.ImageUtils
+import javax.inject.Inject
 
 
-class SignUpViewModel @ViewModelInject constructor(
+class SignUpViewModel @Inject constructor(
     private val roomDatabase: RoomDatabase,
 ) : ViewModel() {
     val profilePhoto = MutableLiveData<Bitmap>()

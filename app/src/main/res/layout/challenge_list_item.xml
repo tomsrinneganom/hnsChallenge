@@ -11,18 +11,16 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_challenge_item"
+        style="@style/Widget.App.CardView.ListItem"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        android:background="@color/backgroundLightColor"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="3dp">
+        app:cardCornerRadius="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/backgroundLightColor">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/imageView5"
@@ -32,7 +30,7 @@
                 app:layout_constraintStart_toStartOf="@+id/image_view_challenge_item_creator_photo"
                 app:layout_constraintTop_toTopOf="@+id/distanceToCurrentLocationChallengeItem"
                 app:srcCompat="@drawable/ic_baseline_gps_fixed_24"
-                app:tint="@color/colorDark" />
+                app:tint="@color/iconColor" />
 
             <ImageView
                 android:id="@+id/image_view_challenge_item_image"
@@ -56,14 +54,11 @@
 
             <TextView
                 android:id="@+id/text_view_challenge_item_creator_name"
+                style="@style/Widget.App.TextView.SmallText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
-                android:fontFamily="@font/rubik_medium"
                 android:text=""
-                android:textAllCaps="false"
-                android:textColor="@color/colorDark"
-                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/image_view_challenge_item_creator_photo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image_view_challenge_item_creator_photo"
@@ -83,28 +78,24 @@
 
             <TextView
                 android:id="@+id/textView2"
+                style="@style/Widget.App.TextView.SmallText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="4dp"
-                android:backgroundTint="@color/colorLight"
-                android:fontFamily="@font/rubik_medium"
                 android:text=""
-                android:textColor="#FF4141"
                 app:layout_constraintStart_toStartOf="@+id/view"
                 app:layout_constraintTop_toBottomOf="@+id/image_view_challenge_item_creator_photo" />
 
             <TextView
                 android:id="@+id/distanceToCurrentLocationChallengeItem"
+                style="@style/Widget.App.TextView.SmallText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="8dp"
-                android:fontFamily="@font/rubik_medium"
-                android:text=" "
-                android:textColor="@color/colorDark"
-                android:textSize="14sp"
+                android:text=""
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView5"
                 app:layout_constraintTop_toBottomOf="@+id/view"

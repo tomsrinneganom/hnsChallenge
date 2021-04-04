@@ -1,16 +1,18 @@
 package com.rinnestudio.hnschallenge.profile
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rinnestudio.hnschallenge.repository.ProfileRepository
-import com.rinnestudio.hnschallenge.repository.room.RoomDatabase
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.rinnestudio.hnschallenge.repository.ProfileRepository
+import com.rinnestudio.hnschallenge.repository.room.RoomDatabase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class OtherProfileViewModel @ViewModelInject constructor(
+@HiltViewModel
+class OtherProfileViewModel @Inject constructor(
     private val roomDatabase: RoomDatabase,
 ) : ViewModel() {
     private var subscribe: Boolean = false

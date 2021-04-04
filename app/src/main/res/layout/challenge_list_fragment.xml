@@ -5,14 +5,12 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundLightColor"
     tools:context=".ChallengeListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_challenge_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/backgroundLightColor"
         android:elevation="10dp"
         android:scrollbars="vertical" />
 </FrameLayout>

@@ -7,5 +7,4 @@ import com.rinnestudio.hnschallenge.profile.Profile
 @Database(entities = [Profile::class], version = 1)
 abstract class RoomDatabase : RoomDatabase() {
     abstract fun getProfileDao():ProfileDao
-
 }

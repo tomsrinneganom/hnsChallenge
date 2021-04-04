@@ -4,168 +4,152 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundLightColor"
+    android:background="@color/backgroundColor"
     tools:context=".profile.OtherProfileFragment">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewOtherProfilePhoto"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:id="@+id/cardViewProfilePhoto"
+        style="@style/Widget.App.CardView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        app:cardBackgroundColor="@color/backgroundLightColor"
         app:cardCornerRadius="6dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageViewOtherProfilePhoto"
+            android:id="@+id/profilePhotoImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:src="@tools:sample/avatars" />
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textViewOtherProfileUserName"
+        android:id="@+id/profileUserNameTextView"
+        style="@style/Widget.App.TextView.MediumText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:fontFamily="@font/rubik_medium"
-        android:text=" "
+        android:text=""
         android:textAlignment="textStart"
-        android:textAllCaps="false"
-        android:textColor="@color/colorDark"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/cardViewOtherProfilePhoto"
-        app:layout_constraintTop_toTopOf="@+id/cardViewOtherProfilePhoto" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/cardViewProfilePhoto"
+        app:layout_constraintTop_toTopOf="@+id/cardViewProfilePhoto" />
 
     <ImageView
-        android:id="@+id/imageViewScore"
+        android:id="@+id/scoreIconImageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="5dp"
         android:src="@drawable/ic_baseline_stars_24"
-        app:layout_constraintStart_toStartOf="@+id/textViewOtherProfileUserName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOtherProfileUserName"
-        app:tint="@color/colorDark" />
+        app:layout_constraintStart_toStartOf="@+id/profileUserNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/profileUserNameTextView"
+        app:tint="@color/iconColor" />
 
     <TextView
-        android:id="@+id/textViewOtherProfileScore"
+        style="@style/Widget.App.TextView.MediumText"
+        android:id="@+id/profileScoreTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
-        android:fontFamily="@font/rubik_medium"
         android:text=" "
-        android:textColor="@color/colorDark"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewScore"
-        app:layout_constraintStart_toEndOf="@+id/imageViewScore"
-        app:layout_constraintTop_toTopOf="@+id/imageViewScore" />
+        app:layout_constraintBottom_toBottomOf="@+id/scoreIconImageView"
+        app:layout_constraintStart_toEndOf="@+id/scoreIconImageView"
+        app:layout_constraintTop_toTopOf="@+id/scoreIconImageView" />
 
     <TextView
-        android:id="@+id/textViewOtherProfileSubscribersTitle"
+        android:id="@+id/profileSubscribersTitleTextView"
+        style="@style/Widget.App.TextView.MediumText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/rubik_medium"
         android:text="@string/subscribers"
         android:textAlignment="center"
-        android:textColor="@color/colorDark"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/imageViewScore"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewScore" />
+        app:layout_constraintStart_toStartOf="@+id/scoreIconImageView"
+        app:layout_constraintTop_toBottomOf="@+id/scoreIconImageView" />
 
     <TextView
-        android:id="@+id/textViewOtherProfileSubscriptionsTitle"
+        android:id="@+id/profileSubscriptionsTitleTextView"
+        style="@style/Widget.App.TextView.MediumText"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:fontFamily="@font/rubik_medium"
         android:text="@string/subscriptions"
         android:textAlignment="center"
-        android:textColor="@color/colorDark"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewOtherProfileSubscribersTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/profileSubscribersTitleTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewOtherProfileSubscribersTitle"
-        app:layout_constraintTop_toTopOf="@+id/textViewOtherProfileSubscribersTitle" />
+        app:layout_constraintStart_toEndOf="@+id/profileSubscribersTitleTextView"
+        app:layout_constraintTop_toTopOf="@+id/profileSubscribersTitleTextView" />
 
     <TextView
-        android:id="@+id/textViewOtherProfileSubscriptions"
+        android:id="@+id/profileSubscriptionsTextView"
+        style="@style/Widget.App.TextView.MediumText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/rubik_medium"
         android:text=" "
-        android:textColor="@color/colorDark"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewOtherProfileSubscriptionsTitle"
-        app:layout_constraintStart_toStartOf="@+id/textViewOtherProfileSubscriptionsTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOtherProfileSubscriptionsTitle" />
+        app:layout_constraintEnd_toEndOf="@+id/profileSubscriptionsTitleTextView"
+        app:layout_constraintStart_toStartOf="@+id/profileSubscriptionsTitleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/profileSubscriptionsTitleTextView" />
 
     <TextView
-        android:id="@+id/textViewOtherProfileSubscribers"
+        android:id="@+id/profileSubscribersTextView"
+        style="@style/Widget.App.TextView.MediumText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/rubik_medium"
         android:text=" "
-        android:textColor="@color/colorDark"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewOtherProfileSubscribersTitle"
-        app:layout_constraintStart_toStartOf="@+id/textViewOtherProfileSubscribersTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOtherProfileSubscribersTitle" />
+        app:layout_constraintEnd_toEndOf="@+id/profileSubscribersTitleTextView"
+        app:layout_constraintStart_toStartOf="@+id/profileSubscribersTitleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/profileSubscribersTitleTextView" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
+        style="@style/Widget.App.CardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="5dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonViewOtherProfileSubscribe">
+        app:layout_constraintTop_toBottomOf="@+id/profileSubscribeButton">
 
-        <fragment
-            android:id="@+id/mapFragmentOtherProfile"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/profileMapFragment"
             android:name="com.rinnestudio.hnschallenge.profile.OtherProfileMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonViewOtherProfileSubscribe"
+        android:id="@+id/profileSubscribeButton"
+        style="@style/Widget.App.Button"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:backgroundTint="@color/colorPrimary"
-        android:fontFamily="@font/rubik_medium"
         android:text="@string/subscribe"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textColor="@color/colorLight"
         android:visibility="visible"
-        app:cornerRadius="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewOtherProfileSubscriptionsTitle"
-        app:layout_constraintStart_toStartOf="@+id/textViewOtherProfileSubscribersTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOtherProfileSubscribers"
+        app:layout_constraintEnd_toEndOf="@+id/profileSubscriptionsTitleTextView"
+        app:layout_constraintStart_toStartOf="@+id/profileSubscribersTitleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/profileSubscribersTextView"
         app:strokeColor="@color/colorPrimary"
         app:strokeWidth="1dp" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonViewOtherProfileUnsubscribe"
+        android:id="@+id/profileUnsubscribeButton"
+        style="@style/Widget.App.Button"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:backgroundTint="@color/backgroundLightColor"
-        android:fontFamily="@font/rubik_medium"
+        android:backgroundTint="@color/backgroundColor"
         android:text="@string/unsubscribe"
         android:textColor="@color/colorPrimary"
-        android:textSize="16sp"
         android:visibility="invisible"
-        app:cornerRadius="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewOtherProfileSubscriptionsTitle"
-        app:layout_constraintStart_toStartOf="@+id/textViewOtherProfileSubscribersTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOtherProfileSubscribers" />
+        app:layout_constraintEnd_toEndOf="@+id/profileSubscriptionsTitleTextView"
+        app:layout_constraintStart_toStartOf="@+id/profileSubscribersTitleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/profileSubscribersTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

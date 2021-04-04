@@ -4,29 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundLightColor"
     tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/settingsImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
         android:contextClickable="false"
-        app:tint="@color/colorDark"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_settings_24" />
+        app:srcCompat="@drawable/ic_baseline_settings_24"
+        app:tint="@color/iconColor" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/mainBottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/backgroundLightColor"
         app:elevation="0dp"
         app:itemIconSize="25dp"
-        app:itemIconTint="@color/bottom_navigation_item_color"
+        app:itemIconTint="@color/iconColor"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,14 +32,15 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
+        style="@style/Widget.App.CardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="2dp"
-        android:background="@color/backgroundLightColor"
         app:cardCornerRadius="15dp"
+        app:cardBackgroundColor="@color/backgroundColor"
         app:layout_constraintBottom_toTopOf="@+id/mainBottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,15 +58,12 @@
 
     <TextView
         android:id="@+id/textView"
+        style="@style/Widget.App.TextView.TitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/app_name"
-        android:textAllCaps="false"
-        android:textColor="@color/colorDark"
-        android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
@@ -81,5 +76,6 @@
         android:contentDescription="logo"
         app:layout_constraintStart_toStartOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_hns_logo" />
+        app:srcCompat="@drawable/ic_hns_logo"
+        app:tint="@color/colorPrimary" />
 </androidx.constraintlayout.widget.ConstraintLayout>

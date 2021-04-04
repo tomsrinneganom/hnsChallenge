@@ -5,13 +5,25 @@
     android:id="@+id/frameLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundLightColor"
+    android:background="@color/backgroundColor"
     tools:context=".MapChallengeExecutionFragment">
 
+    <View
+        android:id="@+id/mapFadeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="2dp"
+        android:foreground="@color/backgroundColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.mapbox.mapboxsdk.maps.MapView
-        android:id="@+id/mapViewChallengeExecution"
+        android:id="@+id/mapView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:elevation="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -22,68 +34,50 @@
     </com.mapbox.mapboxsdk.maps.MapView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButtonChallengeExecutionLocation"
+        android:id="@+id/locationFab"
+        style="@style/Widget.App.FloatingButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foregroundGravity="center"
         android:src="@drawable/ic_baseline_gps_fixed_24"
-        android:tint="@color/colorDark"
-        app:backgroundTint="@color/colorLight"
-        app:fabSize="mini"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:maxImageSize="20dp"
         app:useCompatPadding="false" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButtonDeleteChallenge"
-        style="@style/FloatingButton"
+        android:id="@+id/deleteChallengeFab"
+        style="@style/Widget.App.FloatingButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
-        android:backgroundTint="@color/backgroundLightColor"
-        android:clickable="true"
-        android:foregroundGravity="center"
         android:src="@drawable/ic_baseline_delete_24"
         android:visibility="gone"
-        app:backgroundTint="@color/backgroundLightColor"
-        app:fabSize="mini"
-        app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonChallengeExecutionCamera"
-        app:layout_constraintTop_toBottomOf="@+id/floatingActionButtonChallengeExecutionCamera" />
+        app:layout_constraintEnd_toEndOf="@+id/openCameraFab"
+        app:layout_constraintTop_toBottomOf="@+id/openCameraFab"
+       />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButtonChallengeExecutionCamera"
-        style="@style/FloatingButton"
+        android:id="@+id/openCameraFab"
+        style="@style/Widget.App.FloatingButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foregroundGravity="center"
         android:src="@drawable/ic_baseline_camera_alt_24"
-        android:tint="@color/colorDark"
-        app:backgroundTint="@color/colorLight"
-        app:fabSize="mini"
-        app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonChallengeExecutionLocation"
-        app:layout_constraintTop_toBottomOf="@+id/floatingActionButtonChallengeExecutionImage"
+        app:layout_constraintEnd_toEndOf="@+id/locationFab"
+        app:layout_constraintTop_toBottomOf="@+id/openChallengePhotoFab"
         app:maxImageSize="20dp"
         app:useCompatPadding="false" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButtonChallengeExecutionImage"
-        style="@style/FloatingButton"
+        android:id="@+id/openChallengePhotoFab"
+        style="@style/Widget.App.FloatingButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
-        android:clickable="true"
         android:src="@drawable/ic_baseline_image_24"
-        app:backgroundTint="@color/colorLight"
-        app:fabSize="mini"
-        app:layout_constraintEnd_toEndOf="@+id/floatingActionButtonChallengeExecutionLocation"
-        app:layout_constraintTop_toBottomOf="@+id/floatingActionButtonChallengeExecutionLocation" />
+        app:layout_constraintEnd_toEndOf="@+id/locationFab"
+        app:layout_constraintTop_toBottomOf="@+id/locationFab" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

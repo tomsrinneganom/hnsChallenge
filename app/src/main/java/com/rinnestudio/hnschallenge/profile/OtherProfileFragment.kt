@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
@@ -15,7 +14,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.rinnestudio.hnschallenge.R
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -32,14 +30,8 @@ class OtherProfileFragment : AbstractProfileFragment() {
         savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.other_profile_fragment, container, false)
-        usernameTextView = view.findViewById(R.id.textViewOtherProfileUserName)
-        subscribersTextView = view.findViewById(R.id.textViewOtherProfileSubscribers)
-        subscriptionTextView = view.findViewById(R.id.textViewOtherProfileSubscriptions)
-        scoreTextView = view.findViewById(R.id.textViewOtherProfileScore)
-        photoProfileImageView = view.findViewById(R.id.imageViewOtherProfilePhoto)
-        buttonViewUnsubscribe = view.findViewById(R.id.buttonViewOtherProfileUnsubscribe)
-        buttonViewSubscribe = view.findViewById(R.id.buttonViewOtherProfileSubscribe)
-        gettingProfile()
+        buttonViewUnsubscribe = view.findViewById(R.id.profileUnsubscribeButton)
+        buttonViewSubscribe = view.findViewById(R.id.profileSubscribeButton)
         buttonViewUnsubscribe.setOnClickListener {
             viewModel.subscribe(profile, false)
             updateSubscribeButton(false)
@@ -48,32 +40,11 @@ class OtherProfileFragment : AbstractProfileFragment() {
         buttonViewSubscribe.setOnClickListener {
             viewModel.subscribe(profile, true)
             updateSubscribeButton(true)
-            //TODO()
             updateUI()
         }
-
-        view.findViewById<TextView>(R.id.textViewOtherProfileSubscriptionsTitle).apply {
-            isClickable = true
-            setOnClickListener {
-                navigateToSubscriptionList()
-            }
-        }
-        subscriptionTextView.setOnClickListener {
-            navigateToSubscriptionList()
-        }
-
-        view.findViewById<TextView>(R.id.textViewOtherProfileSubscribersTitle).apply {
-            isClickable = true
-            setOnClickListener {
-                navigateToSubscribersList()
-            }
-        }
-        subscribersTextView.setOnClickListener {
-            navigateToSubscribersList()
-        }
-
         return view
     }
+
 
     //TODO()
     override fun gettingProfile() {

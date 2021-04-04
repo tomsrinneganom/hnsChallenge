@@ -1,12 +1,12 @@
 package com.rinnestudio.hnschallenge.profile
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.rinnestudio.hnschallenge.repository.ProfileRepository
 import com.rinnestudio.hnschallenge.repository.room.RoomDatabase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-
-open class OwnProfileViewModel @ViewModelInject constructor(
+@HiltViewModel
+open class OwnProfileViewModel @Inject constructor(
     private val roomDatabase: RoomDatabase
 ) : ViewModel() {
 

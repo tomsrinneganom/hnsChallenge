@@ -5,22 +5,23 @@
     android:id="@+id/frameLayout5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundLightColor"
+    android:background="@color/backgroundColor"
     tools:context=".MainMapFragment">
 
     <View
-        android:id="@+id/view2"
+        android:id="@+id/mapFadeView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="2dp"
-        android:foreground="@color/backgroundLightColor"
+        android:foreground="@color/backgroundColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/mainMapFabLocation"
+        android:id="@+id/locationFab"
+        style="@style/Widget.App.FloatingButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
@@ -28,8 +29,6 @@
         android:clickable="true"
         android:foregroundGravity="center"
         android:src="@drawable/ic_baseline_gps_fixed_24"
-        android:tint="@color/colorDark"
-        app:backgroundTint="@color/colorLight"
         app:fabSize="mini"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,10 +36,10 @@
         app:useCompatPadding="false" />
 
     <com.mapbox.mapboxsdk.maps.MapView
-        android:id="@+id/mainMapMapView"
+        android:id="@+id/mapView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="@color/backgroundLightColor"
+        android:backgroundTint="@color/backgroundColor"
         android:elevation="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -8,7 +8,6 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.coroutineScope
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
@@ -21,21 +20,22 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.plugins.localization.LocalizationPlugin
 import com.rinnestudio.hnschallenge.utils.LocationUtils
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlin.coroutines.suspendCoroutine
 
 
 abstract class AbstractMapFragment : Fragment(), OnMapReadyCallback {
+
     protected lateinit var mapView: MapView
     protected lateinit var mapboxMap: MapboxMap
     protected lateinit var challenges: List<Challenge>
-    protected lateinit var fabLocation: FloatingActionButton
-    protected lateinit var testView: View
+    protected lateinit var locationFab: FloatingActionButton
+    private lateinit var crossFadeView: View
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        fabLocation.apply {
+        mapView = requireView().findViewById(R.id.mapView)
+        locationFab = requireView().findViewById(R.id.locationFab)
+        crossFadeView = requireView().findViewById(R.id.mapFadeView)
+        locationFab.apply {
             isClickable = true
             setOnClickListener {
                 moveToCurrentLocation()
@@ -47,22 +47,20 @@ abstract class AbstractMapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(mapboxMap: MapboxMap) {
         this.mapboxMap = mapboxMap
-
         mapboxMap.setStyle(Style.Builder()
-            .fromUri("mapbox://styles/hnschallenge/ckl10wjky00x117s68s2ux3eu")) {
-            initMap(it)
-        }
-    }
+                        .fromUri(resources.getString(R.string.mapbox_style_uri))) {
+//            .fromUri("mapbox://styles/hnschallenge/ckl10wjky00x117s68s2ux3eu")) {it->
 
+            initMap(it)
+         }
+    }
     private fun initMap(style: Style) {
 //        viewLifecycleOwner.lifecycle.coroutineScope.launch {
-            mapLocalization(style)
-            runBlocking {
-                moveToCurrentLocation()
-            }
-            disableCompass()
-            addShowingLocation(style)
-            crossfade()
+        mapLocalization(style)
+        initMapCamera()
+        disableCompass()
+        addShowingLocation(style)
+        crossfade()
 //        }
     }
 
@@ -97,7 +95,7 @@ abstract class AbstractMapFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-    private fun moveToCurrentLocation() = viewLifecycleOwner.lifecycle.coroutineScope.launch {
+    private fun initMapCamera() = viewLifecycleOwner.lifecycle.coroutineScope.launch {
         Log.i("Log_tag", "moveToCurrentLocation()")
         val location = LocationUtils().getUserLocation(requireContext())
         if (location != null) {
@@ -110,13 +108,22 @@ abstract class AbstractMapFragment : Fragment(), OnMapReadyCallback {
 
     private fun crossfade() {
         Log.i("Log_tag", "crossfade()")
-        testView.apply {
+        crossFadeView.apply {
             alpha = 1f
             animate()
                 .alpha(0f)
                 .setDuration(500)
                 .setListener(null)
         }
+    }
+
+    private fun moveToCurrentLocation() = viewLifecycleOwner.lifecycle.coroutineScope.launch {
+        val location = LocationUtils().getUserLocation(requireContext())
+        if (location != null) {
+            mapboxMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                LatLng(location), 16.5), 1000)
+        }
+
     }
 
     private fun disableCompass() {
@@ -155,7 +162,8 @@ abstract class AbstractMapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        mapView.onSaveInstanceState(outState)
+    //TODO()
+    //        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {
