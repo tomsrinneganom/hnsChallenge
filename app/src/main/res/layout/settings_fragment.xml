@@ -9,15 +9,16 @@
     tools:context=".settings.SettingsFragment" >
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/logOutTextView"
         style="@style/Widget.App.TextView.MediumText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Night theme"
+        android:layout_marginEnd="16dp"
+        android:text="@string/logOut"
         android:textSize="21sp"
-        app:layout_constraintEnd_toStartOf="@+id/nightThemeSwitchView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view6" />
 
@@ -43,7 +44,7 @@
         android:background="@color/textColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logOutTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/darkThemeTextView" />
 
     <TextView
         android:id="@+id/editProfileTextView"
@@ -62,27 +63,27 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/logOutTextView"
+        android:id="@+id/darkThemeTextView"
         style="@style/Widget.App.TextView.MediumText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="@font/rubik_medium"
-        android:text="@string/logOut"
+        android:text="@string/darkTheme"
         android:textColor="@color/textColor"
         android:textSize="21sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/darkThemeSwitchView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view5" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/nightThemeSwitchView"
+        android:id="@+id/darkThemeSwitchView"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        app:layout_constraintBottom_toTopOf="@+id/view6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/view5" />
 </androidx.constraintlayout.widget.ConstraintLayout>

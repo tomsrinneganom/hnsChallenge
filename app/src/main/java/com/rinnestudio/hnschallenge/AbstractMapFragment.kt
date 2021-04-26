@@ -1,13 +1,14 @@
 package com.rinnestudio.hnschallenge
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.app.ActivityCompat
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.coroutineScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
@@ -20,115 +21,122 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.plugins.localization.LocalizationPlugin
 import com.rinnestudio.hnschallenge.utils.LocationUtils
-import kotlinx.coroutines.launch
 
 
 abstract class AbstractMapFragment : Fragment(), OnMapReadyCallback {
 
     protected lateinit var mapView: MapView
     protected lateinit var mapboxMap: MapboxMap
-    protected lateinit var challenges: List<Challenge>
-    protected lateinit var locationFab: FloatingActionButton
-    private lateinit var crossFadeView: View
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    private lateinit var locationFab: FloatingActionButton
+    protected lateinit var crossFadeView: View
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
+
+    private val permissionResultLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGaranted ->
+            if (isGaranted) {
+                mapboxMap.getStyle {
+                    addShowingLocation(it)
+                    initMapCamera()
+                }
+            }
+        }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         mapView = requireView().findViewById(R.id.mapView)
         locationFab = requireView().findViewById(R.id.locationFab)
         crossFadeView = requireView().findViewById(R.id.mapFadeView)
+        bindLocationFab()
+        bindBackPressedCallback()
+
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync(this)
+    }
+
+    private fun bindLocationFab() {
         locationFab.apply {
             isClickable = true
             setOnClickListener {
                 moveToCurrentLocation()
             }
         }
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
     }
+
 
     override fun onMapReady(mapboxMap: MapboxMap) {
         this.mapboxMap = mapboxMap
         mapboxMap.setStyle(Style.Builder()
-                        .fromUri(resources.getString(R.string.mapbox_style_uri))) {
-//            .fromUri("mapbox://styles/hnschallenge/ckl10wjky00x117s68s2ux3eu")) {it->
+            .fromUri(resources.getString(R.string.mapbox_style_uri))) {
 
-            initMap(it)
-         }
-    }
-    private fun initMap(style: Style) {
-//        viewLifecycleOwner.lifecycle.coroutineScope.launch {
-        mapLocalization(style)
-        initMapCamera()
-        disableCompass()
-        addShowingLocation(style)
-        crossfade()
-//        }
+            PermissionManager().requestLocationPermission(permissionResultLauncher)
+            mapLocalization(it)
+            disableCompass()
+            crossfade()
+
+        }
     }
 
-    protected fun mapLocalization(style: Style) {
-        Log.i("Log_tag", "mapLocalization()")
+    private fun mapLocalization(style: Style) {
         val localizationPlugin = LocalizationPlugin(mapView, mapboxMap, style)
         localizationPlugin.matchMapLanguageWithDeviceDefault()
     }
 
-    protected fun addShowingLocation(loadedMapStyle: Style) {
-        Log.i("Log_tag", "addShowingLocation()")
-        val locationComponent = mapboxMap.locationComponent
-        locationComponent.activateLocationComponent(
-            LocationComponentActivationOptions.builder(requireContext(), loadedMapStyle).build()
-        )
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
+    @SuppressLint("MissingPermission")
+    private fun addShowingLocation(loadedMapStyle: Style) {
+        if (PermissionManager().checkAccessToLocation(requireContext())) {
+            val locationComponent = mapboxMap.locationComponent
+            locationComponent.activateLocationComponent(
+                LocationComponentActivationOptions.builder(requireContext(), loadedMapStyle).build()
+            )
+            locationComponent.isLocationComponentEnabled = true
+            locationComponent.cameraMode = CameraMode.TRACKING
+            locationComponent.renderMode = RenderMode.COMPASS
         }
-
-        Log.i("Log_tag", "Last know location == null2")
-        locationComponent.isLocationComponentEnabled = true
-        locationComponent.cameraMode = CameraMode.TRACKING
-        locationComponent.renderMode = RenderMode.COMPASS
-
-
     }
 
-    private fun initMapCamera() = viewLifecycleOwner.lifecycle.coroutineScope.launch {
-        Log.i("Log_tag", "moveToCurrentLocation()")
-        val location = LocationUtils().getUserLocation(requireContext())
-        if (location != null) {
-            mapboxMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                LatLng(location), 13.5))
+    private fun bindBackPressedCallback() {
+        val navController = findNavController()
+        if (navController.currentDestination!!.id != R.id.mainMapNavigationItem) {
+            onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback {
+                crossFadeView.alpha = 1f
+                this.isEnabled = false
+                this.remove()
+                findNavController().navigateUp()
+            }
         }
-        Log.i("Log_tag", "end moveToCurrentLocation()")
+    }
 
+    private fun initMapCamera() {
+        LocationUtils().getUserLocation(requireContext()).observe(this) { location ->
+            if (location != null) {
+                mapboxMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                    LatLng(location), 13.5))
+            }
+        }
     }
 
     private fun crossfade() {
-        Log.i("Log_tag", "crossfade()")
         crossFadeView.apply {
             alpha = 1f
             animate()
                 .alpha(0f)
                 .setDuration(500)
                 .setListener(null)
+//            visibility = View.GONE
         }
     }
 
-    private fun moveToCurrentLocation() = viewLifecycleOwner.lifecycle.coroutineScope.launch {
-        val location = LocationUtils().getUserLocation(requireContext())
-        if (location != null) {
-            mapboxMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                LatLng(location), 16.5), 1000)
+    private fun moveToCurrentLocation() {
+        LocationUtils().getUserLocation(requireContext()).observe(viewLifecycleOwner) { location ->
+            if (location != null) {
+                mapboxMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                    LatLng(location), 16.5), 1000)
+            }
         }
-
     }
 
     private fun disableCompass() {
-        Log.i("Log_tag", "disableCompass()")
-
         mapboxMap.uiSettings.apply {
             isCompassEnabled = false
             isRotateGesturesEnabled = false
@@ -162,13 +170,21 @@ abstract class AbstractMapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-    //TODO()
-    //        mapView.onSaveInstanceState(outState)
+//        TODO()
+//        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         mapView.onDestroy()
+        try {
+            if (onBackPressedCallback.isEnabled) {
+                onBackPressedCallback.isEnabled = false
+                onBackPressedCallback.remove()
+            }
+        } catch (exception: Exception) {
+            Log.i("Log_tag", "exception")
+        }
     }
 
 }

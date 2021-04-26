@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 
-class CreateChallengeCameraFragment : AbstractCameraFragment() {
+class CameraCreateChallengeFragment : AbstractCameraFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,7 +18,7 @@ class CreateChallengeCameraFragment : AbstractCameraFragment() {
 
     override fun savingPhoto() {
         val navDirections =
-            CreateChallengeCameraFragmentDirections.actionCreateChallengeNavigationItemToCropChallengePhotoFragment(
+            CameraCreateChallengeFragmentDirections.actionCreateChallengeNavigationItemToCropChallengePhotoFragment(
                 pathToPhoto)
         findNavController().navigate(navDirections)
 

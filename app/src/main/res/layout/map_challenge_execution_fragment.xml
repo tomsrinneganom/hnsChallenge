@@ -54,24 +54,24 @@
         android:layout_marginTop="8dp"
         android:src="@drawable/ic_baseline_delete_24"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/openCameraFab"
-        app:layout_constraintTop_toBottomOf="@+id/openCameraFab"
+        app:layout_constraintEnd_toEndOf="@+id/cameraFab"
+        app:layout_constraintTop_toBottomOf="@+id/cameraFab"
        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/openCameraFab"
+        android:id="@+id/cameraFab"
         style="@style/Widget.App.FloatingButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/ic_baseline_camera_alt_24"
         app:layout_constraintEnd_toEndOf="@+id/locationFab"
-        app:layout_constraintTop_toBottomOf="@+id/openChallengePhotoFab"
+        app:layout_constraintTop_toBottomOf="@+id/challengePhotoFab"
         app:maxImageSize="20dp"
         app:useCompatPadding="false" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/openChallengePhotoFab"
+        android:id="@+id/challengePhotoFab"
         style="@style/Widget.App.FloatingButton"
         android:layout_width="40dp"
         android:layout_height="40dp"

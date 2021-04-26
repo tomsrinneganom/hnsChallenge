@@ -11,6 +11,7 @@ import org.opencv.features2d.FlannBasedMatcher
 import org.opencv.features2d.SIFT
 import org.opencv.imgproc.Imgproc
 
+//TODO()
 class ImageComparsion {
     fun compare(bitmapObject: Bitmap, bitmapScene: Bitmap): String {
         OpenCVLoader.initDebug()

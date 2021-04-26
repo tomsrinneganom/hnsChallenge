@@ -6,56 +6,65 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.coroutineScope
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.rinnestudio.hnschallenge.R
-import com.rinnestudio.hnschallenge.SettingsManager
-import kotlinx.coroutines.launch
+import com.rinnestudio.hnschallenge.ThemeManager
 
 class SettingsFragment : Fragment() {
-    private lateinit var viewModel: SettingsViewModel
+
+    private val viewModel: SettingsViewModel by viewModels()
     private lateinit var editProfileTv: TextView
     private lateinit var logOutTv: TextView
+    private lateinit var darkThemeSwitchView: SwitchMaterial
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.settings_fragment, container, false)
+        initView(view)
+        bindLogOut()
+        bindDarkThemeSwitcher()
+        return view
+    }
+
+    private fun initView(view: View) {
         editProfileTv = view.findViewById(R.id.editProfileTextView)
         logOutTv = view.findViewById(R.id.logOutTextView)
+        darkThemeSwitchView = view.findViewById(R.id.darkThemeSwitchView)
+    }
+
+    private fun bindLogOut() {
         logOutTv.apply {
             isClickable = true
+
             setOnClickListener {
                 Firebase.auth.signOut()
                 findNavController().navigate(R.id.signInFragment)
             }
-        }
 
-        val settingsManager = SettingsManager()
-        view.findViewById<SwitchMaterial>(R.id.nightThemeSwitchView).apply {
-            isChecked = settingsManager.getCurrentAppTheme(requireContext())
-            setOnClickListener {
-                viewLifecycleOwner.lifecycle.coroutineScope.launch {
-                    if (isChecked) {
-                        settingsManager.setDarkTheme(requireContext())
-                    } else {
-                        settingsManager.setLightTheme(requireContext())
-                    }
-                }
-            }
         }
-
-        return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
+    private fun bindDarkThemeSwitcher() {
+        val themeManager = ThemeManager()
+        darkThemeSwitchView.apply {
+            isChecked = themeManager.getCurrentAppTheme(requireContext())
+
+            setOnClickListener {
+                if (isChecked) {
+                    themeManager.setDarkTheme(requireContext())
+                } else {
+                    themeManager.setLightTheme(requireContext())
+                }
+            }
+
+        }
+
     }
 
 }

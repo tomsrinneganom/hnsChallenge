@@ -5,7 +5,8 @@ import androidx.navigation.NavDirections
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class SelectedChallengeListAdapter(challenges: List<Challenge>,context: Context) : ChallengeListAdapter(challenges.toMutableList(),context) {
+class SelectedChallengeListAdapter(challenges: List<Challenge>, context: Context) :
+    AbstractChallengeListAdapter(challenges.toMutableList(), context) {
 
     override fun createNavDirectionsToProfile(creatorId: String): NavDirections {
         return if (creatorId == Firebase.auth.uid) {

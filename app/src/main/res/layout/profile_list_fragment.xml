@@ -22,12 +22,12 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/profileListSearchInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
         android:addStatesFromChildren="false"
-        android:hint="username"
+        android:hint="@string/username"
         app:endIconDrawable="@drawable/ic_baseline_search_24"
         app:endIconMode="custom"
         app:endIconTint="@color/iconColor"
@@ -37,14 +37,12 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/profileListSearchEditText"
+            style="@style/Widget.App.EditText"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:fontFamily="@font/rubik_medium"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:singleLine="true"
-            android:textColor="@color/textColor"
-            android:textSize="14sp"
             tools:text="username" />
 
     </com.google.android.material.textfield.TextInputLayout>

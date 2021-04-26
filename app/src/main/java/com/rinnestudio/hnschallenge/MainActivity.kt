@@ -1,10 +1,9 @@
 package com.rinnestudio.hnschallenge
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.coroutineScope
+import androidx.core.view.forEach
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -14,72 +13,72 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.mapbox.mapboxsdk.Mapbox
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var settingsImageView: ImageView
+    private var previousFragmentId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Mapbox.getInstance(applicationContext, getString(R.string.mapbox_access_token))
 
         setContentView(R.layout.activity_main)
 
         supportActionBar?.hide()
 
-        lifecycle.coroutineScope.launch {
-            SettingsManager().setCurrentTheme(applicationContext)
-        }
-
-        Mapbox.getInstance(applicationContext, getString(R.string.mapbox_access_token))
+        ThemeManager().setCurrentTheme(applicationContext)
 
         supportFragmentManager.findFragmentById(R.id.main_nav_host) as NavHostFragment
+
+        settingsImageView = findViewById(R.id.settingsImageView)
+        settingsImageView.apply {
+            isClickable = true
+            setOnClickListener {
+                navController.navigate(R.id.settingsFragment)
+            }
+        }
+
         navController = findNavController(R.id.main_nav_host)
 
         setUpBottomNavigation()
 
+        setUpNavController()
+    }
+
+    private fun setUpNavController() {
         if (Firebase.auth.uid.isNullOrEmpty()) {
             Firebase.auth.signOut()
             navController.navigate(R.id.signInFragment)
         }
 
-        findViewById<ImageView>(R.id.settingsImageView).setOnClickListener {
-            navController.navigate(R.id.settingsFragment)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.signInFragment || destination.id == R.id.signUpFragment) {
+
+                bottomNavigationView.menu.forEach {
+                    it.isEnabled = false
+                }
+                settingsImageView.isClickable = false
+
+            } else if (previousFragmentId == R.id.signInFragment || previousFragmentId == R.id.signUpFragment) {
+
+                bottomNavigationView.menu.forEach {
+                    it.isEnabled = true
+                }
+                settingsImageView.isClickable = true
+
+            }
+            previousFragmentId = destination.id
         }
+
     }
 
     private fun setUpBottomNavigation() {
         bottomNavigationView = findViewById(R.id.mainBottomNavigationView)
         bottomNavigationView.setupWithNavController(navController)
-
-        bottomNavigationView.setOnNavigationItemReselectedListener { item ->
-            when (item.itemId) {
-                R.id.ownProfileNavigationItem -> {
-                    navigateToReselectedItem(R.id.ownProfileNavigationItem)
-                }
-                R.id.mainSearchNavigationItem -> {
-                    navigateToReselectedItem(R.id.mainSearchNavigationItem)
-                }
-                R.id.mainMapNavigationItem -> {
-                    navigateToReselectedItem(R.id.mainMapNavigationItem)
-                }
-                R.id.createChallengeNavigationItem -> {
-                    navigateToReselectedItem(R.id.createChallengeNavigationItem)
-                }
-                R.id.challengeListNavigationItem -> {
-                    navigateToReselectedItem(R.id.challengeListNavigationItem)
-                }
-            }
-        }
     }
-
-    @SuppressLint("RestrictedApi")
-    private fun navigateToReselectedItem(id: Int) {
-        if (navController.currentDestination?.id != id) {
-            navController.navigate(id)
-        }
-    }
-
 }

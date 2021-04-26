@@ -1,78 +1,67 @@
 package com.rinnestudio.hnschallenge
 
-import android.util.Log
-import androidx.lifecycle.coroutineScope
+import android.os.Bundle
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
 import com.mapbox.geojson.LineString
 import com.mapbox.geojson.Point
+import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.style.expressions.Expression.*
 import com.mapbox.mapboxsdk.style.layers.HeatmapLayer
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory.*
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
-import kotlinx.coroutines.launch
 
 abstract class AbstractHeatmapMapFragment : AbstractMapFragment() {
+    private val maxDistaceForChoosingChallenges: Double = 0.001
+    private val minDistaceForChoosingChallenges: Double = -0.001
+
+    protected var challenges: LiveData<List<Challenge>> = MutableLiveData()
     private val sourceID: String = "earthquakes"
     private val layerID = "earthquakes-heat"
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initChallengeObserver()
+    }
+
     override fun onMapReady(mapboxMap: MapboxMap) {
         super.onMapReady(mapboxMap)
-        addHeatmap()
+        addEarthquakeSource()
         mapboxMap.addOnMapClickListener(onMapClickListener)
     }
 
-    private fun addHeatmap() {
-        viewLifecycleOwner.lifecycle.coroutineScope.launch {
-            getChallenges()
-            addEarthquakeSource()
-        }
-    }
-
-    protected abstract suspend fun getChallenges()
 
     private val onMapClickListener = MapboxMap.OnMapClickListener { point ->
-        val selectedChallenges = mutableListOf<Challenge>()
-        //TODO() Добавить проверки на null
-        //если пусто выдавать  сообщение что челлендж был удалён
-        challenges.forEach { challenge ->
-            val differenceLatitude = point.latitude - challenge.latitude!!
-            if (differenceLatitude < 0.001 && differenceLatitude > -0.001) {
-                val differenceLongitude = point.longitude - challenge.longitude!!
-                if (differenceLongitude < 0.001 && differenceLongitude > -0.001) {
-                    selectedChallenges.add(challenge)
-                }
+        if (challenges.value != null) {
+            val selectedChallenges = computeSelectedChallenges(point, challenges.value!!)
+            if (selectedChallenges.isNotEmpty()) {
+                openSelectedChallengeList(selectedChallenges.toTypedArray())
             }
-        }
-        Log.i("Log_tag", "${selectedChallenges.size}")
-        if (selectedChallenges.isNotEmpty()) {
-            openSelectedChallengeList(selectedChallenges.toTypedArray())
         }
         true
     }
 
-    protected abstract fun openSelectedChallengeList(selectedChallenges: Array<Challenge>)
-
     private fun addEarthquakeSource() {
-        val coordinates = ArrayList<Point>()
-        challenges.forEach { challenge ->
-            if (challenge.latitude != null && challenge.longitude != null) {
-                coordinates.add(Point.fromLngLat(challenge.longitude!!, challenge.latitude!!))
-            }
-        }
-        coordinates.add(Point.fromLngLat(180.0, 90.0))
-        coordinates.add(Point.fromLngLat(180.0, 90.0))
+        challenges.observe(this) {
 
-        val lineString = LineString.fromLngLats(coordinates)
-        val featureCollection = FeatureCollection.fromFeature(Feature.fromGeometry(lineString))
-        mapboxMap.getStyle { style ->
-            if (style.getSource(sourceID) == null) {
-                val geoJsonSource = GeoJsonSource(sourceID, featureCollection)
-                style.addSource(geoJsonSource)
+            val coordinates = getListOfPointFromChallenges()
+
+            val lineString = LineString.fromLngLats(coordinates)
+
+            val featureCollection = FeatureCollection.fromFeature(Feature.fromGeometry(lineString))
+
+            mapboxMap.getStyle { style ->
+                if (style.getSource(sourceID) == null) {
+                    val geoJsonSource = GeoJsonSource(sourceID, featureCollection)
+                    style.addSource(geoJsonSource)
+                }
+                addHeatmapLayer(style)
             }
-            addHeatmapLayer(style)
+
         }
     }
 
@@ -115,5 +104,40 @@ abstract class AbstractHeatmapMapFragment : AbstractMapFragment() {
             style.addLayer(layer)
         }
     }
+
+    private fun computeSelectedChallenges(point: LatLng, challenges: List<Challenge>): List<Challenge> {
+        val selectedChallenges = mutableListOf<Challenge>()
+        challenges.forEach { challenge ->
+            val differenceLatitude = point.latitude - challenge.latitude!!
+            if (differenceLatitude < maxDistaceForChoosingChallenges && differenceLatitude > minDistaceForChoosingChallenges) {
+
+                val differenceLongitude = point.longitude - challenge.longitude!!
+                if (differenceLongitude < maxDistaceForChoosingChallenges && differenceLongitude > minDistaceForChoosingChallenges) {
+                    selectedChallenges.add(challenge)
+                }
+            }
+        }
+        return selectedChallenges
+    }
+
+    private fun getListOfPointFromChallenges(): ArrayList<Point> {
+        val coordinates = ArrayList<Point>()
+
+        challenges.value!!.forEach { challenge ->
+            if (challenge.latitude != null && challenge.longitude != null) {
+                coordinates.add(Point.fromLngLat(challenge.longitude!!, challenge.latitude!!))
+            }
+            coordinates.add(Point.fromLngLat(180.0, 90.0))
+            coordinates.add(Point.fromLngLat(180.0, 90.0))
+
+        }
+
+        return coordinates
+
+    }
+
+    protected abstract fun initChallengeObserver()
+    protected abstract fun openSelectedChallengeList(selectedChallenges: Array<Challenge>)
+
 
 }

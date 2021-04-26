@@ -10,8 +10,8 @@ import dagger.hilt.android.AndroidEntryPoint
 open class OwnProfileMapFragment : AbstractProfileMapFragment() {
     private val viewModel: OwnProfileMapViewModel by viewModels({ requireParentFragment() })
 
-    override suspend fun getChallenges() {
-            challenges = viewModel.getChallenges()
+    override fun initChallengeObserver() {
+        challenges = viewModel.getChallenges()
     }
 
     override fun openSelectedChallengeList(selectedChallenges: Array<Challenge>) {
@@ -24,12 +24,14 @@ open class OwnProfileMapFragment : AbstractProfileMapFragment() {
     }
 
     override fun openChallengeList() {
-        val navDirections =
-            OwnProfileFragmentDirections.actionOwnProfileNavigationItemToSelectedChallengeListFragment(
-                challenges.toTypedArray()
-            )
-        mapView.visibility =View.INVISIBLE
-        findNavController().navigate(navDirections)
+        if (challenges.value != null) {
+            val navDirections =
+                OwnProfileFragmentDirections.actionOwnProfileNavigationItemToSelectedChallengeListFragment(
+                    challenges.value!!.toTypedArray()
+                )
+            mapView.visibility = View.INVISIBLE
+            findNavController().navigate(navDirections)
+        }
     }
 
 }

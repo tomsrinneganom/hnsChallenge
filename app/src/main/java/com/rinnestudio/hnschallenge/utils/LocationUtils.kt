@@ -1,38 +1,31 @@
 package com.rinnestudio.hnschallenge.utils
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Looper
 import android.util.Log
-import androidx.core.app.ActivityCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import com.google.android.gms.location.*
+import com.rinnestudio.hnschallenge.PermissionManager
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class LocationUtils() {
 
-    suspend fun getUserLocation(context: Context): Location? {
-        if (ActivityCompat.checkSelfPermission(context,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return null
-        } else {
-            val fusedLocationProviderClient: FusedLocationProviderClient =
-                LocationServices.getFusedLocationProviderClient(context)
-            val lastKnowLocation = getLastKnowLocation(fusedLocationProviderClient)
-            if (lastKnowLocation == null) {
-                return requestLocationUpdate(fusedLocationProviderClient)
-            }
-            else{
-               return lastKnowLocation
+    fun getUserLocation(context: Context): LiveData<Location?> =
+        liveData {
+            if (PermissionManager().checkAccessToLocation(context)) {
+                val fusedLocationProviderClient: FusedLocationProviderClient =
+                    LocationServices.getFusedLocationProviderClient(context)
+                emit(getLastKnowLocation(fusedLocationProviderClient) ?: requestLocationUpdate(
+                    fusedLocationProviderClient))
+            } else {
+                emit(null)
             }
         }
-    }
+
 
     @SuppressLint("MissingPermission")
     private suspend fun getLastKnowLocation(locationProviderClient: FusedLocationProviderClient): Location? =
@@ -55,11 +48,12 @@ class LocationUtils() {
                 }
             }
 
-            locationProviderClient.requestLocationUpdates(LocationRequest(),
+            locationProviderClient.requestLocationUpdates(LocationRequest.create(),
                 locationCallback,
-                Looper.getMainLooper()).addOnFailureListener { exception->
+                Looper.getMainLooper()).addOnFailureListener { exception ->
                 Log.i("Log_tag", "requestLocationUpdate() Exception: ${exception.message}")
                 it.resume(null)
             }
         }
 }
+

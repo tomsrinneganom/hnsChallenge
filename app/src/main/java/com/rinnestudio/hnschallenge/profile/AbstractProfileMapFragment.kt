@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.rinnestudio.hnschallenge.AbstractHeatmapMapFragment
 import com.rinnestudio.hnschallenge.R
 
 abstract class AbstractProfileMapFragment : AbstractHeatmapMapFragment() {
     private lateinit var fabChallengeList: FloatingActionButton
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -20,8 +23,11 @@ abstract class AbstractProfileMapFragment : AbstractHeatmapMapFragment() {
         fabChallengeList.setOnClickListener { openChallengeList() }
         return view
     }
-    abstract fun openChallengeList()
-    protected fun hideMapView(){
+
+    protected fun navigate(navDirections: NavDirections){
+        crossFadeView.visibility = View.VISIBLE
         mapView.visibility = View.INVISIBLE
+        findNavController().navigate(navDirections)
     }
+    abstract fun openChallengeList()
 }

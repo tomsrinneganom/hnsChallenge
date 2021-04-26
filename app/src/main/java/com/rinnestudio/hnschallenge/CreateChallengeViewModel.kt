@@ -2,30 +2,37 @@ package com.rinnestudio.hnschallenge
 
 import android.app.Application
 import android.graphics.Bitmap
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.rinnestudio.hnschallenge.repository.ChallengeRepository
 import com.rinnestudio.hnschallenge.repository.ProfileRepository
 import com.rinnestudio.hnschallenge.repository.room.RoomDatabase
 import com.rinnestudio.hnschallenge.utils.ImageUtils
 import com.rinnestudio.hnschallenge.utils.LocationUtils
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CreateChallengeViewModel @ViewModelInject constructor(
+@HiltViewModel
+class CreateChallengeViewModel @Inject constructor(
     application: Application,
     private val roomDatabase: RoomDatabase,
 ) : AndroidViewModel(application) {
 
-    suspend fun createChallenge(photo: Bitmap): Boolean {
-        val challengePhoto = ImageUtils().convertBitmapToByteArray(photo)
-        val repository = ChallengeRepository()
-        var result = false
-        val location = LocationUtils().getUserLocation(getApplication())
-        withContext(Dispatchers.IO) {
-            val profile = ProfileRepository().getOwnProfile(roomDatabase)
-            if (location != null && profile.id.isNotEmpty()) {
-                result = repository.createChallenge(profile, location, challengePhoto)
+    fun createChallenge(photo: Bitmap): LiveData<Boolean> {
+        val result = MutableLiveData<Boolean>()
+        viewModelScope.launch {
+            val challengePhoto = ImageUtils().convertBitmapToByteArray(photo)
+            val repository = ChallengeRepository()
+            val location = LocationUtils().getUserLocation(getApplication())
+            location.asFlow().collect {
+                val profile = ProfileRepository().getOwnProfile(roomDatabase)
+
+                if (it != null && profile.id.isNotEmpty()) {
+                    result.value = repository.createChallenge(profile, it, challengePhoto)
+                } else {
+                    result.value = false
+                }
             }
         }
         return result

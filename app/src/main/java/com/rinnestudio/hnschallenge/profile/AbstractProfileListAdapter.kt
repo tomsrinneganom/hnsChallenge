@@ -1,21 +1,24 @@
 package com.rinnestudio.hnschallenge.profile
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.rinnestudio.hnschallenge.R
 import com.rinnestudio.hnschallenge.utils.ImageUtils
 
-abstract class AbstractProfileListAdapter(profileList: ArrayList<Profile>) :
+abstract class AbstractProfileListAdapter(profileList: List<Profile>) :
     RecyclerView.Adapter<AbstractProfileListAdapter.UserListViewHolder>() {
 
-    private val data = mutableListOf<Profile>()
+    private val profileList = mutableListOf<Profile>()
+
     init {
-        data.addAll(profileList)
+        this.profileList.addAll(profileList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListViewHolder {
@@ -25,29 +28,36 @@ abstract class AbstractProfileListAdapter(profileList: ArrayList<Profile>) :
     }
 
     override fun onBindViewHolder(holder: UserListViewHolder, position: Int) {
-        Log.i("Log_tag", "position: $position")
-        holder.bind(data[position])
+        holder.bind(profileList[position])
         holder.itemView.setOnClickListener {
-            navigateToProfile(data[position], it)
+            if (profileList[position].id == Firebase.auth.uid) {
+                navigateToOwnProfile(it)
+            } else {
+                navigateToOtherProfile(profileList[position], it)
+
+            }
         }
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return profileList.size
     }
 
     fun removeAllItems() {
-        data.clear()
+        profileList.clear()
         notifyDataSetChanged()
     }
 
     fun addItems(profileList: List<Profile>) {
-        data.addAll(profileList)
+        this.profileList.addAll(profileList)
         notifyDataSetChanged()
     }
 
-    protected abstract fun navigateToProfile(profile: Profile, view: View)
+    private fun navigateToOwnProfile(view: View) {
+        view.findNavController().navigate(R.id.ownProfileNavigationItem)
+    }
 
+    protected abstract fun navigateToOtherProfile(profile: Profile, view: View)
 
     class UserListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val profilePhotoImageView =

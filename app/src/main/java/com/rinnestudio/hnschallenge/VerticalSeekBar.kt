@@ -7,6 +7,8 @@ import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatSeekBar
 
 class VerticalSeekBar : AppCompatSeekBar {
+     val defaultSeekBarProgress = 50
+
     constructor(context: Context) : super(context)
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet)
     constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int) : super(

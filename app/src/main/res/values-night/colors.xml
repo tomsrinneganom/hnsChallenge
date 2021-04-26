@@ -4,9 +4,9 @@
     <color name="colorDark">#1E1E1E</color>
     <color name="colorLight">#FFFFFF</color>
     <color name="colorAccent">#AA23FF</color>
-    <color name="backgroundColor">#201B29</color>
+    <color name="backgroundColor">#252525</color>
     <color name="textColor">#C6C5C5</color>
     <color name="iconColor">#C6C5C5</color>
-    <color name="backgroundColorCard">#393049</color>
+    <color name="backgroundColorCard">#505050</color>
 
 </resources>

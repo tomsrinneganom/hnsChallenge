@@ -11,7 +11,7 @@ import com.theartofdev.edmodo.cropper.CropImageView
 abstract class AbstractCropPhotoFragment : Fragment() {
 
     protected lateinit var cropImageView: CropImageView
-    protected lateinit var savePhotoButton: Button
+    private lateinit var savePhotoButton: Button
 
 
     override fun onCreateView(

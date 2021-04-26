@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">hnsChallenge</string>
     <string name="mapbox_access_token">pk.eyJ1IjoiaG5zY2hhbGxlbmdlIiwiYSI6ImNrYzlibTN6dDFqbTIycnRpaWJwdG45ZDkifQ._V2JULP6FljjDCaQwfN67A</string>
-    <string name="mapbox_style_uri">mapbox://styles/hnschallenge/ckl10wjky00x117s68s2ux3eu</string>
+    <string name="mapbox_style_uri">mapbox://styles/hnschallenge/cknm01fu739e217mgxz6g7vw3</string>
     <string name="firebase_web_client_id">194592409296-jn8ufa6q9ik94jjitplq27djo3rip68f.apps.googleusercontent.com</string>
 
     <string name="subscribe">Subscribe</string>
@@ -10,5 +10,11 @@
     <string name="subscriptions">Subscriptions</string>
     <string name="editProfile">Edit profile</string>
     <string name="logOut">Log out</string>
-    <string name="create">create</string>
+    <string name="create">Create</string>
+    <string name="darkTheme">Dark theme</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="username">Username</string>
 </resources>

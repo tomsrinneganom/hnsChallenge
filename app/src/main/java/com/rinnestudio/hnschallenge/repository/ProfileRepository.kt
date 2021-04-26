@@ -17,7 +17,6 @@ class ProfileRepository {
 
     suspend fun getProfile(profileId: String) = firebaseRepository.getProfile(profileId)
 
-    //TODO()
     suspend fun getOwnProfile(roomDatabase: RoomDatabase): Profile {
         val id = Firebase.auth.uid!!
         val profile = getProfile(id)
@@ -46,7 +45,6 @@ class ProfileRepository {
         }
     }
 
-    //TODO()
     suspend fun signInWithGoogleAccount(
         idToken: String,
         roomDatabase: RoomDatabase,
@@ -99,15 +97,12 @@ class ProfileRepository {
     suspend fun getListOfProfilesById(idList: List<String>) =
         ProfileFirebaseRepository().getListOfProfilesById(idList)
 
-    suspend fun getSubscriptionList(): MutableList<String>? {
+    suspend fun getSubscriptionList(): List<String> {
         val id = Firebase.auth.uid
         if (id != null) {
             return getProfile(id).subscription
         }
-        return null
+        return emptyList()
     }
 
-    fun deleteProfile() {
-
-    }
 }

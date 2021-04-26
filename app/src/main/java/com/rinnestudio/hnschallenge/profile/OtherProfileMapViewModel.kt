@@ -1,18 +1,21 @@
 package com.rinnestudio.hnschallenge.profile
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
+import androidx.lifecycle.*
 import com.rinnestudio.hnschallenge.Challenge
 import com.rinnestudio.hnschallenge.repository.ChallengeRepository
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-open class OtherProfileMapViewModel: ViewModel() {
-    //TODO()
+open class OtherProfileMapViewModel : ViewModel() {
+    private val challenges = MutableLiveData<List<Challenge>>()
     val profileId = MutableLiveData<String>()
 
-    suspend fun getChallenges(): List<Challenge> {
-        return ChallengeRepository().getChallengesByCreatorId(profileId.asFlow().first())
-
+    fun getChallenges(): LiveData<List<Challenge>> {
+        viewModelScope.launch {
+            profileId.asFlow().collect {id->
+                challenges.value = ChallengeRepository().getChallengesByCreatorId(id)
+            }
+        }
+        return challenges
     }
 }

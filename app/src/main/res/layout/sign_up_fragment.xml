@@ -19,31 +19,30 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView10"
+            android:id="@+id/selectProfilePhotoButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/backgroundColor"
-            android:src="@drawable/ic_baseline_add_circle_outline_24"
-            app:tint="@color/iconColor" />
+            android:src="@drawable/ic_baseline_add_circle_outline_24"/>
     </androidx.cardview.widget.CardView>
 
     <EditText
-        android:id="@+id/editTextSignUpUsername"
+        android:id="@+id/usernameEditText"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:ems="10"
         android:fontFamily="@font/rubik_medium"
-        android:hint="Username"
+        android:hint="@string/username"
         android:inputType="textPersonName"
-        android:textColor="@color/colorDark"
+        android:textColor="@color/textColor"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSignUpEmail"/>
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText"/>
 
     <EditText
-        android:id="@+id/editTextSignUpPassword"
+        android:id="@+id/passwordEditText"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -51,14 +50,14 @@
         android:fontFamily="@font/rubik_medium"
         android:hint="Password"
         android:inputType="textPassword"
-        android:textColor="@color/colorDark"
+        android:textColor="@color/textColor"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSignUpUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameEditText" />
 
     <Button
-        android:id="@+id/buttonSignUp"
+        android:id="@+id/signUpButton"
         style="@style/Widget.App.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,13 +65,14 @@
         android:text="Sign up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSignUpPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
     <EditText
-        android:id="@+id/editTextSignUpEmail"
+        android:id="@+id/emailEditText"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:textColor="@color/textColor"
         android:ems="10"
         android:fontFamily="@font/rubik_medium"
         android:hint="Email"

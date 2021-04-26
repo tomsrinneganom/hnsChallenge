@@ -15,23 +15,15 @@ import timber.log.Timber
 class ProfileFirebaseRepository {
     private val profilesCollection = Firebase.firestore.collection("userList")
 
-    suspend fun getProfile(profileId: String): Profile {
-        return profilesCollection.document(profileId).get()
-            .addOnFailureListener {
-                Log.i("Log_tag", "get profile failure exception:${it}")
-            }.continueWith {
-                if (it.isComplete && it.isSuccessful) {
-                    val profile = it.result.toObject<Profile>()
-                    if (profile?.id.isNullOrEmpty()) {
-                        Profile()
-                    } else {
-                        profile
-                    }
-                } else {
-                    Profile()
-                }
-            }.await()!!
-    }
+    suspend fun getProfile(profileId: String): Profile =
+        profilesCollection.document(profileId).get().continueWith {
+            if (it.isComplete && it.isSuccessful) {
+                it.result.toObject<Profile>() ?: Profile()
+            } else {
+
+                Profile()
+            }
+        }.await()
 
     suspend fun signInWithEmail(email: String, password: String): Boolean {
         val auth = Firebase.auth
@@ -43,35 +35,33 @@ class ProfileFirebaseRepository {
             }.await()
     }
 
-    //TODO()
     suspend fun signInWithGoogleAccount(idToken: String): Profile {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         val auth = Firebase.auth
 
         val signIn = auth.signInWithCredential(credential).continueWith {
+            Log.i("Log_tag",  "fail :${it.exception} ${it.isComplete}")
             it.isSuccessful && it.isComplete
         }.await()
 
         if (signIn) {
-            val user = auth.currentUser
-            if (user != null) {
-                val profile = getProfile(user.uid)
-                if (profile.id.isEmpty()) {
-                    val newProfile = Profile(
-                        user.uid,
-                        user.displayName,
-                        user.email,
-                        user.photoUrl.toString()
-                    )
+            val user = auth.currentUser!!
+            val profile = getProfile(user.uid)
+            if (profile.id.isEmpty()) {
+                val newProfile = Profile(
+                    user.uid,
+                    user.displayName,
+                    user.email,
+                    user.photoUrl.toString()
+                )
 
-                    if (addProfileToDatabase(newProfile, ByteArray(0))) {
-                        return newProfile
-                    } else {
-                        return Profile()
-                    }
+                return if (addProfileToDatabase(newProfile, ByteArray(0))) {
+                    newProfile
+                } else {
+                    Profile()
                 }
-                return profile
             }
+            return profile
         }
         return Profile()
     }
@@ -87,10 +77,8 @@ class ProfileFirebaseRepository {
             return false
         }
         val userCreation =
-            auth.createUserWithEmailAndPassword(profile.email!!, password).addOnCompleteListener {
-            }.addOnFailureListener {
-                Log.i("Log_tag", "signUp() exception: ${it.message}")
-            }.continueWith {
+            auth.createUserWithEmailAndPassword(profile.email!!, password)
+                .continueWith {
                 it.isComplete && it.isSuccessful
             }.await()
 
@@ -116,7 +104,6 @@ class ProfileFirebaseRepository {
             .continueWith {
                 it.isSuccessful
             }.await()
-
     }
 
     private suspend fun uploadProfilePhoto(userId: String, image: ByteArray): String {
@@ -144,12 +131,11 @@ class ProfileFirebaseRepository {
 
     suspend fun getRecommendedListOfProfiles(): List<Profile> =
         profilesCollection
-            .get()
-            .continueWith {
+            .get().continueWith {
                 if (it.isSuccessful && it.isComplete) {
-                    return@continueWith it.result.toObjects<Profile>()
-                }
-                listOf()
+                    it.result.toObjects<Profile>()
+                } else
+                    emptyList()
             }.await()
 
     suspend fun getListOfProfilesById(idList: List<String>): List<Profile> =
@@ -160,7 +146,7 @@ class ProfileFirebaseRepository {
                 if (it.isComplete && it.isSuccessful) {
                     it.result.toObjects<Profile>()
                 } else {
-                    listOf()
+                    emptyList()
                 }
             }.await()
 

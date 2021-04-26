@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/createChallengeNavigationItem"
-        android:name="com.rinnestudio.hnschallenge.CreateChallengeCameraFragment"
+        android:name="com.rinnestudio.hnschallenge.CameraCreateChallengeFragment"
         android:label="createChallenge"
         tools:layout="@layout/adding_challenge_fragment">
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/challengeListNavigationItem"
-        android:name="com.rinnestudio.hnschallenge.ChallengeListFragment"
+        android:name="com.rinnestudio.hnschallenge.MainChallengeListFragment"
         android:label="challengeList"
         tools:layout="@layout/challenge_list_fragment">
         <action

@@ -13,19 +13,17 @@ open class MainMapFragment : AbstractHeatmapMapFragment() {
 
     private val viewModel: MainMapViewModel by viewModels()
 
-    override suspend fun getChallenges() {
-        challenges = viewModel.getChallenges()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(R.layout.main_map_fragment, container, false)
-        return view
+        return inflater.inflate(R.layout.main_map_fragment, container, false)
     }
 
+    override fun initChallengeObserver() {
+        challenges = viewModel.getChallenges()
+    }
 
     override fun openSelectedChallengeList(selectedChallenges: Array<Challenge>) {
         val navDirections =
@@ -34,6 +32,5 @@ open class MainMapFragment : AbstractHeatmapMapFragment() {
             )
         findNavController().navigate(navDirections)
     }
-
 
 }

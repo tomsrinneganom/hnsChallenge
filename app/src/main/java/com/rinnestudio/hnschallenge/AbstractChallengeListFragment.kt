@@ -6,24 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.launch
 
-open class ChallengeListFragment : Fragment() {
+abstract class AbstractChallengeListFragment : Fragment() {
 
-    private val viewModel: ChallengeListViewModel by viewModels()
     private lateinit var recyclerView: RecyclerView
     protected lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    protected lateinit var challenges: List<Challenge>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.challenge_list_fragment, container, false)
         Log.i("Log_tag", "userName = ${Firebase.auth.currentUser?.displayName}")
@@ -33,17 +30,9 @@ open class ChallengeListFragment : Fragment() {
         return view
     }
 
-    protected open fun getChallenges() {
-        viewLifecycleOwner.lifecycle.coroutineScope.launch {
-            val challengeList  = viewModel.getChallenges()
-            initViewAdapter(challengeList)
-            bindRecyclerView()
-        }
-    }
+    protected abstract fun getChallenges()
 
-    protected open fun initViewAdapter(challenges: List<Challenge>) {
-        viewAdapter = ChallengeListAdapter(challenges.toMutableList(),requireContext())
-    }
+    protected abstract fun initViewAdapter()
 
     protected fun bindRecyclerView() {
         recyclerView.apply {

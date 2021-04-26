@@ -9,6 +9,7 @@ import com.rinnestudio.hnschallenge.SignUpViewModel
 
 class CropProfilePhotoFragment : AbstractCropPhotoFragment() {
     private val viewModel: SignUpViewModel by activityViewModels()
+
     override fun setUpCropView() {
         val args: CropProfilePhotoFragmentArgs by navArgs()
         val uri = Uri.parse(args.profilePhotoUri)

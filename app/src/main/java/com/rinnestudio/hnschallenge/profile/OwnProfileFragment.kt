@@ -5,11 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.coroutineScope
-import androidx.navigation.fragment.findNavController
 import com.rinnestudio.hnschallenge.R
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 open class OwnProfileFragment : AbstractProfileFragment() {
@@ -24,12 +21,11 @@ open class OwnProfileFragment : AbstractProfileFragment() {
     }
 
     override fun gettingProfile() {
-        viewLifecycleOwner.lifecycle.coroutineScope.launch {
-            profile = viewModel.getProfile()
+        viewModel.getProfile().observe(this){
+            profile = it
             updateUI()
         }
     }
-
 
     override fun navigateToSubscribersList() {
         val subscribersIdList = profile.subscribers
@@ -38,8 +34,7 @@ open class OwnProfileFragment : AbstractProfileFragment() {
                 OwnProfileFragmentDirections.actionOwnProfileNavigationItemToSubscriptionsListFragment(
                     subscribersIdList.toTypedArray()
                 )
-            hideMapFragment()
-            findNavController().navigate(navDirections)
+            navigate(navDirections)
         }
     }
 
@@ -50,9 +45,7 @@ open class OwnProfileFragment : AbstractProfileFragment() {
                 OwnProfileFragmentDirections.actionOwnProfileNavigationItemToSubscriptionsListFragment(
                     subscriptionsIdList.toTypedArray()
                 )
-            hideMapFragment()
-            findNavController().navigate(navDirections)
+            navigate(navDirections)
         }
     }
-
 }

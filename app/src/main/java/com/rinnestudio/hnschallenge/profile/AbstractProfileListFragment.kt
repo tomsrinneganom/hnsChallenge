@@ -16,41 +16,31 @@ import com.rinnestudio.hnschallenge.R
 
 abstract class AbstractProfileListFragment : Fragment() {
 
-    protected lateinit var recyclerView: RecyclerView
+    protected lateinit var profileList: List<Profile>
+    private lateinit var recyclerView: RecyclerView
     protected lateinit var recyclerAdapter: AbstractProfileListAdapter
     protected lateinit var recyclerLayoutManager: GridLayoutManager
-    protected lateinit var profileList: List<Profile>
-    protected lateinit var searchEditText: TextInputEditText
-    protected lateinit var searchInputLayout: TextInputLayout
+    private lateinit var searchEditText: TextInputEditText
+    private lateinit var searchInputLayout: TextInputLayout
     private lateinit var onBackPressedCallback: OnBackPressedCallback
-    private var search = false
-
-    protected abstract fun setUpRecycler()
-
-    protected abstract fun getProfileList()
-
-    protected fun bindRecycler(view: View) {
-        recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewUserList).apply {
-            layoutManager = recyclerLayoutManager
-            setHasFixedSize(true)
-            adapter = recyclerAdapter
-        }
-
-        recyclerView
-
-    }
+    private var isSearched = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initBackPressedCallback()
+        bindBackPressedCallback()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initSearchListener()
+        recyclerView = view.findViewById(R.id.recyclerViewUserList)
+        searchInputLayout = view.findViewById(R.id.profileListSearchInputLayout)
+        searchEditText = view.findViewById(R.id.profileListSearchEditText)
+
+        getProfileList()
+        bindSearchListener()
     }
 
-    private fun initSearchListener() {
+    private fun bindSearchListener() {
         searchInputLayout.setEndIconOnClickListener {
             searchForProfiles()
         }
@@ -62,48 +52,61 @@ abstract class AbstractProfileListFragment : Fragment() {
         }
     }
 
+
     private fun searchForProfiles() {
         val username = searchEditText.text.toString()
-        if (username.isEmpty()) {
+        if (username.isBlank()) {
+            Log.i("Log_tag", "username.isBlank()")
             showAllProfiles()
-        } else {
+        } else if (!profileList.isNullOrEmpty()) {
             val foundProfiles = mutableListOf<Profile>()
+
             profileList.forEach {
                 if (it.userName != null) {
                     if (it.userName.equals(username)) {
                         foundProfiles.add(it)
-                        Log.i("Log_tag", "equals ${it.userName}")
-                        return@forEach
                     }
                 }
+
             }
+
             profileList.forEach {
                 if (it.userName != null) {
                     if (it.userName!!.contains(username, true)) {
                         foundProfiles.add(it)
-                        Log.i("Log_tag", "contains ${it.userName}")
                     }
                 }
             }
             showFoundProfiles(foundProfiles)
+        }
+
+
+    }
+
+    protected fun bindRecycler() {
+        recyclerView.apply {
+            layoutManager = recyclerLayoutManager
+            setHasFixedSize(true)
+            adapter = recyclerAdapter
         }
     }
 
     private fun showFoundProfiles(profileList: List<Profile>) {
         recyclerAdapter.removeAllItems()
         recyclerAdapter.addItems(profileList)
-        search = true
+        isSearched = true
     }
 
     private fun showAllProfiles() {
+
         recyclerAdapter.removeAllItems()
         recyclerAdapter.addItems(profileList)
-        search = false
+        isSearched = false
     }
 
-    private fun initBackPressedCallback() {
+    private fun bindBackPressedCallback() {
         onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback {
-            if (search) {
+            if (isSearched) {
                 showAllProfiles()
             } else {
                 this.isEnabled = false
@@ -119,4 +122,9 @@ abstract class AbstractProfileListFragment : Fragment() {
         onBackPressedCallback.remove()
 
     }
+
+
+    protected abstract fun setUpRecycler()
+    protected abstract fun getProfileList()
+
 }

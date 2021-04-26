@@ -1,18 +1,19 @@
 package com.rinnestudio.hnschallenge.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import com.rinnestudio.hnschallenge.R
 import com.rinnestudio.hnschallenge.utils.ImageUtils
 
 abstract class AbstractProfileFragment : Fragment() {
-    protected lateinit var profile: Profile
 
+    protected lateinit var profile: Profile
     private lateinit var usernameTextView: TextView
     private lateinit var scoreTextView: TextView
     private lateinit var subscriptionTextView: TextView
@@ -20,11 +21,11 @@ abstract class AbstractProfileFragment : Fragment() {
     private lateinit var profilePhotoImageView: ImageView
     private lateinit var mapFragment: FragmentContainerView
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initView()
-        configureClickListeners()
         gettingProfile()
+        setUpView()
     }
 
     private fun initView() {
@@ -38,11 +39,17 @@ abstract class AbstractProfileFragment : Fragment() {
         mapFragment = view.findViewById(R.id.profileMapFragment)
     }
 
-    private fun configureClickListeners(){
+    private fun setUpView() {
         requireView().findViewById<TextView>(R.id.profileSubscriptionsTitleTextView).apply {
             isClickable = true
             setOnClickListener {
                 navigateToSubscriptionList()
+            }
+        }
+        requireView().findViewById<TextView>(R.id.profileSubscribersTitleTextView).apply {
+            isClickable = true
+            setOnClickListener {
+                navigateToSubscribersList()
             }
         }
 
@@ -50,16 +57,9 @@ abstract class AbstractProfileFragment : Fragment() {
             navigateToSubscriptionList()
         }
 
-        requireView().findViewById<TextView>(R.id.profileSubscribersTitleTextView).apply {
-            isClickable = true
-            setOnClickListener {
-                navigateToSubscribersList()
-            }
-        }
         subscribersTextView.setOnClickListener {
             navigateToSubscribersList()
         }
-
     }
 
     protected fun updateUI() {
@@ -67,19 +67,19 @@ abstract class AbstractProfileFragment : Fragment() {
         scoreTextView.text = profile.score.toString()
         subscribersTextView.text = profile.subscribers.size.toString()
         subscriptionTextView.text = profile.subscription.size.toString()
-        Log.i("Log_tag", "${profile.photoReference}")
         ImageUtils().uploadProfilePhotoIntoImageView(profile.id,
             profile.photoReference,
             profilePhotoImageView)
     }
-
+    
+    protected fun navigate(navDirections: NavDirections) {
+        mapFragment.visibility = View.INVISIBLE
+        findNavController().navigate(navDirections)
+    }
 
     protected abstract fun navigateToSubscribersList()
     protected abstract fun navigateToSubscriptionList()
     protected abstract fun gettingProfile()
 
-    protected fun hideMapFragment() {
-        mapFragment.visibility = View.INVISIBLE
-    }
 
 }

@@ -8,13 +8,12 @@ import com.google.firebase.ktx.Firebase
 import com.rinnestudio.hnschallenge.Challenge
 import com.rinnestudio.hnschallenge.profile.Profile
 import com.rinnestudio.hnschallenge.repository.firebaseRepository.ChallengeFirebaseRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 
 class ChallengeRepository {
     private val firebaseRepository = ChallengeFirebaseRepository()
-    fun getChallengeById(id: String) {
-
-    }
 
     suspend fun getChallengesByCreatorId(creatorId: String) =
         firebaseRepository.getChallengesByCreatorId(creatorId)
@@ -25,19 +24,21 @@ class ChallengeRepository {
     suspend fun getSubscriptionsChallengeList(): List<Challenge> {
         val subscription = ProfileRepository().getSubscriptionList()
         if (!subscription.isNullOrEmpty()) {
-            val challenges = ChallengeFirebaseRepository().getSubscriptionsChallengeList(subscription)
-            return if(challenges.isNullOrEmpty())
-                emptyList()
-            else
-                challenges
+            val challenges =
+                ChallengeFirebaseRepository().getSubscriptionsChallengeList(subscription)
+            if (!challenges.isNullOrEmpty())
+                return challenges
         }
-        return listOf()
+        return emptyList()
     }
 
     suspend fun uploadChallengePhoto(creatorId: String, challengeId: String): Bitmap {
-        val file = File.createTempFile("images", "jpg")
-
-        return ChallengeFirebaseRepository().uploadChallengePhoto(creatorId, challengeId, file)
+        return withContext(Dispatchers.IO) {
+            val file = File.createTempFile("images", "jpg")
+            return@withContext ChallengeFirebaseRepository().uploadChallengePhoto(creatorId,
+                challengeId,
+                file)
+        }
     }
 
     suspend fun createChallenge(
