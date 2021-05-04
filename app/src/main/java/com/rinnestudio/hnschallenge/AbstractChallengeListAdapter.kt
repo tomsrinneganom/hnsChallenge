@@ -23,7 +23,7 @@ abstract class AbstractChallengeListAdapter(
     protected var challenges: MutableList<Challenge>,
     protected val context: Context,
 ) : RecyclerView.Adapter<AbstractChallengeListAdapter.ChallengeListViewHolder>() {
-    var deletePosition:Int = 22222
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChallengeListViewHolder {
         Log.i("Log_tag", "onCreateViewHolder()")
         val itemView =
@@ -34,7 +34,6 @@ abstract class AbstractChallengeListAdapter(
     override fun onBindViewHolder(holder: ChallengeListViewHolder, position: Int) {
         Log.i("Log_tag", "position: $position")
 
-        if(position != deletePosition) {
             holder.bind(challenges[position])
 
             holder.challengePhotoImageView.apply {
@@ -59,19 +58,11 @@ abstract class AbstractChallengeListAdapter(
                         .navigate(createNavDirectionsToProfile(challenges[position].creatorId!!))
                 }
             }
-        }
     }
 
     override fun getItemCount() = challenges.size
 
-    fun deleteChallenge(challenge: Challenge){
-        val index = challenges.indexOf(challenge)
-        deletePosition = index
-        Log.i("Log_tag", "index +$index")
-        challenges.removeAt(index)
-        notifyItemRemoved(index)
-        notifyItemRangeChanged(index,challenges.size)
-    }
+
 
     abstract fun createNavDirectionsToProfile(creatorId: String): NavDirections
 
