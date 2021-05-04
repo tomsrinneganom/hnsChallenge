@@ -105,4 +105,8 @@ class ProfileRepository {
         return emptyList()
     }
 
+    suspend fun addPoints() {
+        val ownProfile = getProfile(Firebase.auth.currentUser!!.uid)
+        ProfileFirebaseRepository().addPoints(ownProfile)
+    }
 }

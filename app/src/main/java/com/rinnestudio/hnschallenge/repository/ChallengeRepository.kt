@@ -23,12 +23,11 @@ class ChallengeRepository {
 
     suspend fun getSubscriptionsChallengeList(): List<Challenge> {
         val subscription = ProfileRepository().getSubscriptionList()
+
         if (!subscription.isNullOrEmpty()) {
-            val challenges =
-                ChallengeFirebaseRepository().getSubscriptionsChallengeList(subscription)
-            if (!challenges.isNullOrEmpty())
-                return challenges
+            return ChallengeFirebaseRepository().getSubscriptionsChallengeList(subscription)
         }
+
         return emptyList()
     }
 
@@ -63,6 +62,8 @@ class ChallengeRepository {
         challengeId: String,
         creatorId: String = Firebase.auth.currentUser!!.uid,
     ) = firebaseRepository.deleteChallengeById(challengeId, creatorId)
+
+
 
     private fun getChallengeId(location: Location) =
         "${location.longitude + location.latitude}${Calendar.getInstance().time}"

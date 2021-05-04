@@ -26,11 +26,13 @@ open class MainMapFragment : AbstractHeatmapMapFragment() {
     }
 
     override fun openSelectedChallengeList(selectedChallenges: Array<Challenge>) {
-        val navDirections =
-            MainMapFragmentDirections.actionMainMapNavigationItemToSelectedChallengeListFragment(
-                selectedChallenges
-            )
-        findNavController().navigate(navDirections)
+        if (selectedChallenges.isNotEmpty()) {
+            val navDirections =
+                MainMapFragmentDirections.actionMainMapNavigationItemToSelectedChallengeListFragment(
+                    selectedChallenges
+                )
+            findNavController().navigate(navDirections)
+        }
     }
 
 }

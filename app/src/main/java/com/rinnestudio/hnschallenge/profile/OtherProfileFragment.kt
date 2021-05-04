@@ -33,17 +33,22 @@ class OtherProfileFragment : AbstractProfileFragment() {
     private fun initSubscriptionButtons(view: View) {
         buttonViewUnsubscribe = view.findViewById(R.id.profileUnsubscribeButton)
         buttonViewUnsubscribe.setOnClickListener {
-            viewModel.unSubscribe()
-            updateSubscribeButton(false)
-            updateUI()
-
+            viewModel.unSubscribe().observe(viewLifecycleOwner) {
+                if (it) {
+                    updateSubscribeButton(false)
+                    updateUI()
+                }
+            }
         }
 
         buttonViewSubscribe = view.findViewById(R.id.profileSubscribeButton)
         buttonViewSubscribe.setOnClickListener {
-            viewModel.subscribe()
-            updateSubscribeButton(true)
-            updateUI()
+            viewModel.subscribe().observe(viewLifecycleOwner) {
+                if (it) {
+                    updateSubscribeButton(true)
+                    updateUI()
+                }
+            }
         }
     }
 

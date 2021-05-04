@@ -8,6 +8,18 @@
     android:background="@color/backgroundColor"
     tools:context=".profile.AbstractProfileListFragment">
 
+    <TextView
+        android:id="@+id/textView4"
+        style="@style/Widget.App.TextView.MediumText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/listIsEmpty"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewUserList"
         android:layout_width="0dp"
@@ -24,13 +36,12 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
         android:addStatesFromChildren="false"
         android:hint="@string/username"
         app:endIconDrawable="@drawable/ic_baseline_search_24"
         app:endIconMode="custom"
         app:endIconTint="@color/iconColor"
+        app:helperTextEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

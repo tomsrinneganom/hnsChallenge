@@ -6,6 +6,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import com.rinnestudio.hnschallenge.Challenge
+import com.rinnestudio.hnschallenge.profile.Profile
 import com.rinnestudio.hnschallenge.utils.ChallengeUtils
 import kotlinx.coroutines.tasks.await
 import java.io.File
@@ -40,14 +41,16 @@ class ChallengeFirebaseRepository {
     }
 
 
-    suspend fun getSubscriptionsChallengeList(subscriptionList: List<String>): List<Challenge> =
-        firestore.whereIn("creatorId", subscriptionList).get().continueWith {
+    suspend fun getSubscriptionsChallengeList(subscriptionList: List<String>): List<Challenge> {
+
+        return firestore.whereIn("creatorId", subscriptionList).get().continueWith {
             if (it.isComplete && it.isSuccessful) {
                 it.result.toObjects<Challenge>()
             } else {
                 emptyList()
             }
         }.await()
+    }
 
     private suspend fun uploadChallengePhotoToDatabase(
         creatorId: String,
@@ -78,4 +81,5 @@ class ChallengeFirebaseRepository {
             .continueWith {
                 it.isSuccessful && it.isComplete
             }.await()
+
 }

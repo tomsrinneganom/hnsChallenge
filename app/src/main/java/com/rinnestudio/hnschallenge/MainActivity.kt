@@ -5,7 +5,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         ThemeManager().setCurrentTheme(applicationContext)
 
-        supportFragmentManager.findFragmentById(R.id.main_nav_host) as NavHostFragment
+        val navhost = supportFragmentManager.findFragmentById(R.id.main_nav_host) as NavHostFragment
 
         settingsImageView = findViewById(R.id.settingsImageView)
         settingsImageView.apply {
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        navController = findNavController(R.id.main_nav_host)
+        navController = navhost.navController
 
         setUpBottomNavigation()
 

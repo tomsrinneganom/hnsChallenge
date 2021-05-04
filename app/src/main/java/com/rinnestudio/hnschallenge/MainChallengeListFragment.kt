@@ -6,16 +6,18 @@ class MainChallengeListFragment : AbstractChallengeListFragment() {
     private val viewModel: MainChallengeListViewModel by viewModels()
 
     override fun initViewAdapter() {
-        if (!challenges.isNullOrEmpty()) {
-            viewAdapter = MainChallengeListAdapter(challenges.toMutableList(), requireContext())
-        }
+        viewAdapter = MainChallengeListAdapter(challenges.toMutableList(), requireContext())
     }
 
     override fun getChallenges() {
         viewModel.getChallenges().observe(viewLifecycleOwner) {
-            challenges = it
-            initViewAdapter()
-            bindRecyclerView()
+            challenges = it.toMutableList()
+            if (challenges.isEmpty()) {
+                displayTextForEmptyList()
+            } else {
+                initViewAdapter()
+                bindRecyclerView()
+            }
         }
     }
 }

@@ -17,7 +17,6 @@ import com.rinnestudio.hnschallenge.ThemeManager
 class SettingsFragment : Fragment() {
 
     private val viewModel: SettingsViewModel by viewModels()
-    private lateinit var editProfileTv: TextView
     private lateinit var logOutTv: TextView
     private lateinit var darkThemeSwitchView: SwitchMaterial
 
@@ -33,7 +32,6 @@ class SettingsFragment : Fragment() {
     }
 
     private fun initView(view: View) {
-        editProfileTv = view.findViewById(R.id.editProfileTextView)
         logOutTv = view.findViewById(R.id.logOutTextView)
         darkThemeSwitchView = view.findViewById(R.id.darkThemeSwitchView)
     }

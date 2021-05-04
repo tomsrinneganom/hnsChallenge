@@ -7,6 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".AbstractChallengeListFragment">
 
+    <TextView
+        android:id="@+id/emptyListTextView"
+        style="@style/Widget.App.TextView.MediumText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/listIsEmpty"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_challenge_list"
         android:layout_width="match_parent"

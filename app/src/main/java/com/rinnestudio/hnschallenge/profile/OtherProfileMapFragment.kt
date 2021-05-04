@@ -9,20 +9,24 @@ class OtherProfileMapFragment : AbstractProfileMapFragment() {
     private val viewModel: OtherProfileMapViewModel by viewModels({ requireParentFragment() })
 
     override fun openSelectedChallengeList(selectedChallenges: Array<Challenge>) {
-        val navDirections =
-            OtherProfileFragmentDirections.actionOtherProfileFragmentToSelectedChallengeListFragment(
-                selectedChallenges)
-        navigate(navDirections)
+        if (selectedChallenges.isNotEmpty()) {
+            val navDirections =
+                OtherProfileFragmentDirections.actionOtherProfileFragmentToSelectedChallengeListFragment(
+                    selectedChallenges)
+            navigate(navDirections)
+        }
     }
 
     override fun openChallengeList() {
-       if(challenges.value != null) {
-           val navDirections =
-               OtherProfileFragmentDirections.actionOtherProfileFragmentToSelectedChallengeListFragment(
-                   challenges.value!!.toTypedArray()
-               )
-           navigate(navDirections)
-       }
+        if (challenges.value == null || challenges.value!!.isEmpty()) {
+            displayTostForEmptyChallengeList()
+        } else {
+            val navDirections =
+                OtherProfileFragmentDirections.actionOtherProfileFragmentToSelectedChallengeListFragment(
+                    challenges.value!!.toTypedArray()
+                )
+            navigate(navDirections)
+        }
     }
 
     override fun initChallengeObserver() {

@@ -1,6 +1,5 @@
 package com.rinnestudio.hnschallenge
 
-import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -11,6 +10,7 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 
 class CameraChallengeExecutionFragment : AbstractCameraFragment(), SeekBar.OnSeekBarChangeListener {
@@ -19,7 +19,7 @@ class CameraChallengeExecutionFragment : AbstractCameraFragment(), SeekBar.OnSee
     private lateinit var challenge: Challenge
     private lateinit var verticalSeekBar: VerticalSeekBar
     private lateinit var challengePhoto: Bitmap
-
+    private var isCompared = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -58,9 +58,25 @@ class CameraChallengeExecutionFragment : AbstractCameraFragment(), SeekBar.OnSee
 
     override fun savingPhoto() {
         val photo = BitmapFactory.decodeFile(pathToPhoto)
-        val r = ImageComparsion().compare(challengePhoto, photo)
-        Toast.makeText(requireContext(), r, Toast.LENGTH_LONG).show()
-        AlertDialog.Builder(requireContext()).setMessage(r).create().show()
+        if (!isCompared) {
+            isCompared = true
+            ImageComparsion().compare(challengePhoto, photo).observe(viewLifecycleOwner) {
+                isCompared = false
+                if (it) {
+                    viewModel.addPoints()
+
+                    val dialog = ChallengeSuccessfulExecutionDialogFragment()
+                    dialog.show(parentFragmentManager, "ChallengeSuccessfulExecutionDialogFragment")
+
+                    findNavController().popBackStack()
+                    findNavController().navigateUp()
+                } else {
+                    Toast.makeText(requireContext(),
+                        resources.getString(R.string.wrong),
+                        Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {

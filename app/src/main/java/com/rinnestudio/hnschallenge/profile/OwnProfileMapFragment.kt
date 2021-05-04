@@ -1,8 +1,6 @@
 package com.rinnestudio.hnschallenge.profile
 
-import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.rinnestudio.hnschallenge.Challenge
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,22 +13,23 @@ open class OwnProfileMapFragment : AbstractProfileMapFragment() {
     }
 
     override fun openSelectedChallengeList(selectedChallenges: Array<Challenge>) {
-        val navDirections =
-            OwnProfileFragmentDirections.actionOwnProfileNavigationItemToSelectedChallengeListFragment(
-                selectedChallenges)
-        mapView.visibility = View.INVISIBLE
-        findNavController().navigate(navDirections)
-
+        if (selectedChallenges.isNotEmpty()) {
+            val navDirections =
+                OwnProfileFragmentDirections.actionOwnProfileNavigationItemToSelectedChallengeListFragment(
+                    selectedChallenges)
+            navigate(navDirections)
+        }
     }
 
     override fun openChallengeList() {
-        if (challenges.value != null) {
+        if (challenges.value == null || challenges.value!!.isEmpty()) {
+            displayTostForEmptyChallengeList()
+        } else {
             val navDirections =
                 OwnProfileFragmentDirections.actionOwnProfileNavigationItemToSelectedChallengeListFragment(
                     challenges.value!!.toTypedArray()
                 )
-            mapView.visibility = View.INVISIBLE
-            findNavController().navigate(navDirections)
+            navigate(navDirections)
         }
     }
 

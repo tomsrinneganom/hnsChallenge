@@ -1,9 +1,6 @@
 package com.rinnestudio.hnschallenge.profile
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.rinnestudio.hnschallenge.repository.ProfileRepository
@@ -32,28 +29,30 @@ class OtherProfileViewModel @Inject constructor(
         return profile
     }
 
-    fun subscribe() {
-        viewModelScope.launch {
-            if (profile.value != null && getOwnProfile()) {
-                if (!checkSubscriptions()) {
-                    profile.value!!.subscribers.add(ownProfile.id)
-                    ownProfile.subscription.add(profile.value!!.id)
-                    updateProfiles()
-                }
-            }
-        }
+    fun subscribe() = liveData {
+        if (profile.value != null && getOwnProfile()) {
+            if (!checkSubscriptions()) {
+                profile.value!!.subscribers.add(ownProfile.id)
+                ownProfile.subscription.add(profile.value!!.id)
+                updateProfiles()
+                emit(true)
+            } else
+                emit(false)
+        } else
+            emit(false)
     }
 
-    fun unSubscribe() {
-        viewModelScope.launch {
-            if (profile.value != null && getOwnProfile()) {
-                if (checkSubscriptions()) {
-                    profile.value!!.subscribers.remove(ownProfile.id)
-                    ownProfile.subscription.remove(profile.value!!.id)
-                    updateProfiles()
-                }
-            }
-        }
+    fun unSubscribe() = liveData {
+        if (profile.value != null && getOwnProfile()) {
+            if (checkSubscriptions()) {
+                profile.value!!.subscribers.remove(ownProfile.id)
+                ownProfile.subscription.remove(profile.value!!.id)
+                updateProfiles()
+                emit(true)
+            } else
+                emit(false)
+        }else
+            emit(false)
     }
 
     private suspend fun getOwnProfile(): Boolean = coroutineScope {

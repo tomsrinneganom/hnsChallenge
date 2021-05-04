@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -33,6 +34,7 @@ class MapChallengeExecutionFragment : AbstractMapFragment() {
 
     private lateinit var challenge: Challenge
     private val viewModel: MapChallengeExecutionViewModel by viewModels()
+    private val viewModelChallengeList :ChallengeListViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,10 +77,11 @@ class MapChallengeExecutionFragment : AbstractMapFragment() {
     }
 
     private fun deleteChallenge() {
-
         viewModel.deleteChallenge(challenge.id!!, challenge.creatorId!!)
             .observe(viewLifecycleOwner) {
                 if (it) {
+                    viewModelChallengeList.deletedChallenge.add(challenge)
+                    Log.i("Log_tag","size deleted challenges ${viewModelChallengeList.deletedChallenge.size }")
                     findNavController().navigateUp()
                 }
             }

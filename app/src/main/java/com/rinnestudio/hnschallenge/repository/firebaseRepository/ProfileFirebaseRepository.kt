@@ -40,7 +40,7 @@ class ProfileFirebaseRepository {
         val auth = Firebase.auth
 
         val signIn = auth.signInWithCredential(credential).continueWith {
-            Log.i("Log_tag",  "fail :${it.exception} ${it.isComplete}")
+            Log.i("Log_tag", "fail :${it.exception} ${it.isComplete}")
             it.isSuccessful && it.isComplete
         }.await()
 
@@ -66,7 +66,6 @@ class ProfileFirebaseRepository {
         return Profile()
     }
 
-    //TODO()!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     suspend fun signUp(
         profile: Profile,
         password: String,
@@ -79,8 +78,8 @@ class ProfileFirebaseRepository {
         val userCreation =
             auth.createUserWithEmailAndPassword(profile.email!!, password)
                 .continueWith {
-                it.isComplete && it.isSuccessful
-            }.await()
+                    it.isComplete && it.isSuccessful
+                }.await()
 
         return if (userCreation) {
             val user = auth.currentUser
@@ -150,7 +149,8 @@ class ProfileFirebaseRepository {
                 }
             }.await()
 
-    fun deleteProfile() {
-
+    suspend fun addPoints(profile: Profile) {
+        profile.score += 100
+        profilesCollection.document(profile.id).set(profile).await()
     }
 }

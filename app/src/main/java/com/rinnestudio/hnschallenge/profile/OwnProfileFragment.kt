@@ -1,6 +1,7 @@
 package com.rinnestudio.hnschallenge.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ open class OwnProfileFragment : AbstractProfileFragment() {
 
     override fun gettingProfile() {
         viewModel.getProfile().observe(this){
+            Log.i("Log_tag","update profile")
             profile = it
             updateUI()
         }

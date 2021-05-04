@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -29,5 +30,10 @@ abstract class AbstractProfileMapFragment : AbstractHeatmapMapFragment() {
         mapView.visibility = View.INVISIBLE
         findNavController().navigate(navDirections)
     }
+
+    protected fun displayTostForEmptyChallengeList(){
+        Toast.makeText(requireContext(),resources.getString(R.string.listIsEmpty),Toast.LENGTH_LONG).show()
+    }
+
     abstract fun openChallengeList()
 }

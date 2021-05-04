@@ -23,8 +23,9 @@ abstract class AbstractChallengeListAdapter(
     protected var challenges: MutableList<Challenge>,
     protected val context: Context,
 ) : RecyclerView.Adapter<AbstractChallengeListAdapter.ChallengeListViewHolder>() {
-
+    var deletePosition:Int = 22222
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChallengeListViewHolder {
+        Log.i("Log_tag", "onCreateViewHolder()")
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.challenge_list_item, parent, false)
         return ChallengeListViewHolder(itemView)
@@ -32,38 +33,50 @@ abstract class AbstractChallengeListAdapter(
 
     override fun onBindViewHolder(holder: ChallengeListViewHolder, position: Int) {
         Log.i("Log_tag", "position: $position")
-        holder.bind(challenges[position])
 
-        holder.challengePhotoImageView.apply {
-            isClickable = true
-            setOnClickListener {
-                it.findNavController()
-                    .navigate(createNavDirecetionsToChallenge(challenges[position]))
-            }
-        }
+        if(position != deletePosition) {
+            holder.bind(challenges[position])
 
-        holder.creatorProfilePhotoImageView.apply {
-            isClickable = true
-            setOnClickListener {
-                it.findNavController()
-                    .navigate(createNavDirectionsToProfile(challenges[position].creatorId!!))
+            holder.challengePhotoImageView.apply {
+                isClickable = true
+                setOnClickListener {
+                    it.findNavController()
+                        .navigate(createNavDirecetionsToChallenge(challenges[position]))
+                }
             }
-        }
-        holder.creatorNameTextView.apply {
-            isClickable = true
-            setOnClickListener {
-                it.findNavController()
-                    .navigate(createNavDirectionsToProfile(challenges[position].creatorId!!))
+
+            holder.creatorProfilePhotoImageView.apply {
+                isClickable = true
+                setOnClickListener {
+                    it.findNavController()
+                        .navigate(createNavDirectionsToProfile(challenges[position].creatorId!!))
+                }
+            }
+            holder.creatorNameTextView.apply {
+                isClickable = true
+                setOnClickListener {
+                    it.findNavController()
+                        .navigate(createNavDirectionsToProfile(challenges[position].creatorId!!))
+                }
             }
         }
     }
 
+    override fun getItemCount() = challenges.size
+
+    fun deleteChallenge(challenge: Challenge){
+        val index = challenges.indexOf(challenge)
+        deletePosition = index
+        Log.i("Log_tag", "index +$index")
+        challenges.removeAt(index)
+        notifyItemRemoved(index)
+        notifyItemRangeChanged(index,challenges.size)
+    }
 
     abstract fun createNavDirectionsToProfile(creatorId: String): NavDirections
 
     abstract fun createNavDirecetionsToChallenge(challenge: Challenge): NavDirections
 
-    override fun getItemCount() = challenges.size
 
     class ChallengeListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

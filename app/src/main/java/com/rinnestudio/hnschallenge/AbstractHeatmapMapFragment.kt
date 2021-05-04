@@ -1,6 +1,7 @@
 package com.rinnestudio.hnschallenge
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mapbox.geojson.Feature
@@ -49,7 +50,7 @@ abstract class AbstractHeatmapMapFragment : AbstractMapFragment() {
         challenges.observe(this) {
 
             val coordinates = getListOfPointFromChallenges()
-
+          Log.i("Log_tag",  "coordinates.size ${coordinates.size}")
             val lineString = LineString.fromLngLats(coordinates)
 
             val featureCollection = FeatureCollection.fromFeature(Feature.fromGeometry(lineString))
