@@ -1,4 +1,4 @@
-package com.rinnestudio.hnschallenge.profile
+package com.rinnestudio.hnschallenge
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.rinnestudio.hnschallenge.R
 import com.rinnestudio.hnschallenge.utils.ImageUtils
 
 abstract class AbstractProfileListAdapter(profileList: List<Profile>) :

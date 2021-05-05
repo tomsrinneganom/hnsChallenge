@@ -1,4 +1,4 @@
-package com.rinnestudio.hnschallenge.profile
+package com.rinnestudio.hnschallenge
 
 import android.os.Parcel
 import android.os.Parcelable

@@ -1,7 +1,7 @@
 package com.rinnestudio.hnschallenge.repository.room
 
 import androidx.room.*
-import com.rinnestudio.hnschallenge.profile.Profile
+import com.rinnestudio.hnschallenge.Profile
 
 @Dao
 interface ProfileDao {

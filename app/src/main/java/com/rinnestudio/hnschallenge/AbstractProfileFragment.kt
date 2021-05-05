@@ -1,4 +1,4 @@
-package com.rinnestudio.hnschallenge.profile
+package com.rinnestudio.hnschallenge
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import com.rinnestudio.hnschallenge.R
 import com.rinnestudio.hnschallenge.utils.ImageUtils
 
 abstract class AbstractProfileFragment : Fragment() {

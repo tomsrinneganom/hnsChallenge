@@ -1,4 +1,4 @@
-package com.rinnestudio.hnschallenge.profile
+package com.rinnestudio.hnschallenge
 
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.rinnestudio.hnschallenge.R
 
 abstract class AbstractProfileListFragment : Fragment() {
 

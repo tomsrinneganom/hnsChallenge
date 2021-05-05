@@ -1,7 +1,8 @@
-package com.rinnestudio.hnschallenge.profile
+package com.rinnestudio.hnschallenge
 
 import android.view.View
 import androidx.navigation.findNavController
+import com.rinnestudio.hnschallenge.profile.SubscriptionsListFragmentDirections
 
 class SubscriptionListAdapter(profileList: List<Profile>) :
     AbstractProfileListAdapter(profileList) {

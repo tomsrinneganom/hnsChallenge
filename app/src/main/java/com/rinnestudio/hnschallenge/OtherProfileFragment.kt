@@ -1,4 +1,4 @@
-package com.rinnestudio.hnschallenge.profile
+package com.rinnestudio.hnschallenge
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,8 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.rinnestudio.hnschallenge.R
+import com.rinnestudio.hnschallenge.profile.OtherProfileFragmentArgs
+import com.rinnestudio.hnschallenge.profile.OtherProfileFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

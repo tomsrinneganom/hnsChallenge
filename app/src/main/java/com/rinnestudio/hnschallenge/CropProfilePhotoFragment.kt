@@ -1,11 +1,10 @@
-package com.rinnestudio.hnschallenge.profile
+package com.rinnestudio.hnschallenge
 
 import android.net.Uri
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.rinnestudio.hnschallenge.AbstractCropPhotoFragment
-import com.rinnestudio.hnschallenge.SignUpViewModel
+import com.rinnestudio.hnschallenge.profile.CropProfilePhotoFragmentArgs
 
 class CropProfilePhotoFragment : AbstractCropPhotoFragment() {
     private val viewModel: SignUpViewModel by activityViewModels()

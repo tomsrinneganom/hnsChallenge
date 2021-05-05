@@ -1,17 +1,21 @@
-package com.rinnestudio.hnschallenge.profile
+package com.rinnestudio.hnschallenge
 
 import androidx.fragment.app.viewModels
-import com.rinnestudio.hnschallenge.Challenge
+import com.rinnestudio.hnschallenge.profile.OwnProfileFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OtherProfileMapFragment : AbstractProfileMapFragment() {
-    private val viewModel: OtherProfileMapViewModel by viewModels({ requireParentFragment() })
+open class OwnProfileMapFragment : AbstractProfileMapFragment() {
+    private val viewModel: OwnProfileMapViewModel by viewModels({ requireParentFragment() })
+
+    override fun initChallengeObserver() {
+        challenges = viewModel.getChallenges()
+    }
 
     override fun openSelectedChallengeList(selectedChallenges: Array<Challenge>) {
         if (selectedChallenges.isNotEmpty()) {
             val navDirections =
-                OtherProfileFragmentDirections.actionOtherProfileFragmentToSelectedChallengeListFragment(
+                OwnProfileFragmentDirections.actionOwnProfileNavigationItemToSelectedChallengeListFragment(
                     selectedChallenges)
             navigate(navDirections)
         }
@@ -22,15 +26,11 @@ class OtherProfileMapFragment : AbstractProfileMapFragment() {
             displayTostForEmptyChallengeList()
         } else {
             val navDirections =
-                OtherProfileFragmentDirections.actionOtherProfileFragmentToSelectedChallengeListFragment(
+                OwnProfileFragmentDirections.actionOwnProfileNavigationItemToSelectedChallengeListFragment(
                     challenges.value!!.toTypedArray()
                 )
             navigate(navDirections)
         }
-    }
-
-    override fun initChallengeObserver() {
-        challenges = viewModel.getChallenges()
     }
 
 }

@@ -1,6 +1,6 @@
 package com.rinnestudio.hnschallenge.repository.room.repository
 
-import com.rinnestudio.hnschallenge.profile.Profile
+import com.rinnestudio.hnschallenge.Profile
 import com.rinnestudio.hnschallenge.repository.room.RoomDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

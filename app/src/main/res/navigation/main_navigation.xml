@@ -76,7 +76,7 @@
     </fragment>
     <fragment
         android:id="@+id/ownProfileNavigationItem"
-        android:name="com.rinnestudio.hnschallenge.profile.OwnProfileFragment"
+        android:name="com.rinnestudio.hnschallenge.OwnProfileFragment"
         android:label="ownProfile"
         tools:layout="@layout/own_profile_fragment" >
         <action
@@ -121,7 +121,7 @@
     </fragment>
     <fragment
         android:id="@+id/otherProfileFragment"
-        android:name="com.rinnestudio.hnschallenge.profile.OtherProfileFragment"
+        android:name="com.rinnestudio.hnschallenge.OtherProfileFragment"
         android:label="other_profile_fragment"
         tools:layout="@layout/other_profile_fragment" >
         <argument android:name="profile"
@@ -140,7 +140,7 @@
     </fragment>
     <fragment
         android:id="@+id/subscriptionsListFragment"
-        android:name="com.rinnestudio.hnschallenge.profile.SubscriptionsListFragment"
+        android:name="com.rinnestudio.hnschallenge.SubscriptionsListFragment"
         android:label="SubscriptionsListFragment" >
         <argument
             android:name="idList"
@@ -160,7 +160,7 @@
     </fragment>
     <fragment
         android:id="@+id/cropProfilePhotoFragment"
-        android:name="com.rinnestudio.hnschallenge.profile.CropProfilePhotoFragment"
+        android:name="com.rinnestudio.hnschallenge.CropProfilePhotoFragment"
         android:label="CropProfilePhotoFragment" >
         <argument
             android:name="profilePhotoUri"

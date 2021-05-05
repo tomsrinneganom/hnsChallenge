@@ -6,7 +6,7 @@ import android.location.Location
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.rinnestudio.hnschallenge.Challenge
-import com.rinnestudio.hnschallenge.profile.Profile
+import com.rinnestudio.hnschallenge.Profile
 import com.rinnestudio.hnschallenge.repository.firebaseRepository.ChallengeFirebaseRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

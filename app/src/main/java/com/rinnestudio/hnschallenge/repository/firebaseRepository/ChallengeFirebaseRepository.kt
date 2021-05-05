@@ -6,7 +6,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import com.rinnestudio.hnschallenge.Challenge
-import com.rinnestudio.hnschallenge.profile.Profile
 import com.rinnestudio.hnschallenge.utils.ChallengeUtils
 import kotlinx.coroutines.tasks.await
 import java.io.File

@@ -1,4 +1,4 @@
-package com.rinnestudio.hnschallenge.profile
+package com.rinnestudio.hnschallenge
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
