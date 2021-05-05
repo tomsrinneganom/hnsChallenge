@@ -37,9 +37,13 @@ abstract class AbstractChallengeListFragment : Fragment() {
         }
     }
 
-    protected fun displayTextForEmptyList(){
+    protected fun displayTextForEmptyList() {
         emptyListTextView.visibility = View.VISIBLE
         recyclerView.visibility = View.GONE
+    }
+
+    protected fun changeTextForEmptyList(str: String) {
+        emptyListTextView.text  = str
     }
 
     protected abstract fun getChallenges()

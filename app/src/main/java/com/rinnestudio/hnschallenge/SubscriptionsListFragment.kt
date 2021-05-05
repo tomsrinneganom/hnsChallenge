@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.rinnestudio.hnschallenge.profile.SubscriptionsListFragmentArgs
 
 class SubscriptionsListFragment : AbstractProfileListFragment() {
 

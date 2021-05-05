@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,6 +32,7 @@ class SignInFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     private val googleSignInResult = registerForActivityResult(StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -74,11 +77,15 @@ class SignInFragment : Fragment() {
         emailEditText = view.findViewById(R.id.editTextTextEmailAddress)
         passwordEditText = view.findViewById(R.id.editTextTextPassword)
 
-
+        bindBackPressedCallback()
 
         return view
     }
+    private fun bindBackPressedCallback() {
+        onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback{
 
+        }
+    }
 
     private fun signInWithEmail() {
         val email = emailEditText.text.toString()
@@ -126,5 +133,11 @@ class SignInFragment : Fragment() {
             }
         }
         return signInResult
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        onBackPressedCallback.isEnabled = false
+        onBackPressedCallback.remove()
+
     }
 }

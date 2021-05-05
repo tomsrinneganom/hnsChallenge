@@ -1,7 +1,6 @@
 package com.rinnestudio.hnschallenge
 
 import androidx.fragment.app.viewModels
-import com.rinnestudio.hnschallenge.profile.OwnProfileFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

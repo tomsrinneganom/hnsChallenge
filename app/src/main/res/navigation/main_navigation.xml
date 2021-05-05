@@ -125,7 +125,7 @@
         android:label="other_profile_fragment"
         tools:layout="@layout/other_profile_fragment" >
         <argument android:name="profile"
-            app:argType="com.rinnestudio.hnschallenge.profile.Profile"
+            app:argType="com.rinnestudio.hnschallenge.Profile"
             app:nullable="true" />
         <action
             android:id="@+id/action_otherProfileFragment_to_selectedChallengeListFragment"
@@ -179,4 +179,22 @@
         android:name="com.rinnestudio.hnschallenge.settings.SettingsFragment"
         android:label="settings_fragment"
         tools:layout="@layout/settings_fragment" />
+    <navigation android:id="@+id/navigation"
+        app:startDestination="@id/challengeListNavigationItem">
+        <fragment
+            android:id="@+id/challengeListNavigationItem"
+            android:name="com.rinnestudio.hnschallenge.MainChallengeListFragment"
+            android:label="challengeList"
+            tools:layout="@layout/challenge_list_fragment">
+            <action
+                android:id="@+id/action_challengeListNavigationItem_to_mapChallengeExecutionFragment"
+                app:destination="@id/mapChallengeExecutionFragment" />
+            <action
+                android:id="@+id/action_challengeListNavigationItem_to_otherProfileFragment"
+                app:destination="@id/otherProfileFragment" />
+            <action
+                android:id="@+id/action_challengeListNavigationItem_to_ownProfileNavigationItem"
+                app:destination="@id/ownProfileNavigationItem" />
+        </fragment>
+    </navigation>
 </navigation>
