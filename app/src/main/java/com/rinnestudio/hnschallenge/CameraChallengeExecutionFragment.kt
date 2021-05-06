@@ -14,12 +14,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 
 class CameraChallengeExecutionFragment : AbstractCameraFragment(), SeekBar.OnSeekBarChangeListener {
+
     private val viewModel: CameraChallengeExecutionViewModel by viewModels()
     private lateinit var challengeImageView: ImageView
     private lateinit var challenge: Challenge
     private lateinit var verticalSeekBar: VerticalSeekBar
     private lateinit var challengePhoto: Bitmap
     private var isCompared = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,

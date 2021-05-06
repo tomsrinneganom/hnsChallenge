@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:text="@string/listIsEmpty"
         android:textAlignment="center"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_challenge_list"
